@@ -2,7 +2,6 @@
 {%- assign blog = blogs[section.settings.homepage_blog] -%}
 {%- assign post_count = section.settings.homepage_blog_count -%}
 
-
 {% case post_count %}
   {% when '0' %}
   {% when '1' %}
@@ -13,34 +12,142 @@
     {% assign blog_grid = 'large--one-third' %}
 {% endcase %}
 
-
 <div class="homepage-blog {{ section.settings.homepage_blog_color }}" data-section-id="{{ section.id }}" data-section-type="index-blog">
   <div class="wrapper">
-      {% unless section.settings.title == '' %}
-        <h4 class="home__subtitle">{{ section.settings.title | escape }}</h4>
-      {% endunless %}
-      <div class="grid-uniform">
-        {% unless blog == blank or blog.empty? %}
+    {% unless section.settings.title == '' %}
+      <h4 class="home__subtitle">{{ section.settings.title | escape }}</h4>
+    {% endunless %}
+    
+    <div class="grid-uniform">
+      {% unless blog == blank or blog.empty? %}
+        {% if blog.articles.size > 0 %}
           {% for article in blog.articles limit:post_count %}
             {% include 'article-grid-item' %}
           {% endfor %}
         {% else %}
-          {% for i in (1..post_count) %}
-            <div class="grid__item {{ blog_grid }}">
-              <div class="blog__link">
-                <div class="blog__article blog__article--card">
-                  <div class="rte blog__article__content equalHeightColumn">
-                    <h3 class="h3 blog__article__title">{{ 'home_page.onboarding.blog_title' | t }}</h3>
-                    <p>{{ 'home_page.onboarding.blog_excerpt' | t }}</p>
-                  </div>
+          <!-- No articles in the selected blog -->
+          <div class="grid__item large--one-whole text-center">
+            <div class="blog__empty-state">
+              <h3>No blog posts yet</h3>
+              <p>The selected blog doesn't have any posts yet. Create your first blog post to see it here!</p>
+              <a href="/admin/blogs" class="btn btn--primary">Create Blog Post</a>
+            </div>
+          </div>
+        {% endif %}
+      {% else %}
+        <!-- No blog selected or blog doesn't exist -->
+        {% if section.settings.homepage_blog == blank %}
+          <div class="grid__item large--one-whole text-center">
+            <div class="blog__setup-state">
+              <h3>Blog Section Setup</h3>
+              <p>To display blog posts here, please select a blog in the theme customizer.</p>
+              <div class="blog__setup-steps">
+                <p><strong>How to set up:</strong></p>
+                <ol>
+                  <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong></li>
+                  <li>Find this blog section</li>
+                  <li>Select a blog from the "Featured blog" dropdown</li>
+                  <li>Save your changes</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <!-- Blog selected but doesn't exist -->
+          <div class="grid__item large--one-whole text-center">
+            <div class="blog__error-state">
+              <h3>Blog Not Found</h3>
+              <p>The selected blog "{{ section.settings.homepage_blog }}" doesn't exist or has been deleted.</p>
+              <p>Please select a different blog or create a new one.</p>
+            </div>
+          </div>
+        {% endif %}
+        
+        <!-- Show placeholder cards for design preview -->
+        {% for i in (1..post_count) %}
+          <div class="grid__item {{ blog_grid }}">
+            <div class="blog__link">
+              <div class="blog__article blog__article--card">
+                <div class="rte blog__article__content equalHeightColumn">
+                  <h3 class="h3 blog__article__title">{{ 'home_page.onboarding.blog_title' | t | default: 'Sample Blog Post' }}</h3>
+                  <p>{{ 'home_page.onboarding.blog_excerpt' | t | default: 'This is a sample blog post excerpt. Create your first blog post to replace this placeholder content.' }}</p>
                 </div>
               </div>
             </div>
-          {% endfor %}
-        {% endunless %}
-      </div>
+          </div>
+        {% endfor %}
+      {% endunless %}
     </div>
   </div>
+</div>
+
+<style>
+  .blog__empty-state,
+  .blog__setup-state,
+  .blog__error-state {
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 1rem 0;
+  }
+  
+  .blog__empty-state h3,
+  .blog__setup-state h3,
+  .blog__error-state h3 {
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .blog__empty-state p,
+  .blog__setup-state p,
+  .blog__error-state p {
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  
+  .blog__setup-steps {
+    text-align: left;
+    max-width: 500px;
+    margin: 1rem auto;
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+  }
+  
+  .blog__setup-steps ol {
+    margin: 0.5rem 0 0 1.5rem;
+    color: #666;
+  }
+  
+  .blog__setup-steps li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .btn--primary {
+    background: #007cba;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1rem;
+    transition: background 0.3s ease;
+  }
+  
+  .btn--primary:hover {
+    background: #005a87;
+    color: #ffffff;
+  }
+  
+  @media (max-width: 768px) {
+    .blog__setup-steps {
+      text-align: left;
+      margin: 1rem 0;
+    }
+  }
+</style>
+
 {% schema %}
 {
   "name": "Featured blog",
@@ -55,7 +162,7 @@
       "type": "blog",
       "id": "homepage_blog",
       "label": "Featured blog",
-      "info": "Feature two recent posts from this blog."
+      "info": "Feature recent posts from this blog."
     },
     {
       "type": "select",
