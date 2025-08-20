@@ -20,7 +20,21 @@ jobs:
     - name: Install Shopify CLI
       run: npm install -g @shopify/cli @shopify/theme
     
-    - name: Deploy theme with token
-      run: shopify theme push --store=t0uds3-a2.myshopify.com --theme=185569444188 --password=${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+    - name: Deploy theme
+      run: |
+        echo "🚀 Starting Shopify theme deployment..."
+        echo "Store: ${{ secrets.SHOPIFY_STORE_URL }}"
+        echo "Theme ID: ${{ secrets.SHOPIFY_THEME_ID }}"
+        
+        # Deploy the theme
+        shopify theme push \
+          --store=${{ secrets.SHOPIFY_STORE_URL }} \
+          --theme=${{ secrets.SHOPIFY_THEME_ID }} \
+          --password=${{ secrets.SHOPIFY_ACCESS_TOKEN }} \
+          --live
+        
+        echo "✅ Theme deployment completed successfully!"
       env:
-        SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+        SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+        SHOPIFY_THEME_ID: ${{ secrets.SHOPIFY_THEME_ID }}
