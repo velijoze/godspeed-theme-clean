@@ -83,7 +83,7 @@
           "main_menu_linklist": "main-menu",
           "height": "header--medium",
           "meganav_link": "",
-          "header_message": "0% FINANCING AVAILABLE | RIDE NOW, PAY LATER",
+          "header_message": "Every bike professionally built and tested",
           "header_message_url": "",
           "header_enable_account": true,
           "header_enable_search": true,
@@ -110,7 +110,7 @@
           "newsletter": {
             "type": "newsletter",
             "settings": {
-              "text": "Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals."
+              "text": "Join the GODSPEED community"
             }
           }
         },
@@ -186,8 +186,8 @@
           "height": "use_screen_two_thirds",
           "overlay": "image-overlay-15",
           "parallax": true,
-          "title": "Image with text overlay",
-          "description": "This area is used to describe your store.",
+          "title": "0% FINANCING AVAILABLE",
+          "description": "RIDE NOW, PAY LATER",
           "text_align": "text-center",
           "color": "homepage--white",
           "link_text": "View products",
