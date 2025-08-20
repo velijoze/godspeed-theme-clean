@@ -7,21 +7,6 @@
         "page_width": "narrow"
       }
     },
-    "toolkit_intro": {
-      "type": "rich-text",
-      "settings": {
-        "align_text": "center",
-        "narrow_column": true,
-        "enlarge_text": false,
-        "divider": false,
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "background-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
     "comparison_tool": {
       "type": "bike-compare",
       "settings": {
@@ -37,7 +22,6 @@
   },
   "order": [
     "main",
-    "toolkit_intro", 
     "comparison_tool"
   ]
 }
