@@ -1,0 +1,415 @@
+{% comment %}
+  Section: Store Locations List
+  List view of all store locations with details
+{% endcomment %}
+
+<div class="store-locations-list-section">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <div class="section-header text-center">
+        <h2>{{ section.settings.title }}</h2>
+        {% if section.settings.description != blank %}
+          <p>{{ section.settings.description }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="locations-grid">
+      {% for block in section.blocks %}
+        <div class="location-card" {{ block.shopify_attributes }}>
+          <div class="location-header">
+            <h3>{{ block.settings.name }}</h3>
+            {% if block.settings.featured %}
+              <span class="featured-badge">Featured</span>
+            {% endif %}
+          </div>
+
+          <div class="location-details">
+            {% if block.settings.address != blank %}
+              <div class="location-item">
+                <span class="location-icon">📍</span>
+                <div class="location-content">
+                  <strong>Address</strong>
+                  <p>{{ block.settings.address | newline_to_br }}</p>
+                </div>
+              </div>
+            {% endif %}
+
+            {% if block.settings.phone != blank %}
+              <div class="location-item">
+                <span class="location-icon">📞</span>
+                <div class="location-content">
+                  <strong>Phone</strong>
+                  <p><a href="tel:{{ block.settings.phone }}">{{ block.settings.phone }}</a></p>
+                </div>
+              </div>
+            {% endif %}
+
+            {% if block.settings.email != blank %}
+              <div class="location-item">
+                <span class="location-icon">✉️</span>
+                <div class="location-content">
+                  <strong>Email</strong>
+                  <p><a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a></p>
+                </div>
+              </div>
+            {% endif %}
+
+            {% if block.settings.hours != blank %}
+              <div class="location-item">
+                <span class="location-icon">🕒</span>
+                <div class="location-content">
+                  <strong>Opening Hours</strong>
+                  <p>{{ block.settings.hours | newline_to_br }}</p>
+                </div>
+              </div>
+            {% endif %}
+
+            {% if block.settings.services != blank %}
+              <div class="location-item">
+                <span class="location-icon">🔧</span>
+                <div class="location-content">
+                  <strong>Services</strong>
+                  <p>{{ block.settings.services | newline_to_br }}</p>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="location-actions">
+            {% if block.settings.latitude != blank and block.settings.longitude != blank %}
+              <a href="https://maps.google.com/maps?daddr={{ block.settings.latitude }},{{ block.settings.longitude }}" 
+                 target="_blank" 
+                 class="btn btn--secondary btn--small">
+                Get Directions
+              </a>
+            {% endif %}
+            
+            {% if block.settings.booking_link != blank %}
+              <a href="{{ block.settings.booking_link }}" 
+                 class="btn btn--primary btn--small">
+                Book Appointment
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.blocks.size == 0 %}
+      <div class="empty-state text-center">
+        <h3>No locations added yet</h3>
+        <p>Add store locations in the theme customizer to display them here.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .store-locations-list-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .locations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .location-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #f0f0f0;
+  }
+
+  .location-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  }
+
+  .location-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f8f8f8;
+  }
+
+  .location-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2c2c2c;
+  }
+
+  .featured-badge {
+    background: linear-gradient(135deg, #E1306C, #C13584);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .location-details {
+    margin-bottom: 1.5rem;
+  }
+
+  .location-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .location-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .location-icon {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .location-content {
+    flex: 1;
+  }
+
+  .location-content strong {
+    display: block;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+
+  .location-content p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .location-content a {
+    color: #E1306C;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .location-content a:hover {
+    color: #C13584;
+    text-decoration: underline;
+  }
+
+  .location-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .btn--small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .btn--primary {
+    background: #E1306C;
+    color: white;
+  }
+
+  .btn--primary:hover {
+    background: #C13584;
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .btn--secondary {
+    background: #f8f9fa;
+    color: #2c2c2c;
+    border: 1px solid #e0e0e0;
+  }
+
+  .btn--secondary:hover {
+    background: #e9ecef;
+    color: #2c2c2c;
+    transform: translateY(-1px);
+  }
+
+  .empty-state {
+    padding: 3rem 2rem;
+    color: #666;
+  }
+
+  .empty-state h3 {
+    margin-bottom: 0.5rem;
+    color: #2c2c2c;
+  }
+
+  @media (max-width: 768px) {
+    .store-locations-list-section {
+      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
+    }
+
+    .locations-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .location-card {
+      padding: 1.5rem;
+    }
+
+    .location-header {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .location-actions {
+      flex-direction: column;
+    }
+
+    .btn {
+      text-align: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Store Locations List",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Visit Our Stores"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Find the nearest Godspeed store and plan your visit"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Store Location",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Store Name",
+          "default": "Godspeed Store"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Featured Location",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "address",
+          "label": "Address",
+          "default": "Street Address\nCity, ZIP Code\nSwitzerland"
+        },
+        {
+          "type": "text",
+          "id": "latitude",
+          "label": "Latitude",
+          "info": "Required for map directions"
+        },
+        {
+          "type": "text",
+          "id": "longitude",
+          "label": "Longitude",
+          "info": "Required for map directions"
+        },
+        {
+          "type": "tel",
+          "id": "phone",
+          "label": "Phone Number"
+        },
+        {
+          "type": "email",
+          "id": "email",
+          "label": "Email Address"
+        },
+        {
+          "type": "textarea",
+          "id": "hours",
+          "label": "Opening Hours",
+          "default": "Monday - Friday: 9:00 - 18:00\nSaturday: 9:00 - 17:00\nSunday: Closed"
+        },
+        {
+          "type": "textarea",
+          "id": "services",
+          "label": "Available Services",
+          "default": "E-bike Sales\nTest Rides\nRepairs & Service\nAccessories"
+        },
+        {
+          "type": "url",
+          "id": "booking_link",
+          "label": "Booking/Appointment Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Store Locations List",
+      "category": "Store Information",
+      "blocks": [
+        {
+          "type": "location"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,80 @@
+{% comment %}
+  Section: Range Calculator
+  Battery range estimation tool
+{% endcomment %}
+
+<div class="range-calculator-section page-width">
+  <div class="section-header text-center">
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <p>{{ section.settings.description }}</p>
+    {% endif %}
+  </div>
+
+  <div id="range-calculator-{{ section.id }}" class="range-calculator-container">
+    <!-- Range calculator will be initialized here by JavaScript -->
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.GodspeedToolkit && window.GodspeedToolkit.RangeCalculator) {
+      const calculator = new window.GodspeedToolkit.RangeCalculator();
+      calculator.init('range-calculator-{{ section.id }}');
+    }
+  });
+</script>
+
+<style>
+  .range-calculator-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Range Calculator",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Calculate Your E-Bike Range"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Estimate how far you can go on a single charge based on your riding conditions"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Range Calculator",
+      "category": "E-bike Tools"
+    }
+  ]
+}
+{% endschema %}

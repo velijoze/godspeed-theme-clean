@@ -1,0 +1,80 @@
+{% comment %}
+  Section: Blog Generator
+  AI-powered blog content generation
+{% endcomment %}
+
+<div class="blog-generator-section page-width">
+  <div class="section-header text-center">
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <p>{{ section.settings.description }}</p>
+    {% endif %}
+  </div>
+
+  <div id="blog-generator-{{ section.id }}" class="blog-generator-container">
+    <!-- Blog generator will be initialized here by JavaScript -->
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.GodspeedToolkit && window.GodspeedToolkit.BlogGenerator) {
+      const generator = new window.GodspeedToolkit.BlogGenerator();
+      generator.init('blog-generator-{{ section.id }}');
+    }
+  });
+</script>
+
+<style>
+  .blog-generator-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Blog Generator",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Content Generator"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Generate AI-powered blog content for your e-bike store"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Generator",
+      "category": "E-bike Tools"
+    }
+  ]
+}
+{% endschema %}

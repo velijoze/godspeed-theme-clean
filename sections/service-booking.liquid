@@ -1,0 +1,80 @@
+{% comment %}
+  Section: Service Booking
+  E-bike service scheduling with tiered packages
+{% endcomment %}
+
+<div class="service-booking-section page-width">
+  <div class="section-header text-center">
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <p>{{ section.settings.description }}</p>
+    {% endif %}
+  </div>
+
+  <div id="service-booking-{{ section.id }}" class="service-booking-container">
+    <!-- Service booking will be initialized here by JavaScript -->
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.GodspeedToolkit && window.GodspeedToolkit.ServiceBooking) {
+      const booking = new window.GodspeedToolkit.ServiceBooking();
+      booking.init('service-booking-{{ section.id }}');
+    }
+  });
+</script>
+
+<style>
+  .service-booking-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Service Booking",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Schedule E-Bike Service"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Keep your e-bike in perfect condition with our professional service packages"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service Booking",
+      "category": "E-bike Tools"
+    }
+  ]
+}
+{% endschema %}

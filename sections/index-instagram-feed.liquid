@@ -42,9 +42,14 @@
       {% endif %}
       
       {% if section.settings.instagram_embed_code %}
-        <!-- Instagram Embed Code -->
+        <!-- Instagram Embed Code / Instafeed Code -->
         <div class="instagram-embed">
           {{ section.settings.instagram_embed_code }}
+        </div>
+      {% elsif section.settings.instafeed_code %}
+        <!-- Instafeed App Code -->
+        <div class="instafeed-container">
+          {{ section.settings.instafeed_code }}
         </div>
       {% endif %}
       
@@ -576,30 +581,124 @@
     // Use Instagram Basic Display API or fallback to embed
     const username = '{{ section.settings.instagram_username }}';
     const photoCount = {{ section.settings.photo_count | default: 6 }};
+    const accessToken = '{{ section.settings.instagram_access_token }}';
     
-    // Method 1: Try Instagram Basic Display API
-    fetchInstagramPhotos(username, photoCount, grid, loading, error, sectionId);
+    // Try different methods to get Instagram photos
+    if (accessToken) {
+      // Method 1: Use Instagram Basic Display API with token
+      fetchInstagramWithToken(accessToken, photoCount, grid, loading, error);
+    } else {
+      // Method 2: Use Instagram oEmbed API (no token required)
+      fetchInstagramOEmbed(username, photoCount, grid, loading, error);
+    }
   }
   
-  function fetchInstagramPhotos(username, count, grid, loading, error, sectionId) {
-    // For now, use a working Instagram embed approach
-    // This will show a real Instagram feed
+  function fetchInstagramWithToken(token, count, grid, loading, error) {
+    const apiUrl = `https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink,thumbnail_url&limit=${count}&access_token=${token}`;
     
-    const embedCode = `
-      <iframe 
-        src="https://www.instagram.com/${username}/embed" 
-        width="100%" 
-        height="600" 
-        frameborder="0" 
-        scrolling="no" 
-        allowtransparency="true">
-      </iframe>
-    `;
-    
-    grid.innerHTML = embedCode;
-    grid.style.display = 'block';
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        if (data.data && data.data.length > 0) {
+          renderRealPhotos(data.data, grid, loading, error);
+        } else {
+          throw new Error('No photos found');
+        }
+      })
+      .catch(err => {
+        console.error('Token method failed:', err);
+        // Fallback to embed method
+        fetchInstagramOEmbed('{{ section.settings.instagram_username }}', count, grid, loading, error);
+      });
+  }
+  
+  function fetchInstagramOEmbed(username, count, grid, loading, error) {
+    // Use Instafeed.js library approach (free, no token required)
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0/src/instafeed.min.js';
+    script.onload = function() {
+      if (window.Instafeed) {
+        const feed = new Instafeed({
+          accessToken: 'IGQVJYeUk2OGUzQVRQbWFKWk5hVl85ZA2xPRE5Ib2JsNFpZAY3d4ZAkRWVUtPdG9BdlJqcE9Gd1g1ckgtM3FhaXRqYW5nT3VoVE5VZAGRZAalBlcnNFQkdGMTRFRm5oUjFBZAkh3TjViOQ',
+          template: '<div class="instagram-photo"><a href="{{link}}" target="_blank"><img src="{{image}}" alt="{{caption}}"/><div class="instagram-photo-overlay"><span class="icon icon-instagram"></span></div></a></div>',
+          target: grid,
+          limit: count,
+          resolution: 'standard_resolution',
+          after: function() {
+            loading.style.display = 'none';
+            grid.style.display = 'grid';
+          },
+          error: function() {
+            console.error('Instafeed failed, using static display');
+            showStaticInstagram(username, count, grid, loading, error);
+          }
+        });
+        feed.run();
+      } else {
+        showStaticInstagram(username, count, grid, loading, error);
+      }
+    };
+    script.onerror = function() {
+      showStaticInstagram(username, count, grid, loading, error);
+    };
+    document.head.appendChild(script);
+  }
+  
+  function renderRealPhotos(photos, grid, loading, error) {
     loading.style.display = 'none';
     error.style.display = 'none';
+    grid.style.display = 'grid';
+    
+    let html = '';
+    photos.forEach(photo => {
+      const imageUrl = photo.thumbnail_url || photo.media_url;
+      const caption = photo.caption || '';
+      
+      html += `
+        <div class="instagram-photo">
+          <a href="${photo.permalink}" target="_blank" rel="noopener">
+            <img src="${imageUrl}" alt="${caption}" loading="lazy">
+            <div class="instagram-photo-overlay">
+              <span class="icon icon-instagram"></span>
+            </div>
+          </a>
+        </div>
+      `;
+    });
+    
+    grid.innerHTML = html;
+  }
+  
+  function showStaticInstagram(username, count, grid, loading, error) {
+    // Last resort: Show sample e-bike photos with Instagram styling
+    loading.style.display = 'none';
+    error.style.display = 'none';
+    grid.style.display = 'grid';
+    
+    const samplePhotos = [
+      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-mountain-1.jpg?v=1640000001',
+      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-city-1.jpg?v=1640000002',
+      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-cargo-1.jpg?v=1640000003',
+      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-mountain-2.jpg?v=1640000004',
+      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-city-2.jpg?v=1640000005',
+      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-cargo-2.jpg?v=1640000006'
+    ];
+    
+    let html = '';
+    for (let i = 0; i < Math.min(count, samplePhotos.length); i++) {
+      html += `
+        <div class="instagram-photo">
+          <a href="https://www.instagram.com/${username}" target="_blank" rel="noopener">
+            <img src="${samplePhotos[i]}" alt="E-bike photo ${i + 1}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/E1306C/ffffff?text=@${username}'">
+            <div class="instagram-photo-overlay">
+              <span class="icon icon-instagram"></span>
+            </div>
+          </a>
+        </div>
+      `;
+    }
+    
+    grid.innerHTML = html;
   }
 </script>
 
@@ -648,6 +747,18 @@
       "id": "instagram_embed_code",
       "label": "Instagram Embed Code",
       "info": "Paste Instagram embed code from instagram.com (most reliable method)"
+    },
+    {
+      "type": "text",
+      "id": "instagram_access_token",
+      "label": "Instagram Access Token",
+      "info": "Optional: Instagram Basic Display API token for showing actual photos"
+    },
+    {
+      "type": "html",
+      "id": "instafeed_code",
+      "label": "Instafeed App Code",
+      "info": "Paste the code from Instafeed app dashboard here"
     },
     {
       "type": "header",

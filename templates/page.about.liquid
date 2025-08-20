@@ -1,0 +1,21 @@
+{% comment %}
+  Template: About Us Page
+  This template displays company information and history
+{% endcomment %}
+
+<div class="page-width">
+  <header class="section-header">
+    <h1 class="section-header__title">{{ page.title }}</h1>
+  </header>
+
+  {% if page.content != blank %}
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  {% endif %}
+
+  {% section 'about-hero' %}
+  {% section 'about-values' %}
+  {% section 'about-timeline' %}
+  {% section 'about-stats' %}
+</div>

@@ -1,0 +1,80 @@
+{% comment %}
+  Section: Test Ride Booking
+  Multi-location appointment system
+{% endcomment %}
+
+<div class="test-ride-booking-section page-width">
+  <div class="section-header text-center">
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <p>{{ section.settings.description }}</p>
+    {% endif %}
+  </div>
+
+  <div id="test-ride-booking-{{ section.id }}" class="test-ride-booking-container">
+    <!-- Test ride booking will be initialized here by JavaScript -->
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.GodspeedToolkit && window.GodspeedToolkit.TestRideBooking) {
+      const booking = new window.GodspeedToolkit.TestRideBooking();
+      booking.init('test-ride-booking-{{ section.id }}');
+    }
+  });
+</script>
+
+<style>
+  .test-ride-booking-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Test Ride Booking",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Book Your Test Ride"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Schedule a test ride at one of our locations to experience our e-bikes firsthand"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Test Ride Booking",
+      "category": "E-bike Tools"
+    }
+  ]
+}
+{% endschema %}

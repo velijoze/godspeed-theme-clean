@@ -1,0 +1,80 @@
+{% comment %}
+  Section: Dashboard Management
+  VeloConnect API monitoring
+{% endcomment %}
+
+<div class="dashboard-management-section page-width">
+  <div class="section-header text-center">
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <p>{{ section.settings.description }}</p>
+    {% endif %}
+  </div>
+
+  <div id="dashboard-management-{{ section.id }}" class="dashboard-management-container">
+    <!-- Dashboard management will be initialized here by JavaScript -->
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.GodspeedToolkit && window.GodspeedToolkit.DashboardManagement) {
+      const dashboard = new window.GodspeedToolkit.DashboardManagement();
+      dashboard.init('dashboard-management-{{ section.id }}');
+    }
+  });
+</script>
+
+<style>
+  .dashboard-management-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Dashboard Management",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "VeloConnect Dashboard"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Monitor API connections and system status"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dashboard Management",
+      "category": "E-bike Tools"
+    }
+  ]
+}
+{% endschema %}

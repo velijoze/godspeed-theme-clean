@@ -1,0 +1,80 @@
+{% comment %}
+  Section: Size Calculator
+  E-bike size recommendation tool
+{% endcomment %}
+
+<div class="size-calculator-section page-width">
+  <div class="section-header text-center">
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <p>{{ section.settings.description }}</p>
+    {% endif %}
+  </div>
+
+  <div id="size-calculator-{{ section.id }}" class="size-calculator-container">
+    <!-- Size calculator will be initialized here by JavaScript -->
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.GodspeedToolkit && window.GodspeedToolkit.SizeCalculator) {
+      const calculator = new window.GodspeedToolkit.SizeCalculator();
+      calculator.init('size-calculator-{{ section.id }}');
+    }
+  });
+</script>
+
+<style>
+  .size-calculator-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Size Calculator",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Find Your Perfect E-Bike Size"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Enter your measurements to get personalized e-bike size recommendations"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Size Calculator",
+      "category": "E-bike Tools"
+    }
+  ]
+}
+{% endschema %}
