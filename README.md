@@ -3,6 +3,7 @@
 A clean, nulled Shopify theme ready for production use.
 
 <!-- Test deployment fix - GitHub Actions should now work properly -->
+<!-- Theme is now published - testing deployment workflow -->
 
 ## Features
 - Responsive design
