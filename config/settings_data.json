@@ -231,20 +231,6 @@
           "color": "homepage--splash"
         }
       },
-      "index-instagram": {
-        "type": "index-instagram",
-        "settings": {
-          "title": "Instagram",
-          "subtitle": "Stay connected with our latest updates and community highlights",
-          "instagram_username": "",
-          "instagram_embed_code": "",
-          "show_cta": true,
-          "cta_title": "Join Our Community",
-          "cta_description": "Connect with fellow e-bike enthusiasts and stay updated with our latest products and news.",
-          "cta_button_text": "Get Started",
-          "cta_button_link": ""
-        }
-      },
       "bike-compare": {
         "type": "bike-compare",
         "settings": {
@@ -437,7 +423,14 @@
       "index_blog_6zJUw4",
       "index_sustainability_rFiKFj",
       "index_featured_collections_KWKDEg"
-    ]
+    ],
+    "blocks": {
+      "1232542678405107163": {
+        "type": "shopify://apps/instafeed/blocks/head-block/c447db20-095d-4a10-9725-b5977662c9d5",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "Bright": {
