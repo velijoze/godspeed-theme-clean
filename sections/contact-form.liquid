@@ -1,215 +1,54 @@
 {% comment %}
   Section: Contact Form
-  Contact form with multiple form types
+  Simple contact form using Shopify's built-in contact form
 {% endcomment %}
 
-<div class="page-width">
-  {% if section.settings.title != blank %}
-    <div class="section-header text-center">
-      <h2>{{ section.settings.title }}</h2>
-      {% if section.settings.description != blank %}
-        <p class="rte">{{ section.settings.description }}</p>
-      {% endif %}
-    </div>
-  {% endif %}
+<section class="section-spacing">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <header class="section-header text-center">
+        <h2 class="section-header__title">{{ section.settings.title }}</h2>
+        {% if section.settings.description != blank %}
+          <p>{{ section.settings.description }}</p>
+        {% endif %}
+      </header>
+    {% endif %}
 
-  <div class="grid">
-    <div class="grid__item large--eight-tenths push--large--one-tenth">
-      {% if section.settings.show_form_selector %}
-        <div class="text-center" style="margin-bottom: 2rem;">
-          <button class="btn form-type-btn active" data-form="general">{{ section.settings.general_form_label | default: "General Inquiry" }}</button>
-          <button class="btn form-type-btn" data-form="support">{{ section.settings.support_form_label | default: "Support" }}</button>
-          <button class="btn form-type-btn" data-form="sales">{{ section.settings.sales_form_label | default: "Sales" }}</button>
-        </div>
-      {% endif %}
-
-      <!-- General Contact Form -->
-      <div class="contact-form active" id="general-form">
+    <div class="grid">
+      <div class="grid__item large--eight-tenths push--large--one-tenth">
         {% form 'contact' %}
           {% if form.posted_successfully? %}
-            <div class="note form-success" style="margin-bottom: 2rem;">
-              <h4>{{ section.settings.success_title | default: "Thank you!" }}</h4>
-              <p>{{ section.settings.success_message | default: "Your message has been sent successfully. We'll get back to you soon." }}</p>
-            </div>
+            <p class="note form-success">
+              {{ 'contact.form.post_success' | t | default: 'Thanks for contacting us. We'll get back to you as soon as possible.' }}
+            </p>
           {% endif %}
 
-          {% if form.errors %}
-            <div class="note form-error" style="margin-bottom: 2rem;">
-              <h4>{{ 'contact.form.error_heading' | t }}</h4>
-              <ul>
-                {% for field in form.errors %}
-                  <li>{{ field }} {{ form.errors[field] }}</li>
-                {% endfor %}
-              </ul>
-            </div>
-          {% endif %}
+          {{ form.errors | default_errors }}
 
           <div class="grid">
-            <div class="grid__item medium--one-half">
-              <label for="contact-name">{{ section.settings.name_label | default: "Name" }} *</label>
-              <input type="text" id="contact-name" name="contact[name]" required>
+            <div class="grid__item large--one-half">
+              <label for="ContactFormName">{{ 'contact.form.name' | t | default: 'Name' }}</label>
+              <input type="text" id="ContactFormName" name="contact[name]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
             </div>
-            <div class="grid__item medium--one-half">
-              <label for="contact-email">{{ section.settings.email_label | default: "Email" }} *</label>
-              <input type="email" id="contact-email" name="contact[email]" required>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="grid__item medium--one-half">
-              <label for="contact-phone">{{ section.settings.phone_label | default: "Phone" }}</label>
-              <input type="tel" id="contact-phone" name="contact[phone]">
-            </div>
-            <div class="grid__item medium--one-half">
-              <label for="contact-subject">{{ section.settings.subject_label | default: "Subject" }}</label>
-              <select id="contact-subject" name="contact[subject]">
-                <option value="">{{ section.settings.subject_placeholder | default: "Select a subject" }}</option>
-                <option value="General Inquiry">General Inquiry</option>
-                <option value="Product Question">Product Question</option>
-                <option value="Technical Support">Technical Support</option>
-                <option value="Warranty">Warranty</option>
-                <option value="Other">Other</option>
-              </select>
+            
+            <div class="grid__item large--one-half">
+              <label for="ContactFormEmail">{{ 'contact.form.email' | t | default: 'Email' }} <span class="required">*</span></label>
+              <input type="email" id="ContactFormEmail" name="contact[email]" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
             </div>
           </div>
 
-          <div class="grid">
-            <div class="grid__item">
-              <label for="contact-message">{{ section.settings.message_label | default: "Message" }} *</label>
-              <textarea id="contact-message" name="contact[body]" rows="6" required placeholder="{{ section.settings.message_placeholder | default: 'Tell us how we can help you...' }}"></textarea>
-            </div>
-          </div>
+          <label for="ContactFormPhone">{{ 'contact.form.phone' | t | default: 'Phone Number' }}</label>
+          <input type="tel" id="ContactFormPhone" name="contact[phone]" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
 
-          {% if section.settings.show_consent_checkbox %}
-            <div class="grid">
-              <div class="grid__item">
-                <label>
-                  <input type="checkbox" name="contact[consent]" required>
-                  {{ section.settings.consent_text | default: "I agree to receive communications from Godspeed and understand I can unsubscribe at any time." }}
-                </label>
-              </div>
-            </div>
-          {% endif %}
+          <label for="ContactFormMessage">{{ 'contact.form.message' | t | default: 'Message' }} <span class="required">*</span></label>
+          <textarea rows="10" id="ContactFormMessage" name="contact[body]" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
 
-          <div class="text-center" style="margin-top: 2rem;">
-            <button type="submit" class="btn btn--primary">
-              {{ section.settings.submit_button_text | default: "Send Message" }}
-            </button>
-          </div>
-        {% endform %}
-      </div>
-
-      <!-- Support Form -->
-      <div class="contact-form" id="support-form" style="display: none;">
-        {% form 'contact' %}
-          <input type="hidden" name="contact[form_type]" value="support">
-          
-          <div class="grid">
-            <div class="grid__item medium--one-half">
-              <label for="support-name">Name *</label>
-              <input type="text" id="support-name" name="contact[name]" required>
-            </div>
-            <div class="grid__item medium--one-half">
-              <label for="support-email">Email *</label>
-              <input type="email" id="support-email" name="contact[email]" required>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="grid__item medium--one-half">
-              <label for="support-order">Order Number</label>
-              <input type="text" id="support-order" name="contact[order_number]" placeholder="Optional">
-            </div>
-            <div class="grid__item medium--one-half">
-              <label for="support-product">Product Model</label>
-              <input type="text" id="support-product" name="contact[product_model]" placeholder="e.g., Cube Town Sport">
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="grid__item">
-              <label for="support-issue">Describe Your Issue *</label>
-              <textarea id="support-issue" name="contact[body]" rows="6" required placeholder="Please describe the issue you're experiencing in detail..."></textarea>
-            </div>
-          </div>
-
-          <div class="text-center" style="margin-top: 2rem;">
-            <button type="submit" class="btn btn--primary">Submit Support Request</button>
-          </div>
-        {% endform %}
-      </div>
-
-      <!-- Sales Form -->
-      <div class="contact-form" id="sales-form" style="display: none;">
-        {% form 'contact' %}
-          <input type="hidden" name="contact[form_type]" value="sales">
-          
-          <div class="grid">
-            <div class="grid__item medium--one-half">
-              <label for="sales-name">Name *</label>
-              <input type="text" id="sales-name" name="contact[name]" required>
-            </div>
-            <div class="grid__item medium--one-half">
-              <label for="sales-email">Email *</label>
-              <input type="email" id="sales-email" name="contact[email]" required>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="grid__item medium--one-half">
-              <label for="sales-phone">Phone</label>
-              <input type="tel" id="sales-phone" name="contact[phone]">
-            </div>
-            <div class="grid__item medium--one-half">
-              <label for="sales-interest">I'm interested in</label>
-              <select id="sales-interest" name="contact[interest]">
-                <option value="">Select category</option>
-                <option value="City E-Bikes">City E-Bikes</option>
-                <option value="Mountain E-Bikes">Mountain E-Bikes</option>
-                <option value="Cargo E-Bikes">Cargo E-Bikes</option>
-                <option value="Accessories">Accessories</option>
-                <option value="Test Ride">Test Ride</option>
-                <option value="Corporate Sales">Corporate Sales</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="grid__item">
-              <label for="sales-message">Tell us about your needs *</label>
-              <textarea id="sales-message" name="contact[body]" rows="6" required placeholder="What are you looking for? Budget range? Timeline? Let us know how we can help..."></textarea>
-            </div>
-          </div>
-
-          <div class="text-center" style="margin-top: 2rem;">
-            <button type="submit" class="btn btn--primary">Contact Sales Team</button>
-          </div>
+          <input type="submit" class="btn" value="{{ 'contact.form.send' | t | default: 'Send' }}">
         {% endform %}
       </div>
     </div>
   </div>
-</div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const formTypeButtons = document.querySelectorAll('.form-type-btn');
-    const contactForms = document.querySelectorAll('.contact-form');
-
-    formTypeButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const formType = this.getAttribute('data-form');
-        
-        // Update active button
-        formTypeButtons.forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Show corresponding form
-        contactForms.forEach(form => form.classList.remove('active'));
-        document.getElementById(formType + '-form').classList.add('active');
-      });
-    });
-  });
-</script>
+</section>
 
 {% schema %}
 {
@@ -219,115 +58,19 @@
       "type": "text",
       "id": "title",
       "label": "Title",
-      "default": "Get in Touch"
+      "default": "Contact Us"
     },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
       "default": "Have a question? We'd love to hear from you."
-    },
-    {
-      "type": "checkbox",
-      "id": "show_form_selector",
-      "label": "Show Form Type Selector",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "general_form_label",
-      "label": "General Form Label",
-      "default": "General Inquiry"
-    },
-    {
-      "type": "text",
-      "id": "support_form_label",
-      "label": "Support Form Label",
-      "default": "Support"
-    },
-    {
-      "type": "text",
-      "id": "sales_form_label",
-      "label": "Sales Form Label",
-      "default": "Sales"
-    },
-    {
-      "type": "header",
-      "content": "Form Labels"
-    },
-    {
-      "type": "text",
-      "id": "name_label",
-      "label": "Name Field Label",
-      "default": "Name"
-    },
-    {
-      "type": "text",
-      "id": "email_label",
-      "label": "Email Field Label", 
-      "default": "Email"
-    },
-    {
-      "type": "text",
-      "id": "phone_label",
-      "label": "Phone Field Label",
-      "default": "Phone"
-    },
-    {
-      "type": "text",
-      "id": "subject_label",
-      "label": "Subject Field Label",
-      "default": "Subject"
-    },
-    {
-      "type": "text",
-      "id": "message_label",
-      "label": "Message Field Label",
-      "default": "Message"
-    },
-    {
-      "type": "text",
-      "id": "submit_button_text",
-      "label": "Submit Button Text",
-      "default": "Send Message"
-    },
-    {
-      "type": "header",
-      "content": "Success Messages"
-    },
-    {
-      "type": "text",
-      "id": "success_title",
-      "label": "Success Title",
-      "default": "Thank you!"
-    },
-    {
-      "type": "textarea",
-      "id": "success_message",
-      "label": "Success Message",
-      "default": "Your message has been sent successfully. We'll get back to you soon."
-    },
-    {
-      "type": "header",
-      "content": "Privacy & Consent"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_consent_checkbox",
-      "label": "Show Consent Checkbox",
-      "default": true
-    },
-    {
-      "type": "textarea",
-      "id": "consent_text",
-      "label": "Consent Text",
-      "default": "I agree to receive communications from Godspeed and understand I can unsubscribe at any time."
     }
   ],
   "presets": [
     {
       "name": "Contact Form",
-      "category": "Contact"
+      "category": "Forms"
     }
   ]
 }
