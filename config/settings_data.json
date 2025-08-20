@@ -182,7 +182,7 @@
       "index-banner-image": {
         "type": "index-banner-image",
         "settings": {
-          "image": "shopify://shop_images/manybikes-locarno.jpg",
+          "image": "shopify://shop_images/5S5A2355.jpg",
           "height": "use_screen_two_thirds",
           "overlay": "image-overlay-15",
           "parallax": true,
@@ -210,11 +210,11 @@
         "type": "index-collection",
         "settings": {
           "title": "Featured products",
-          "collection": "",
+          "collection": "e-bikes-cargo",
           "grid": "4",
           "rows": "2",
           "homepage_collection_color": "homepage--white",
-          "show_view_all": false
+          "show_view_all": true
         }
       },
       "index-video": {
