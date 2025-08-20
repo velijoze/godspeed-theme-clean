@@ -10,21 +10,21 @@
       <div class="tab-buttons">
         {% for block in section.blocks %}
           {% if block.type == 'collection_tab' %}
-            <button class="tab-button{% if forloop.first %} active{% endif %}" 
-                    data-tab="{{ block.settings.collection_handle }}">
-              {{ block.settings.tab_title }}
-            </button>
+                         <button class="tab-button{% if forloop.first %} active{% endif %}" 
+                     data-tab="{{ block.settings.collection.handle }}">
+               {{ block.settings.tab_title }}
+             </button>
           {% endif %}
         {% endfor %}
       </div>
     </div>
     
     <!-- Collection Content -->
-    {% for block in section.blocks %}
-      {% if block.type == 'collection_tab' %}
-        {% assign collection = collections[block.settings.collection_handle] %}
-        <div class="collection-content{% if forloop.first %} active{% endif %}" 
-             data-tab="{{ block.settings.collection_handle }}">
+            {% for block in section.blocks %}
+          {% if block.type == 'collection_tab' %}
+            {% assign collection = block.settings.collection %}
+                     <div class="collection-content{% if forloop.first %} active{% endif %}" 
+                  data-tab="{{ block.settings.collection.handle }}">
           <div class="collection-grid">
             {% if collection.products.size > 0 %}
               {% for product in collection.products limit: section.settings.products_per_tab %}
@@ -415,7 +415,7 @@
         },
         {
           "type": "collection",
-          "id": "collection_handle",
+          "id": "collection",
           "label": "Collection"
         }
       ]
@@ -428,19 +428,22 @@
         {
           "type": "collection_tab",
           "settings": {
-            "tab_title": "FIRE"
+            "tab_title": "FIRE",
+            "collection": ""
           }
         },
         {
           "type": "collection_tab",
           "settings": {
-            "tab_title": "AIR"
+            "tab_title": "AIR",
+            "collection": ""
           }
         },
         {
           "type": "collection_tab",
           "settings": {
-            "tab_title": "EARTH"
+            "tab_title": "EARTH",
+            "collection": ""
           }
         }
       ]

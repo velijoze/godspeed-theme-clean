@@ -1,67 +1,44 @@
 <div class="sustainability-section" data-section-id="{{ section.id }}" data-section-type="sustainability">
   <div class="wrapper">
     <div class="section-header text-center">
-      <h2 class="section-header__title">{{ section.settings.title | default: 'SUSTAINABILITY' }}</h2>
+      <h2 class="section-header__title">{{ section.settings.title | default: 'ECO-FRIENDLY TRANSPORT' }}</h2>
       <div class="section-header__divider"></div>
-      <p class="section-header__subtitle">{{ section.settings.subtitle | default: 'Committed to a greener future through eco-friendly practices and sustainable solutions.' }}</p>
+      <p class="section-header__subtitle">{{ section.settings.subtitle | default: 'Join the green revolution with our sustainable e-bike solutions.' }}</p>
     </div>
     
     <div class="sustainability-grid">
-      <!-- Eco-Friendly Materials -->
+      <!-- Green Commuting -->
       <div class="sustainability-item">
         <div class="sustainability-icon">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M32 4C16.536 4 4 16.536 4 32C4 47.464 16.536 60 32 60C47.464 60 60 47.464 60 32C60 16.536 47.464 4 32 4ZM32 56C18.745 56 8 45.255 8 32C8 18.745 18.745 8 32 8C45.255 8 56 18.745 56 32C56 45.255 45.255 56 32 56Z" fill="#4CAF50"/>
-            <path d="M32 16C23.163 16 16 23.163 16 32C16 40.837 23.163 48 32 48C40.837 48 48 40.837 48 32C48 23.163 40.837 16 32 16ZM32 44C25.373 44 20 38.627 20 32C20 25.373 25.373 20 32 20C38.627 20 44 25.373 44 32C44 38.627 38.627 44 32 44Z" fill="#4CAF50"/>
-            <path d="M32 24C27.582 24 24 27.582 24 32C24 36.418 27.582 40 32 40C36.418 40 40 36.418 40 32C40 27.582 36.418 24 32 24ZM32 36C29.791 36 28 34.209 28 32C28 29.791 29.791 28 32 28C34.209 28 36 29.791 36 32C36 34.209 34.209 36 32 36Z" fill="#4CAF50"/>
-          </svg>
+          <span class="icon icon-leaf"></span>
         </div>
-        <h3 class="sustainability-title">{{ section.settings.materials_title | default: 'Eco-Friendly Materials' }}</h3>
-        <p class="sustainability-description">{{ section.settings.materials_description | default: 'We use sustainable materials and recycled components in our products to minimize environmental impact.' }}</p>
+        <h3 class="sustainability-title">{{ section.settings.commuting_title | default: 'Green Commuting' }}</h3>
+        <p class="sustainability-description">{{ section.settings.commuting_description | default: 'Reduce your carbon footprint by choosing e-bikes for daily transportation.' }}</p>
       </div>
       
-      <!-- Carbon Footprint -->
+      <!-- Energy Efficient -->
       <div class="sustainability-item">
         <div class="sustainability-icon">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M32 8C18.745 8 8 18.745 8 32C8 45.255 18.745 56 32 56C45.255 56 56 45.255 56 32C56 18.745 45.255 8 32 8ZM32 52C20.954 52 12 43.046 12 32C12 20.954 20.954 12 32 12C43.046 12 52 20.954 52 32C52 43.046 43.046 52 32 52Z" fill="#FF9800"/>
-            <path d="M32 20C25.373 20 20 25.373 20 32C20 38.627 25.373 44 32 44C38.627 44 44 38.627 44 32C44 25.373 38.627 20 32 20ZM32 40C27.582 40 24 36.418 24 32C24 27.582 27.582 24 32 24C36.418 24 40 27.582 40 32C40 36.418 36.418 40 32 40Z" fill="#FF9800"/>
-            <path d="M32 28C29.791 28 28 29.791 28 32C28 34.209 29.791 36 32 36C34.209 36 36 34.209 36 32C36 29.791 34.209 28 32 28Z" fill="#FF9800"/>
-          </svg>
+          <span class="icon icon-bolt"></span>
         </div>
-        <h3 class="sustainability-title">{{ section.settings.carbon_title | default: 'Reduced Carbon Footprint' }}</h3>
-        <p class="sustainability-description">{{ section.settings.carbon_description | default: 'Our manufacturing processes are designed to reduce carbon emissions and energy consumption.' }}</p>
+        <h3 class="sustainability-title">{{ section.settings.energy_title | default: 'Energy Efficient' }}</h3>
+        <p class="sustainability-description">{{ section.settings.energy_description | default: 'Our e-bikes use minimal electricity compared to cars and public transport.' }}</p>
       </div>
       
-      <!-- Recycling Program -->
+      <!-- Sustainable Materials -->
       <div class="sustainability-item">
         <div class="sustainability-icon">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M48 16H40V8C40 5.79 38.21 4 36 4H28C25.79 4 24 5.79 24 8V16H16C13.79 16 12 17.79 12 20V48C12 50.21 13.79 52 16 52H48C50.21 52 52 50.21 52 48V20C52 17.79 50.21 16 48 16ZM28 8H36V16H28V8ZM48 48H16V20H48V48Z" fill="#2196F3"/>
-            <path d="M32 24C27.582 24 24 27.582 24 32C24 36.418 27.582 40 32 40C36.418 40 40 36.418 40 32C40 27.582 36.418 24 32 24ZM32 36C29.791 36 28 34.209 28 32C28 29.791 29.791 28 32 28C34.209 28 36 29.791 36 32C36 34.209 34.209 36 32 36Z" fill="#2196F3"/>
-          </svg>
+          <span class="icon icon-recycle"></span>
         </div>
-        <h3 class="sustainability-title">{{ section.settings.recycling_title | default: 'Recycling Program' }}</h3>
-        <p class="sustainability-description">{{ section.settings.recycling_description | default: 'We offer a comprehensive recycling program for old products and packaging materials.' }}</p>
-      </div>
-      
-      <!-- Renewable Energy -->
-      <div class="sustainability-item">
-        <div class="sustainability-icon">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M32 4L36 20H48L40 32L44 48L32 36L20 48L24 32L16 20H28L32 4Z" fill="#FFC107"/>
-            <path d="M32 12L34 20H40L36 26L38 32L32 28L26 32L28 26L24 20H30L32 12Z" fill="#FFC107"/>
-          </svg>
-        </div>
-        <h3 class="sustainability-title">{{ section.settings.energy_title | default: 'Renewable Energy' }}</h3>
-        <p class="sustainability-description">{{ section.settings.energy_description | default: 'Our facilities are powered by renewable energy sources including solar and wind power.' }}</p>
+        <h3 class="sustainability-title">{{ section.settings.materials_title | default: 'Sustainable Materials' }}</h3>
+        <p class="sustainability-description">{{ section.settings.materials_description | default: 'Built with eco-friendly components and recyclable materials.' }}</p>
       </div>
     </div>
     
     <!-- Call to Action -->
     <div class="sustainability-cta">
-      <h3 class="cta-title">{{ section.settings.cta_title | default: 'Join Us in Building a Sustainable Future' }}</h3>
-      <p class="cta-description">{{ section.settings.cta_description | default: 'Every purchase supports our commitment to environmental responsibility and sustainable practices.' }}</p>
+      <h3 class="cta-title">{{ section.settings.cta_title | default: 'Choose Sustainable Transportation' }}</h3>
+      <p class="cta-description">{{ section.settings.cta_description | default: 'Every ride contributes to a cleaner environment and healthier cities.' }}</p>
       {% if section.settings.cta_button_text and section.settings.cta_button_link %}
         <a href="{{ section.settings.cta_button_link }}" class="btn btn--primary btn--large">
           {{ section.settings.cta_button_text }}
@@ -73,7 +50,7 @@
 
 <style>
   .sustainability-section {
-    padding: 4rem 0;
+    padding: 2.5rem 0;
     background: #f8f9fa;
   }
   
@@ -85,90 +62,90 @@
   }
   
   .section-header__subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #666;
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.5;
   }
   
   .sustainability-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
   }
   
   .sustainability-item {
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
   .sustainability-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
   }
   
   .sustainability-icon {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     display: flex;
     justify-content: center;
   }
   
-  .sustainability-icon svg {
-    width: 64px;
-    height: 64px;
+  .sustainability-icon .icon {
+    font-size: 2rem;
+    color: #4CAF50;
   }
   
   .sustainability-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: #2c2c2c;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
   
   .sustainability-description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #666;
-    line-height: 1.5;
+    line-height: 1.4;
     margin: 0;
   }
   
   .sustainability-cta {
     text-align: center;
-    margin-top: 3rem;
-    padding: 2rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
   
   .cta-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: #2c2c2c;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
   
   .cta-description {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #666;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    max-width: 600px;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
   }
   
   .btn--large {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: 6px;
     text-decoration: none;
     display: inline-block;
     transition: all 0.3s ease;
@@ -183,55 +160,36 @@
   .btn--primary:hover {
     background: #45a049;
     border-color: #45a049;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
   
   /* Responsive design */
   @media (max-width: 768px) {
     .sustainability-section {
-      padding: 3rem 0;
+      padding: 2rem 0;
     }
     
     .sustainability-grid {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    
-    .sustainability-item {
-      padding: 1.5rem 1rem;
-    }
-    
-    .sustainability-cta {
-      margin-top: 2rem;
-      padding: 1.5rem;
-    }
-    
-    .cta-title {
-      font-size: 1.3rem;
-    }
-    
-    .cta-description {
-      font-size: 1rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .sustainability-section {
-      padding: 2rem 0;
-    }
-    
-    .section-header__subtitle {
-      font-size: 1rem;
+      gap: 1rem;
+      margin: 1.5rem 0;
     }
     
     .sustainability-item {
       padding: 1rem;
     }
     
-    .sustainability-icon svg {
-      width: 48px;
-      height: 48px;
+    .sustainability-cta {
+      margin-top: 1.5rem;
+      padding: 1rem;
+    }
+    
+    .cta-title {
+      font-size: 1.2rem;
+    }
+    
+    .cta-description {
+      font-size: 0.9rem;
     }
   }
 </style>
@@ -244,61 +202,29 @@
       "type": "text",
       "id": "title",
       "label": "Section Title",
-      "default": "SUSTAINABILITY"
+      "default": "ECO-FRIENDLY TRANSPORT"
     },
     {
       "type": "text",
       "id": "subtitle",
       "label": "Section Subtitle",
-      "default": "Committed to a greener future through eco-friendly practices and sustainable solutions."
+      "default": "Join the green revolution with our sustainable e-bike solutions."
     },
     {
       "type": "header",
-      "content": "Materials Settings"
+      "content": "Commuting Settings"
     },
     {
       "type": "text",
-      "id": "materials_title",
-      "label": "Materials Title",
-      "default": "Eco-Friendly Materials"
+      "id": "commuting_title",
+      "label": "Commuting Title",
+      "default": "Green Commuting"
     },
     {
       "type": "text",
-      "id": "materials_description",
-      "label": "Materials Description",
-      "default": "We use sustainable materials and recycled components in our products to minimize environmental impact."
-    },
-    {
-      "type": "header",
-      "content": "Carbon Settings"
-    },
-    {
-      "type": "text",
-      "id": "carbon_title",
-      "label": "Carbon Title",
-      "default": "Reduced Carbon Footprint"
-    },
-    {
-      "type": "text",
-      "id": "carbon_description",
-      "label": "Carbon Description",
-      "default": "Our manufacturing processes are designed to reduce carbon emissions and energy consumption."
-    },
-    {
-      "type": "header",
-      "content": "Recycling Settings"
-    },
-    {
-      "type": "text",
-      "id": "recycling_title",
-      "label": "Recycling Title",
-      "default": "Recycling Program"
-    },
-    {
-      "type": "text",
-      "id": "recycling_description",
-      "label": "Recycling Description",
-      "default": "We offer a comprehensive recycling program for old products and packaging materials."
+      "id": "commuting_description",
+      "label": "Commuting Description",
+      "default": "Reduce your carbon footprint by choosing e-bikes for daily transportation."
     },
     {
       "type": "header",
@@ -308,13 +234,29 @@
       "type": "text",
       "id": "energy_title",
       "label": "Energy Title",
-      "default": "Renewable Energy"
+      "default": "Energy Efficient"
     },
     {
       "type": "text",
       "id": "energy_description",
       "label": "Energy Description",
-      "default": "Our facilities are powered by renewable energy sources including solar and wind power."
+      "default": "Our e-bikes use minimal electricity compared to cars and public transport."
+    },
+    {
+      "type": "header",
+      "content": "Materials Settings"
+    },
+    {
+      "type": "text",
+      "id": "materials_title",
+      "label": "Materials Title",
+      "default": "Sustainable Materials"
+    },
+    {
+      "type": "text",
+      "id": "materials_description",
+      "label": "Materials Description",
+      "default": "Built with eco-friendly components and recyclable materials."
     },
     {
       "type": "header",
@@ -324,19 +266,19 @@
       "type": "text",
       "id": "cta_title",
       "label": "CTA Title",
-      "default": "Join Us in Building a Sustainable Future"
+      "default": "Choose Sustainable Transportation"
     },
     {
       "type": "text",
       "id": "cta_description",
       "label": "CTA Description",
-      "default": "Every purchase supports our commitment to environmental responsibility and sustainable practices."
+      "default": "Every ride contributes to a cleaner environment and healthier cities."
     },
     {
       "type": "text",
       "id": "cta_button_text",
       "label": "CTA Button Text",
-      "default": "Learn More"
+      "default": "Shop E-Bikes"
     },
     {
       "type": "url",
