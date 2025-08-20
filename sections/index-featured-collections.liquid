@@ -7,19 +7,19 @@
     
     <!-- Collection Category Tabs -->
     <div class="collection-tabs">
-      <div class="tab-buttons">
-        {% for block in section.blocks %}
-          {% if block.type == 'collection_tab' %}
-            {% assign collection = block.settings.collection %}
-            {% if collection %}
-              <button class="tab-button{% if forloop.first %} active{% endif %}" 
-                      data-tab="{{ collection.handle }}">
-                {{ block.settings.tab_title }}
-              </button>
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-      </div>
+             <div class="tab-buttons">
+         {% for block in section.blocks %}
+           {% if block.type == 'collection_tab' %}
+             {% assign collection = block.settings.collection %}
+             {% if collection %}
+               <button class="tab-button{% if forloop.first %} active{% endif %}" 
+                       data-tab="{{ collection.handle }}">
+                 {{ collection.title }}
+               </button>
+             {% endif %}
+           {% endif %}
+         {% endfor %}
+       </div>
     </div>
     
     <!-- Collection Content -->
@@ -77,20 +77,20 @@
           <!-- No collection selected - show setup message -->
           <div class="collection-content{% if forloop.first %} active{% endif %}" 
                data-tab="setup-{{ forloop.index }}">
-            <div class="collection-setup">
-              <h3>Collection Not Set</h3>
-              <p>The "{{ block.settings.tab_title }}" tab doesn't have a collection selected.</p>
-              <div class="setup-instructions">
-                <p><strong>To fix this:</strong></p>
-                <ol>
-                  <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong></li>
-                  <li>Find this "Featured Collections" section</li>
-                  <li>Click on the "{{ block.settings.tab_title }}" block</li>
-                  <li>Select a collection from the "Collection" dropdown</li>
-                  <li>Save your changes</li>
-                </ol>
-              </div>
-            </div>
+                       <div class="collection-setup">
+             <h3>Collection Not Set</h3>
+             <p>This collection tab doesn't have a collection selected.</p>
+             <div class="setup-instructions">
+               <p><strong>To fix this:</strong></p>
+               <ol>
+                 <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong></li>
+                 <li>Find this "Featured Collections" section</li>
+                 <li>Click on the "Collection Tab" block</li>
+                 <li>Select a collection from the "Collection" dropdown</li>
+                 <li>Save your changes</li>
+               </ol>
+             </div>
+           </div>
           </div>
         {% endif %}
       {% endif %}
@@ -106,20 +106,20 @@
     {% endfor %}
     
     {% unless has_collections %}
-      <div class="no-collections-setup">
-        <h3>Featured Collections Setup</h3>
-        <p>No collections have been selected for this section.</p>
-        <div class="setup-instructions">
-          <p><strong>To set up featured collections:</strong></p>
-          <ol>
-            <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong></li>
-            <li>Find this "Featured Collections" section</li>
-            <li>Click on each tab block (FIRE, AIR, EARTH)</li>
-            <li>Select collections from the "Collection" dropdowns</li>
-            <li>Save your changes</li>
-          </ol>
-        </div>
-      </div>
+             <div class="no-collections-setup">
+         <h3>Featured Collections Setup</h3>
+         <p>No collections have been selected for this section.</p>
+         <div class="setup-instructions">
+           <p><strong>To set up featured collections:</strong></p>
+           <ol>
+             <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong></li>
+             <li>Find this "Featured Collections" section</li>
+             <li>Click on each "Collection Tab" block</li>
+             <li>Select collections from the "Collection" dropdowns</li>
+             <li>Save your changes</li>
+           </ol>
+         </div>
+       </div>
     {% endunless %}
   </div>
 </div>
@@ -523,7 +523,30 @@
   "presets": [
     {
       "name": "Featured Collections",
-      "category": "Content"
+      "category": "Content",
+      "blocks": [
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "Collection 1",
+            "collection": ""
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "Collection 2",
+            "collection": ""
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "Collection 3",
+            "collection": ""
+          }
+        }
+      ]
     }
   ]
 }
