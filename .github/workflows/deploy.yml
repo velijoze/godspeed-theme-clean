@@ -24,7 +24,7 @@ jobs:
       run: |
         echo "🚀 Starting Shopify theme deployment..."
         echo "Store: ${{ secrets.SHOPIFY_STORE_URL }}"
-        echo "Theme ID: 1855694"
+        echo "Theme ID: ${{ secrets.SHOPIFY_THEME_ID }}"
         
         # Deploy the theme (no --live to allow unpublished themes)
         shopify theme push \
