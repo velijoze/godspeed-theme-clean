@@ -26,12 +26,13 @@ jobs:
         echo "Store: ${{ secrets.SHOPIFY_STORE_URL }}"
         echo "Theme ID: ${{ secrets.SHOPIFY_THEME_ID }}"
         
-        # Deploy the theme with force flag for CI
+        # Deploy the theme with --force to skip prompts and --allow-live for the live theme
         shopify theme push \
           --store=${{ secrets.SHOPIFY_STORE_URL }} \
           --theme=${{ secrets.SHOPIFY_THEME_ID }} \
           --password=${{ secrets.SHOPIFY_ACCESS_TOKEN }} \
-          --force
+          --force \
+          --allow-live
         
         echo "✅ Theme deployment completed successfully!"
       env:
