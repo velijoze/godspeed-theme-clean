@@ -9,7 +9,26 @@
     <!-- Instagram Feed Options -->
     <div class="instagram-options">
       {% if section.settings.instagram_username %}
-        <!-- Option 1: Instagram Profile Link -->
+        <!-- Instagram Photo Grid -->
+        <div class="instagram-feed" id="instagram-feed-{{ section.id }}">
+          <div class="instagram-grid" data-username="{{ section.settings.instagram_username }}" data-count="{{ section.settings.photo_count | default: 6 }}">
+            <!-- Photos will be loaded here via JavaScript -->
+          </div>
+          
+          <!-- Loading State -->
+          <div class="instagram-loading">
+            <div class="loading-spinner"></div>
+            <p>Loading Instagram photos...</p>
+          </div>
+          
+          <!-- Error State -->
+          <div class="instagram-error" style="display: none;">
+            <p>Unable to load Instagram photos. Please check your username or try again later.</p>
+            <button class="retry-btn" onclick="loadInstagramFeed('{{ section.id }}')">Retry</button>
+          </div>
+        </div>
+        
+        <!-- Instagram Profile Link -->
         <div class="instagram-profile-link">
           <a href="https://www.instagram.com/{{ section.settings.instagram_username }}" 
              target="_blank" 
@@ -22,14 +41,14 @@
       {% endif %}
       
       {% if section.settings.instagram_embed_code %}
-        <!-- Option 2: Instagram Embed Code -->
+        <!-- Instagram Embed Code -->
         <div class="instagram-embed">
           {{ section.settings.instagram_embed_code }}
         </div>
       {% endif %}
       
       {% unless section.settings.instagram_username or section.settings.instagram_embed_code %}
-        <!-- Option 3: Fallback Social Media Showcase -->
+        <!-- Fallback Social Media Showcase -->
         <div class="social-showcase">
           <div class="social-grid">
             <div class="social-item">
@@ -101,6 +120,105 @@
   
   .instagram-options {
     margin: 2rem 0;
+  }
+  
+  .instagram-feed {
+    margin: 2rem 0;
+  }
+  
+  .instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .instagram-photo {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f0f0f0;
+    transition: transform 0.3s ease;
+  }
+  
+  .instagram-photo:hover {
+    transform: scale(1.05);
+  }
+  
+  .instagram-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  
+  .instagram-photo:hover img {
+    opacity: 0.9;
+  }
+  
+  .instagram-photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .instagram-photo:hover .instagram-photo-overlay {
+    opacity: 1;
+  }
+  
+  .instagram-photo-overlay .icon {
+    color: #ffffff;
+    font-size: 1.5rem;
+  }
+  
+  .instagram-loading {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #E1306C;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .instagram-error {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+  }
+  
+  .retry-btn {
+    background: #E1306C;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.3s ease;
+  }
+  
+  .retry-btn:hover {
+    background: #C13584;
   }
   
   .instagram-profile-link {
@@ -273,6 +391,11 @@
       padding: 2rem 0;
     }
     
+    .instagram-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+    
     .social-grid {
       grid-template-columns: 1fr;
       gap: 1.5rem;
@@ -296,7 +419,147 @@
       font-size: 0.9rem;
     }
   }
+  
+  @media (max-width: 480px) {
+    .instagram-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
+
+<script>
+  // Instagram Feed Loader
+  function loadInstagramFeed(sectionId) {
+    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+    if (!section) return;
+    
+    const grid = section.querySelector('.instagram-grid');
+    const loading = section.querySelector('.instagram-loading');
+    const error = section.querySelector('.instagram-error');
+    const username = grid.dataset.username;
+    const count = parseInt(grid.dataset.count) || 6;
+    
+    if (!username) return;
+    
+    // Show loading
+    loading.style.display = 'block';
+    error.style.display = 'none';
+    grid.innerHTML = '';
+    
+    // Method 1: Try using a working Instagram API endpoint
+    fetchInstagramPhotos(username, count, grid, loading, error, sectionId);
+  }
+  
+  function fetchInstagramPhotos(username, count, grid, loading, error, sectionId) {
+    // Use a more reliable Instagram data source
+    const apiUrl = `https://www.instagram.com/${username}/?__a=1&__d=1`;
+    
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Instagram API not accessible');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data && data.graphql && data.graphql.user && data.graphql.user.edge_owner_to_timeline_media) {
+          const media = data.graphql.user.edge_owner_to_timeline_media.edges;
+          renderInstagramPhotos(media.slice(0, count), grid, loading, error);
+        } else {
+          throw new Error('No media data found');
+        }
+      })
+      .catch(err => {
+        console.log('Instagram API failed, trying alternative method...');
+        // Fallback: Use a different approach
+        fetchInstagramPhotosAlternative(username, count, grid, loading, error, sectionId);
+      });
+  }
+  
+  function fetchInstagramPhotosAlternative(username, count, grid, loading, error, sectionId) {
+    // Alternative method: Use a different Instagram endpoint
+    const alternativeUrl = `https://www.instagram.com/${username}/feed/`;
+    
+    fetch(alternativeUrl)
+      .then(response => response.text())
+      .then(html => {
+        // Parse the HTML to extract photo data
+        const photoMatches = html.match(/https:\/\/[^"]*\.jpg[^"]*/g);
+        if (photoMatches && photoMatches.length > 0) {
+          const photos = photoMatches.slice(0, count).map(url => ({
+            node: {
+              thumbnail_src: url,
+              shortcode: Math.random().toString(36).substr(2, 9),
+              edge_media_to_caption: { edges: [] }
+            }
+          }));
+          renderInstagramPhotos(photos, grid, loading, error);
+        } else {
+          throw new Error('No photos found in HTML');
+        }
+      })
+      .catch(err => {
+        console.log('Alternative method failed, showing placeholders...');
+        renderInstagramPlaceholders(count, grid, loading, error);
+      });
+  }
+  
+  function renderInstagramPhotos(media, grid, loading, error) {
+    loading.style.display = 'none';
+    error.style.display = 'none';
+    
+    let html = '';
+    media.forEach(photo => {
+      const imageUrl = photo.node.thumbnail_src;
+      const postUrl = `https://www.instagram.com/p/${photo.node.shortcode}`;
+      const caption = photo.node.edge_media_to_caption.edges.length > 0 
+        ? photo.node.edge_media_to_caption.edges[0].node.text 
+        : '';
+      
+      html += `
+        <div class="instagram-photo">
+          <a href="${postUrl}" target="_blank" rel="noopener">
+            <img src="${imageUrl}" alt="${caption}" loading="lazy">
+            <div class="instagram-photo-overlay">
+              <span class="icon icon-instagram"></span>
+            </div>
+          </a>
+        </div>
+      `;
+    });
+    
+    grid.innerHTML = html;
+  }
+  
+  function renderInstagramPlaceholders(count, grid, loading, error) {
+    loading.style.display = 'none';
+    error.style.display = 'block';
+    
+    // Show placeholder grid
+    let html = '';
+    for (let i = 0; i < count; i++) {
+      html += `
+        <div class="instagram-photo">
+          <div style="background: #f0f0f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #999;">
+            <span class="icon icon-instagram"></span>
+          </div>
+        </div>
+      `;
+    }
+    grid.innerHTML = html;
+  }
+  
+  // Load Instagram feeds when DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    const instagramSections = document.querySelectorAll('[data-section-type="instagram"]');
+    instagramSections.forEach(section => {
+      const sectionId = section.getAttribute('data-section-id');
+      if (sectionId) {
+        loadInstagramFeed(sectionId);
+      }
+    });
+  });
+</script>
 
 {% schema %}
 {
@@ -316,19 +579,33 @@
     },
     {
       "type": "header",
-      "content": "Instagram Options"
+      "content": "Instagram Feed"
     },
     {
       "type": "text",
       "id": "instagram_username",
       "label": "Instagram Username",
-      "info": "Enter your Instagram username (without @) to show a follow button"
+      "info": "Enter your Instagram username (without @) to display photos",
+      "placeholder": "godspeed_bikes"
+    },
+    {
+      "type": "range",
+      "id": "photo_count",
+      "label": "Number of Photos",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Alternative Options"
     },
     {
       "type": "html",
       "id": "instagram_embed_code",
       "label": "Instagram Embed Code",
-      "info": "Paste Instagram embed code from instagram.com (recommended for reliable display)"
+      "info": "Paste Instagram embed code from instagram.com (most reliable method)"
     },
     {
       "type": "header",

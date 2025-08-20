@@ -235,12 +235,14 @@
         "type": "index-instagram",
         "settings": {
           "title": "Instagram",
-          "homepage_instagram_color": "homepage--white",
-          "username": "",
-          "instagram_photo_count": "6",
-          "instagram_grid_width_large": "large--one-sixth",
-          "instagram_grid_width_medium": "medium--one-third",
-          "instagram_grid_width_small": "small--one-third"
+          "subtitle": "Stay connected with our latest updates and community highlights",
+          "instagram_username": "",
+          "instagram_embed_code": "",
+          "show_cta": true,
+          "cta_title": "Join Our Community",
+          "cta_description": "Connect with fellow e-bike enthusiasts and stay updated with our latest products and news.",
+          "cta_button_text": "Get Started",
+          "cta_button_link": ""
         }
       },
       "bike-compare": {
@@ -330,14 +332,59 @@
           "title": "",
           "homepage_logos_bg_color": "homepage--light"
         }
+      },
+      "index_collection_grid_P3keXh": {
+        "type": "index-collection-grid",
+        "blocks": {
+          "featured_collection_GbnWz7": {
+            "type": "featured_collection",
+            "settings": {
+              "collection": "e-bikes-general",
+              "title": "Featured collection",
+              "link_text": "View products"
+            }
+          },
+          "featured_collection_Wrwwiy": {
+            "type": "featured_collection",
+            "settings": {
+              "collection": "e-bikes-mountain",
+              "title": "Featured collection",
+              "link_text": "View products"
+            }
+          }
+        },
+        "block_order": [
+          "featured_collection_GbnWz7",
+          "featured_collection_Wrwwiy"
+        ],
+        "name": "Collection list",
+        "settings": {
+          "title": "Collection list",
+          "grid": "2",
+          "homepage_collection_grid_color": "homepage--white",
+          "color": "homepage--white",
+          "button_style": "btn btn--clear btn--square uppercase",
+          "overlay": "image-overlay-15"
+        }
+      },
+      "index_blog_q6nFip": {
+        "type": "index-blog",
+        "name": "Blog posts",
+        "settings": {
+          "title": "News",
+          "homepage_blog": "news",
+          "homepage_blog_color": "homepage--white",
+          "homepage_blog_count": "2"
+        }
       }
     },
     "content_for_index": [
       "index-banner-image",
       "index-collection",
       "index-video",
-      "index-instagram",
-      "index_logos_e8qw4V"
+      "index_logos_e8qw4V",
+      "index_collection_grid_P3keXh",
+      "index_blog_q6nFip"
     ]
   },
   "presets": {
