@@ -1,0 +1,298 @@
+{% comment %}
+  AI Chat Assistant
+  Floating chat widget for customer support
+{% endcomment %}
+
+<div id="ai-chat-widget" class="ai-chat-widget">
+  <button id="ai-chat-toggle" class="ai-chat-toggle" aria-label="Open chat">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <span class="chat-badge" style="display: none;">1</span>
+  </button>
+  
+  <div id="ai-chat-container" class="ai-chat-container" style="display: none;">
+    <div class="ai-chat-header">
+      <h3>{{ section.settings.title | default: 'Chat Assistant' }}</h3>
+      <button id="ai-chat-close" class="ai-chat-close" aria-label="Close chat">×</button>
+    </div>
+    
+    <div class="ai-chat-messages" id="ai-chat-messages">
+      <div class="ai-message">
+        <p>{{ section.settings.welcome_message | default: 'Hello! How can I help you today?' }}</p>
+      </div>
+    </div>
+    
+    <div class="ai-chat-input">
+      <input type="text" id="ai-chat-input" placeholder="{{ section.settings.placeholder | default: 'Type your message...' }}" />
+      <button id="ai-chat-send" aria-label="Send message">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ai-chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
+  
+  .ai-chat-toggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: {{ section.settings.button_color | default: '#333' }};
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .chat-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ai-chat-container {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 350px;
+    height: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ai-chat-header {
+    padding: 15px;
+    background: {{ section.settings.header_color | default: '#f5f5f5' }};
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .ai-chat-header h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .ai-chat-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .ai-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+  }
+  
+  .ai-message, .user-message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    max-width: 80%;
+  }
+  
+  .ai-message {
+    background: #f0f0f0;
+    margin-right: auto;
+  }
+  
+  .user-message {
+    background: {{ section.settings.user_message_color | default: '#007bff' }};
+    color: white;
+    margin-left: auto;
+  }
+  
+  .ai-chat-input {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #eee;
+  }
+  
+  .ai-chat-input input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+  }
+  
+  .ai-chat-input button {
+    background: {{ section.settings.send_button_color | default: '#007bff' }};
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin-left: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @media (max-width: 480px) {
+    .ai-chat-container {
+      width: calc(100vw - 40px);
+      height: calc(100vh - 160px);
+      right: -10px;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.getElementById('ai-chat-toggle');
+  const container = document.getElementById('ai-chat-container');
+  const closeBtn = document.getElementById('ai-chat-close');
+  const input = document.getElementById('ai-chat-input');
+  const sendBtn = document.getElementById('ai-chat-send');
+  const messagesContainer = document.getElementById('ai-chat-messages');
+  
+  // Predefined responses for common questions
+  const responses = {
+    'hello': 'Hello! How can I help you today?',
+    'hi': 'Hi there! What can I assist you with?',
+    'price': 'Our e-bikes range from CHF 2,000 to CHF 8,000. Would you like to see specific models?',
+    'shipping': 'We offer free shipping on all e-bikes within Switzerland. Delivery takes 3-5 business days.',
+    'warranty': 'All our e-bikes come with a 2-year warranty covering parts and labor.',
+    'test ride': 'Yes! You can book a test ride at any of our locations. Visit /pages/test-ride to schedule.',
+    'financing': 'We offer 0% financing through HeyLight for up to 36 months. Check /pages/financing for details.',
+    'size': 'Use our size calculator at /pages/size-calculator to find your perfect fit!',
+    'compare': 'You can compare up to 3 bikes at /pages/compare',
+    'default': 'I understand your question. For detailed assistance, please call us at +41 44 123 45 67 or email support@godspeed.ch'
+  };
+  
+  toggle.addEventListener('click', function() {
+    container.style.display = container.style.display === 'none' ? 'flex' : 'none';
+  });
+  
+  closeBtn.addEventListener('click', function() {
+    container.style.display = 'none';
+  });
+  
+  function sendMessage() {
+    const message = input.value.trim();
+    if (!message) return;
+    
+    // Add user message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'user-message';
+    userMsg.innerHTML = `<p>${message}</p>`;
+    messagesContainer.appendChild(userMsg);
+    
+    // Clear input
+    input.value = '';
+    
+    // Find response
+    let response = responses.default;
+    for (let key in responses) {
+      if (message.toLowerCase().includes(key)) {
+        response = responses[key];
+        break;
+      }
+    }
+    
+    // Add AI response after delay
+    setTimeout(() => {
+      const aiMsg = document.createElement('div');
+      aiMsg.className = 'ai-message';
+      aiMsg.innerHTML = `<p>${response}</p>`;
+      messagesContainer.appendChild(aiMsg);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 500);
+    
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+  
+  sendBtn.addEventListener('click', sendMessage);
+  input.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') sendMessage();
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "AI Chat Assistant",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Chat Title",
+      "default": "Chat Assistant"
+    },
+    {
+      "type": "textarea",
+      "id": "welcome_message",
+      "label": "Welcome Message",
+      "default": "Hello! I'm here to help you find the perfect e-bike. Ask me anything!"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Input Placeholder",
+      "default": "Type your message..."
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Chat Button Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "header_color",
+      "label": "Header Background Color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "user_message_color",
+      "label": "User Message Color",
+      "default": "#007bff"
+    },
+    {
+      "type": "color",
+      "id": "send_button_color",
+      "label": "Send Button Color",
+      "default": "#007bff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "AI Chat Assistant",
+      "category": "Customer Support"
+    }
+  ]
+}
+{% endschema %}
