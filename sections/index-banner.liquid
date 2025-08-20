@@ -1,0 +1,183 @@
+<div class="banner-section" data-section-id="{{ section.id }}" data-section-type="banner">
+  <div class="wrapper">
+    <div class="banner-grid">
+      <!-- FREE RETURNS -->
+      <div class="banner-column">
+        <div class="banner-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 4C12.95 4 4 12.95 4 24C4 35.05 12.95 44 24 44C35.05 44 44 35.05 44 24C44 12.95 35.05 4 24 4ZM24 40C15.18 40 8 32.82 8 24C8 15.18 15.18 8 24 8C32.82 8 40 15.18 40 24C40 32.82 32.82 40 24 40Z" fill="#FFA07A"/>
+            <path d="M32 16L24 24L16 16L14 18L24 28L34 18L32 16Z" fill="#FFA07A"/>
+            <path d="M24 28C22.9 28 22 27.1 22 26C22 24.9 22.9 24 24 24C25.1 24 26 24.9 26 26C26 27.1 25.1 28 24 28Z" fill="#FFA07A"/>
+          </svg>
+        </div>
+        <h3 class="banner-title">{{ section.settings.returns_title | default: 'FREE RETURNS' }}</h3>
+        <p class="banner-description">{{ section.settings.returns_description | default: 'Returns within 30 days receive a full refund.' }}</p>
+      </div>
+      
+      <!-- WORLDWIDE SHIPPING -->
+      <div class="banner-column">
+        <div class="banner-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 16H32V8C32 5.79 30.21 4 28 4H20C17.79 4 16 5.79 16 8V16H8C5.79 16 4 17.79 4 20V36C4 38.21 5.79 40 8 40H40C42.21 40 44 38.21 44 36V20C44 17.79 42.21 16 40 16ZM20 8H28V16H20V8ZM40 36H8V20H40V36Z" fill="#87CEEB"/>
+            <path d="M24 24C21.79 24 20 25.79 20 28C20 30.21 21.79 32 24 32C26.21 32 28 30.21 28 28C28 25.79 26.21 24 24 24ZM24 30C22.9 30 22 29.1 22 28C22 26.9 22.9 26 24 26C25.1 26 26 26.9 26 28C26 29.1 25.1 30 24 30Z" fill="#87CEEB"/>
+            <circle cx="24" cy="28" r="2" fill="#87CEEB"/>
+          </svg>
+        </div>
+        <h3 class="banner-title">{{ section.settings.shipping_title | default: 'WORLDWIDE SHIPPING' }}</h3>
+        <p class="banner-description">{{ section.settings.shipping_description | default: 'Ship anywhere, rates available at checkout.' }}</p>
+      </div>
+      
+      <!-- 24/7 SUPPORT -->
+      <div class="banner-column">
+        <div class="banner-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 4C12.95 4 4 12.95 4 24C4 35.05 12.95 44 24 44C35.05 44 44 35.05 44 24C44 12.95 35.05 4 24 4ZM24 40C15.18 40 8 32.82 8 24C8 15.18 15.18 8 24 8C32.82 8 40 15.18 40 24C40 32.82 32.82 40 24 40Z" fill="#98FB98"/>
+            <path d="M24 12C17.37 12 12 17.37 12 24C12 30.63 17.37 36 24 36C30.63 36 36 30.63 36 24C36 17.37 30.63 12 24 12ZM24 32C19.59 32 16 28.41 16 24C16 19.59 19.59 16 24 16C28.41 16 32 19.59 32 24C32 28.41 28.41 32 24 32Z" fill="#98FB98"/>
+            <path d="M24 20C21.79 20 20 21.79 20 24C20 26.21 21.79 28 24 28C26.21 28 28 26.21 28 24C28 21.79 26.21 20 24 20ZM24 26C22.9 26 22 25.1 22 24C22 22.9 22.9 22 24 22C25.1 22 26 22.9 26 24C26 25.1 25.1 26 24 26Z" fill="#98FB98"/>
+            <circle cx="24" cy="24" r="2" fill="#98FB98"/>
+          </svg>
+        </div>
+        <h3 class="banner-title">{{ section.settings.support_title | default: '24/7 SUPPORT' }}</h3>
+        <p class="banner-description">{{ section.settings.support_description | default: 'Call us anytime at 1(800) 555-1234.' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .banner-section {
+    padding: 3rem 0;
+    background: #f8f9fa;
+  }
+  
+  .banner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+  
+  .banner-column {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .banner-icon {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .banner-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .banner-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .banner-description {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    margin: 0;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .banner-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .banner-column {
+      padding: 0.5rem;
+    }
+    
+    .banner-title {
+      font-size: 1rem;
+    }
+    
+    .banner-description {
+      font-size: 0.85rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .banner-section {
+      padding: 2rem 0;
+    }
+    
+    .banner-grid {
+      gap: 1rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Banner Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Returns Settings"
+    },
+    {
+      "type": "text",
+      "id": "returns_title",
+      "label": "Returns Title",
+      "default": "FREE RETURNS"
+    },
+    {
+      "type": "text",
+      "id": "returns_description",
+      "label": "Returns Description",
+      "default": "Returns within 30 days receive a full refund."
+    },
+    {
+      "type": "header",
+      "content": "Shipping Settings"
+    },
+    {
+      "type": "text",
+      "id": "shipping_title",
+      "label": "Shipping Title",
+      "default": "WORLDWIDE SHIPPING"
+    },
+    {
+      "type": "text",
+      "id": "shipping_description",
+      "label": "Shipping Description",
+      "default": "Ship anywhere, rates available at checkout."
+    },
+    {
+      "type": "header",
+      "content": "Support Settings"
+    },
+    {
+      "type": "text",
+      "id": "support_title",
+      "label": "Support Title",
+      "default": "24/7 SUPPORT"
+    },
+    {
+      "type": "text",
+      "id": "support_description",
+      "label": "Support Description",
+      "default": "Call us anytime at 1(800) 555-1234."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner Section",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}

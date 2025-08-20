@@ -1,0 +1,450 @@
+<div class="featured-collections-section" data-section-id="{{ section.id }}" data-section-type="featured-collections">
+  <div class="wrapper">
+    <div class="section-header text-center">
+      <h2 class="section-header__title">{{ section.settings.title | default: 'FEATURED COLLECTIONS' }}</h2>
+      <div class="section-header__divider"></div>
+    </div>
+    
+    <!-- Collection Category Tabs -->
+    <div class="collection-tabs">
+      <div class="tab-buttons">
+        {% for block in section.blocks %}
+          {% if block.type == 'collection_tab' %}
+            <button class="tab-button{% if forloop.first %} active{% endif %}" 
+                    data-tab="{{ block.settings.collection_handle }}">
+              {{ block.settings.tab_title }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    
+    <!-- Collection Content -->
+    {% for block in section.blocks %}
+      {% if block.type == 'collection_tab' %}
+        {% assign collection = collections[block.settings.collection_handle] %}
+        <div class="collection-content{% if forloop.first %} active{% endif %}" 
+             data-tab="{{ block.settings.collection_handle }}">
+          <div class="collection-grid">
+            {% if collection.products.size > 0 %}
+              {% for product in collection.products limit: section.settings.products_per_tab %}
+                <div class="collection-product">
+                  <div class="product-image-wrapper">
+                    <a href="{{ product.url }}" class="product-image-link">
+                      <img src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}" 
+                           alt="{{ product.title | escape }}"
+                           class="product-image"
+                           loading="lazy">
+                      {% unless product.available %}
+                        <div class="sold-out-badge">SOLD OUT</div>
+                      {% endunless %}
+                    </a>
+                    <div class="product-actions">
+                      <button class="quick-view-btn" 
+                              data-product-id="{{ product.id }}"
+                              data-product-handle="{{ product.handle }}">
+                        Quick View
+                      </button>
+                    </div>
+                  </div>
+                  <div class="product-info">
+                    <h3 class="product-title">
+                      <a href="{{ product.url }}">{{ product.title }}</a>
+                    </h3>
+                    <div class="product-price">
+                      {% if product.compare_at_price > product.price %}
+                        <span class="price-sale">{{ product.price | money }}</span>
+                        <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                      {% else %}
+                        <span class="price-regular">{{ product.price | money }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="no-products">
+                <p>No products found in this collection.</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Quick View Modal -->
+<div id="quick-view-modal" class="quick-view-modal" style="display: none;">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <button class="modal-close">&times;</button>
+    <div class="quick-view-content">
+      <!-- Content will be loaded here -->
+    </div>
+  </div>
+</div>
+
+<style>
+  .featured-collections-section {
+    padding: 4rem 0;
+    background: #ffffff;
+  }
+  
+  .section-header__divider {
+    width: 60px;
+    height: 2px;
+    background: #000000;
+    margin: 1rem auto;
+  }
+  
+  .collection-tabs {
+    margin: 3rem 0;
+    text-align: center;
+  }
+  
+  .tab-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .tab-button {
+    background: transparent;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 25px;
+  }
+  
+  .tab-button:hover,
+  .tab-button.active {
+    background: #f0f0f0;
+    color: #000;
+  }
+  
+  .collection-content {
+    display: none;
+  }
+  
+  .collection-content.active {
+    display: block;
+  }
+  
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .collection-product {
+    text-align: center;
+  }
+  
+  .product-image-wrapper {
+    position: relative;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-image-wrapper:hover .product-image {
+    transform: scale(1.05);
+  }
+  
+  .sold-out-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #f0f0f0;
+    color: #000;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 4px;
+  }
+  
+  .product-actions {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .product-image-wrapper:hover .product-actions {
+    opacity: 1;
+  }
+  
+  .quick-view-btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+  }
+  
+  .quick-view-btn:hover {
+    background: #333;
+  }
+  
+  .product-title {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  .product-title a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .product-title a:hover {
+    color: #000;
+  }
+  
+  .product-price {
+    margin-top: 0.5rem;
+  }
+  
+  .price-sale {
+    color: #e74c3c;
+    font-weight: 600;
+  }
+  
+  .price-compare {
+    color: #999;
+    text-decoration: line-through;
+    margin-left: 0.5rem;
+  }
+  
+  .price-regular {
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Quick View Modal */
+  .quick-view-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
+  
+  .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+  }
+  
+  .modal-close:hover {
+    color: #000;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .tab-buttons {
+      gap: 1rem;
+    }
+    
+    .tab-button {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .collection-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Tab functionality
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const collectionContents = document.querySelectorAll('.collection-content');
+    
+    tabButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const targetTab = this.getAttribute('data-tab');
+        
+        // Remove active class from all buttons and contents
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        collectionContents.forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding content
+        this.classList.add('active');
+        document.querySelector(`[data-tab="${targetTab}"]`).classList.add('active');
+      });
+    });
+    
+    // Quick view functionality
+    const quickViewButtons = document.querySelectorAll('.quick-view-btn');
+    const modal = document.getElementById('quick-view-modal');
+    const modalContent = modal.querySelector('.quick-view-content');
+    const modalClose = modal.querySelector('.modal-close');
+    const modalOverlay = modal.querySelector('.modal-overlay');
+    
+    quickViewButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const productHandle = this.getAttribute('data-product-handle');
+        loadQuickView(productHandle);
+        modal.style.display = 'block';
+      });
+    });
+    
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+    
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+    
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+    
+    function loadQuickView(productHandle) {
+      // Load product data for quick view
+      fetch(`/products/${productHandle}.js`)
+        .then(response => response.json())
+        .then(product => {
+          modalContent.innerHTML = `
+            <div class="quick-view-product">
+              <div class="quick-view-image">
+                <img src="${product.featured_image}" alt="${product.title}">
+              </div>
+              <div class="quick-view-details">
+                <h3>${product.title}</h3>
+                <p class="price">${formatMoney(product.price)}</p>
+                <div class="description">${product.description.substring(0, 200)}...</div>
+                <a href="/products/${product.handle}" class="btn btn--primary">View Full Product</a>
+              </div>
+            </div>
+          `;
+        })
+        .catch(error => {
+          modalContent.innerHTML = '<p>Error loading product details.</p>';
+        });
+    }
+    
+    function formatMoney(cents) {
+      return '$' + (cents / 100).toFixed(2);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Featured Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "FEATURED COLLECTIONS"
+    },
+    {
+      "type": "range",
+      "id": "products_per_tab",
+      "label": "Products per tab",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_tab",
+      "name": "Collection Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Title",
+          "default": "FIRE"
+        },
+        {
+          "type": "collection",
+          "id": "collection_handle",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collections",
+      "blocks": [
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "FIRE"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "AIR"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "EARTH"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
