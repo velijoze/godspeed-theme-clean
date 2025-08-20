@@ -1,9 +1,7 @@
 <!-- /templates/page.ebike-toolkit.liquid -->
 {% comment %}
-
-  E‑Bike Toolkit page template
-  Select "page.ebike-toolkit" in the admin to use this template.
-
+  This page template is for the e-bike toolkit overview.
+  Be sure to select page.ebike-toolkit as the template from the admin page to have this template take effect.
 {% endcomment %}
 
 <div class="wrapper page-margin">
@@ -13,10 +11,163 @@
       <div class="rte">
         {{ page.content }}
       </div>
-      {% section 'bike-compare' %}
+      
+      <!-- E-Bike Toolkit Overview -->
+      <div class="ebike-toolkit-overview">
+        <div class="toolkit-intro">
+          <h3>Professional E-Bike Tools</h3>
+          <p>Access our complete suite of e-bike tools and calculators to help you make informed decisions.</p>
+        </div>
+        
+        <!-- Tool Grid -->
+        <div class="toolkit-grid">
+          <!-- Bike Comparison Tool -->
+          <div class="toolkit-tool-card">
+            <div class="tool-icon">🔍</div>
+            <h4>Bike Comparison</h4>
+            <p>Compare e-bikes side-by-side with detailed specifications and insights.</p>
+            <a href="/pages/bike-comparison" class="btn btn--primary">Use Tool</a>
+          </div>
+          
+          <!-- Size Calculator Tool -->
+          <div class="toolkit-tool-card">
+            <div class="tool-icon">📏</div>
+            <h4>Size Calculator</h4>
+            <p>Find your perfect e-bike size based on your measurements and riding style.</p>
+            <a href="/pages/size-calculator" class="btn btn--primary">Use Tool</a>
+          </div>
+          
+          <!-- Financing Calculator Tool -->
+          <div class="toolkit-tool-card">
+            <div class="tool-icon">💰</div>
+            <h4>Financing Calculator</h4>
+            <p>Calculate monthly payments and explore financing options for your e-bike.</p>
+            <a href="/pages/financing-calculator" class="btn btn--primary">Use Tool</a>
+          </div>
+          
+          <!-- Range Calculator Tool -->
+          <div class="toolkit-tool-card">
+            <div class="tool-icon">🔋</div>
+            <h4>Range Calculator</h4>
+            <p>Estimate your e-bike's range based on terrain, weight, and riding conditions.</p>
+            <a href="/pages/range-calculator" class="btn btn--primary">Use Tool</a>
+          </div>
+          
+          <!-- Test Ride Booking Tool -->
+          <div class="toolkit-tool-card">
+            <div class="tool-icon">🚴</div>
+            <h4>Test Ride Booking</h4>
+            <p>Schedule a test ride with our professional team at your convenience.</p>
+            <a href="/pages/test-ride-booking" class="btn btn--primary">Book Now</a>
+          </div>
+          
+          <!-- Service Booking Tool -->
+          <div class="toolkit-tool-card">
+            <div class="tool-icon">🔧</div>
+            <h4>Service Booking</h4>
+            <p>Book maintenance and repair services for your e-bike with our experts.</p>
+            <a href="/pages/service-booking" class="btn btn--primary">Book Service</a>
+          </div>
+          
+          <!-- Wishlist Manager Tool -->
+          <div class="toolkit-tool-card">
+            <div class="tool-icon">❤️</div>
+            <h4>Wishlist Manager</h4>
+            <p>Save and organize your favorite e-bikes for future reference.</p>
+            <a href="/pages/wishlist-manager" class="btn btn--primary">Manage List</a>
+          </div>
+          
+          <!-- Dashboard Management Tool -->
+          <div class="toolkit-tool-card">
+            <div class="tool-icon">📊</div>
+            <h4>Dashboard Management</h4>
+            <p>Track your e-bike usage, maintenance schedule, and performance metrics.</p>
+            <a href="/pages/dashboard-management" class="btn btn--primary">View Dashboard</a>
+          </div>
+          
+          <!-- Blog Generator Tool -->
+          <div class="toolkit-tool-card">
+            <div class="tool-icon">✍️</div>
+            <h4>Blog Generator</h4>
+            <p>Generate engaging content about e-bikes, maintenance tips, and riding guides.</p>
+            <a href="/pages/blog-generator" class="btn btn--primary">Generate Content</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  
 </div>
+
+<!-- Custom styles for e-bike toolkit overview page -->
+<style>
+  .ebike-toolkit-overview {
+    margin: 3rem 0;
+    text-align: center;
+  }
+  
+  .toolkit-intro h3 {
+    font-size: 2rem;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+  }
+  
+  .toolkit-intro p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  
+  .toolkit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .toolkit-tool-card {
+    background: #ffffff;
+    border: 2px solid #f0f0f0;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  .toolkit-tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    border-color: #007bff;
+  }
+  
+  .tool-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .toolkit-tool-card h4 {
+    font-size: 1.25rem;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+  }
+  
+  .toolkit-tool-card p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .toolkit-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .toolkit-tool-card {
+      padding: 1.5rem;
+    }
+  }
+</style>
 
 

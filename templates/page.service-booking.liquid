@@ -1,0 +1,386 @@
+<!-- /templates/page.service-booking.liquid -->
+{% comment %}
+  This page template is for the service booking tool.
+  Be sure to select page.service-booking as the template from the admin page to have this template take effect.
+{% endcomment %}
+<div class="wrapper page-margin">
+  <div class="grid">
+    <div class="grid__item large--two-thirds push--large--one-sixth">
+      <h1 class="text-center h2">{{ page.title }}</h1>
+      <div class="rte">
+        {{ page.content }}
+      </div>
+      
+      <!-- Service Booking Form -->
+      <div class="service-booking-container">
+        <div class="booking-intro">
+          <h3>Book Your Service</h3>
+          <p>Keep your e-bike running smoothly with our professional service. Schedule maintenance, repairs, or upgrades.</p>
+        </div>
+        
+        <form class="service-booking-form" id="service-booking-form">
+          <div class="form-section">
+            <h4>Customer Information</h4>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name *</label>
+                <input type="text" id="first-name" name="first-name" required>
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name *</label>
+                <input type="text" id="last-name" name="last-name" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone *</label>
+                <input type="tel" id="phone" name="phone" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h4>Bike Information</h4>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="bike-brand">Bike Brand</label>
+                <input type="text" id="bike-brand" name="bike-brand" placeholder="e.g., Godspeed, Bosch, etc.">
+              </div>
+              <div class="form-group">
+                <label for="bike-model">Bike Model</label>
+                <input type="text" id="bike-model" name="bike-model" placeholder="e.g., City Comfort Pro">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="bike-age">Bike Age</label>
+                <select id="bike-age" name="bike-age">
+                  <option value="">Select age</option>
+                  <option value="under-1">Under 1 year</option>
+                  <option value="1-2">1-2 years</option>
+                  <option value="2-5">2-5 years</option>
+                  <option value="5-10">5-10 years</option>
+                  <option value="over-10">Over 10 years</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="last-service">Last Service Date</label>
+                <input type="date" id="last-service" name="last-service">
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h4>Service Details</h4>
+            <div class="form-group">
+              <label for="service-type">Service Type *</label>
+              <select id="service-type" name="service-type" required>
+                <option value="">Select service type</option>
+                <option value="maintenance">Regular Maintenance</option>
+                <option value="repair">Repair</option>
+                <option value="upgrade">Upgrade/Modification</option>
+                <option value="diagnostic">Diagnostic Check</option>
+                <option value="battery">Battery Service</option>
+                <option value="motor">Motor Service</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="service-description">Service Description *</label>
+              <textarea id="service-description" name="service-description" rows="4" placeholder="Please describe the issue or service needed..." required></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="urgency">Urgency Level</label>
+                <select id="urgency" name="urgency">
+                  <option value="routine">Routine - No rush</option>
+                  <option value="soon">Soon - Within a week</option>
+                  <option value="urgent">Urgent - Within 2-3 days</option>
+                  <option value="emergency">Emergency - Same day</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="estimated-cost">Estimated Budget</label>
+                <select id="estimated-cost" name="estimated-cost">
+                  <option value="">Select budget range</option>
+                  <option value="under-100">Under $100</option>
+                  <option value="100-300">$100 - $300</option>
+                  <option value="300-500">$300 - $500</option>
+                  <option value="500-1000">$500 - $1,000</option>
+                  <option value="over-1000">Over $1,000</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h4>Appointment Preferences</h4>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="preferred-date">Preferred Date *</label>
+                <input type="date" id="preferred-date" name="preferred-date" required>
+              </div>
+              <div class="form-group">
+                <label for="preferred-time">Preferred Time *</label>
+                <select id="preferred-time" name="preferred-time" required>
+                  <option value="">Select time</option>
+                  <option value="09:00">9:00 AM</option>
+                  <option value="10:00">10:00 AM</option>
+                  <option value="11:00">11:00 AM</option>
+                  <option value="12:00">12:00 PM</option>
+                  <option value="13:00">1:00 PM</option>
+                  <option value="14:00">2:00 PM</option>
+                  <option value="15:00">3:00 PM</option>
+                  <option value="16:00">4:00 PM</option>
+                  <option value="17:00">5:00 PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="dropoff-preference">Drop-off Preference</label>
+              <select id="dropoff-preference" name="dropoff-preference">
+                <option value="">Select preference</option>
+                <option value="morning">Morning drop-off</option>
+                <option value="afternoon">Afternoon drop-off</option>
+                <option value="evening">Evening drop-off</option>
+                <option value="flexible">Flexible</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h4>Additional Information</h4>
+            <div class="form-group">
+              <label for="special-requirements">Special Requirements</label>
+              <textarea id="special-requirements" name="special-requirements" rows="3" placeholder="Any special needs, accessibility requirements, or additional notes..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="how-heard">How did you hear about us?</label>
+              <select id="how-heard" name="how-heard">
+                <option value="">Select option</option>
+                <option value="google">Google Search</option>
+                <option value="social-media">Social Media</option>
+                <option value="friend">Friend/Family</option>
+                <option value="advertisement">Advertisement</option>
+                <option value="existing-customer">Existing Customer</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <div class="form-group checkbox-group">
+              <input type="checkbox" id="terms-agreement" name="terms-agreement" required>
+              <label for="terms-agreement">I agree to the <a href="/pages/terms" target="_blank">terms and conditions</a> and <a href="/pages/privacy" target="_blank">privacy policy</a> *</label>
+            </div>
+            <div class="form-group checkbox-group">
+              <input type="checkbox" id="marketing-consent" name="marketing-consent">
+              <label for="marketing-consent">I would like to receive updates about new products and special offers</label>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn--primary btn--large">Book Service</button>
+        </form>
+        
+        <div id="service-booking-confirmation" class="service-booking-confirmation" style="display: none;">
+          <h4>Service Booking Confirmed!</h4>
+          <p>Your service appointment has been scheduled successfully. We'll contact you within 24 hours to confirm details.</p>
+          <div class="confirmation-details">
+            <p><strong>Reference Number:</strong> <span id="service-reference-number">SB-2024-001</span></p>
+            <p><strong>Next Steps:</strong></p>
+            <ul>
+              <li>Check your email for confirmation details</li>
+              <li>We'll call to confirm your appointment</li>
+              <li>Please bring your bike and any relevant documentation</li>
+              <li>Arrive 10 minutes before your scheduled time</li>
+              <li>We'll provide a detailed quote before starting work</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .service-booking-container {
+    margin: 3rem 0;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 2px solid #f0f0f0;
+  }
+  
+  .booking-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .booking-intro h3 {
+    font-size: 1.75rem;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+  }
+  
+  .booking-intro p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+  
+  .form-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .form-section h4 {
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group {
+    flex: 1;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: #ffffff;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  }
+  
+  .checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-top: 0.25rem;
+  }
+  
+  .checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+    line-height: 1.4;
+  }
+  
+  .btn--large {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+  
+  .service-booking-confirmation {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: #d4edda;
+    border-radius: 12px;
+    border: 2px solid #c3e6cb;
+    text-align: center;
+  }
+  
+  .service-booking-confirmation h4 {
+    color: #155724;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .service-booking-confirmation p {
+    color: #155724;
+    margin-bottom: 1.5rem;
+  }
+  
+  .confirmation-details {
+    text-align: left;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .confirmation-details p {
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .confirmation-details ul {
+    margin: 1rem 0 0 1.5rem;
+    color: #2c2c2c;
+  }
+  
+  .confirmation-details li {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .service-booking-container {
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .form-row {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+</style>
+
+<script>
+  document.getElementById('service-booking-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Generate reference number
+    const refNumber = 'SB-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+    document.getElementById('service-reference-number').textContent = refNumber;
+    
+    // Hide form and show confirmation
+    document.getElementById('service-booking-form').style.display = 'none';
+    document.getElementById('service-booking-confirmation').style.display = 'block';
+    
+    // Scroll to confirmation
+    document.getElementById('service-booking-confirmation').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>

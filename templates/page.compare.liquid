@@ -1,9 +1,7 @@
 <!-- /templates/page.compare.liquid -->
 {% comment %}
-
-  Bike Comparison page template
-  Select "page.compare" in the admin to use this template.
-
+  This page template is for the bike comparison tool.
+  Be sure to select page.compare as the template from the admin page to have this template take effect.
 {% endcomment %}
 
 <div class="wrapper page-margin">
@@ -13,10 +11,519 @@
       <div class="rte">
         {{ page.content }}
       </div>
-      {% section 'bike-compare' %}
+      
+      <!-- Bike Comparison Tool -->
+      <div class="bike-comparison-container">
+        <div class="comparison-intro">
+          <h3>Compare E-Bikes Side by Side</h3>
+          <p>Select up to 4 e-bikes to compare their specifications, features, and performance.</p>
+        </div>
+        
+        <!-- Bike Selection -->
+        <div class="bike-selection">
+          <div class="selection-row">
+            <div class="bike-selector">
+              <label for="bike1">Bike 1</label>
+              <select id="bike1" class="bike-dropdown" onchange="updateComparison()">
+                <option value="">Select a bike</option>
+                <option value="city-comfort">City Comfort Pro - $2,499</option>
+                <option value="trekking-sport">Trekking Sport X1 - $3,299</option>
+                <option value="mountain-trail">Mountain Trail Pro - $4,799</option>
+                <option value="cargo-family">Cargo Family+ - $3,899</option>
+              </select>
+            </div>
+            
+            <div class="bike-selector">
+              <label for="bike2">Bike 2</label>
+              <select id="bike2" class="bike-dropdown" onchange="updateComparison()">
+                <option value="">Select a bike</option>
+                <option value="city-comfort">City Comfort Pro - $2,499</option>
+                <option value="trekking-sport">Trekking Sport X1 - $3,299</option>
+                <option value="mountain-trail">Mountain Trail Pro - $4,799</option>
+                <option value="cargo-family">Cargo Family+ - $3,899</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="selection-row">
+            <div class="bike-selector">
+              <label for="bike3">Bike 3</label>
+              <select id="bike3" class="bike-dropdown" onchange="updateComparison()">
+                <option value="">Select a bike</option>
+                <option value="city-comfort">City Comfort Pro - $2,499</option>
+                <option value="trekking-sport">Trekking Sport X1 - $3,299</option>
+                <option value="mountain-trail">Mountain Trail Pro - $4,799</option>
+                <option value="cargo-family">Cargo Family+ - $3,899</option>
+              </select>
+            </div>
+            
+            <div class="bike-selector">
+              <label for="bike4">Bike 4</label>
+              <select id="bike4" class="bike-dropdown" onchange="updateComparison()">
+                <option value="">Select a bike</option>
+                <option value="city-comfort">City Comfort Pro - $2,499</option>
+                <option value="trekking-sport">Trekking Sport X1 - $3,299</option>
+                <option value="mountain-trail">Mountain Trail Pro - $4,799</option>
+                <option value="cargo-family">Cargo Family+ - $3,899</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Comparison Table -->
+        <div class="comparison-table-container">
+          <table class="comparison-table" id="comparisonTable">
+            <thead>
+              <tr>
+                <th class="feature-column">Feature</th>
+                <th class="bike-column" id="bike1-header">Bike 1</th>
+                <th class="bike-column" id="bike2-header">Bike 2</th>
+                <th class="bike-column" id="bike3-header">Bike 3</th>
+                <th class="bike-column" id="bike4-header">Bike 4</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="feature-name">Price</td>
+                <td class="bike-data" id="bike1-price">-</td>
+                <td class="bike-data" id="bike2-price">-</td>
+                <td class="bike-data" id="bike3-price">-</td>
+                <td class="bike-data" id="bike4-price">-</td>
+              </tr>
+              <tr>
+                <td class="feature-name">Motor</td>
+                <td class="bike-data" id="bike1-motor">-</td>
+                <td class="bike-data" id="bike2-motor">-</td>
+                <td class="bike-data" id="bike3-motor">-</td>
+                <td class="bike-data" id="bike4-motor">-</td>
+              </tr>
+              <tr>
+                <td class="feature-name">Battery</td>
+                <td class="bike-data" id="bike1-battery">-</td>
+                <td class="bike-data" id="bike2-battery">-</td>
+                <td class="bike-data" id="bike3-battery">-</td>
+                <td class="bike-data" id="bike4-battery">-</td>
+              </tr>
+              <tr>
+                <td class="feature-name">Range</td>
+                <td class="bike-data" id="bike1-range">-</td>
+                <td class="bike-data" id="bike2-range">-</td>
+                <td class="bike-data" id="bike3-range">-</td>
+                <td class="bike-data" id="bike4-range">-</td>
+              </tr>
+              <tr>
+                <td class="feature-name">Weight</td>
+                <td class="bike-data" id="bike1-weight">-</td>
+                <td class="bike-data" id="bike2-weight">-</td>
+                <td class="bike-data" id="bike3-weight">-</td>
+                <td class="bike-data" id="bike4-weight">-</td>
+              </tr>
+              <tr>
+                <td class="feature-name">Frame</td>
+                <td class="bike-data" id="bike1-frame">-</td>
+                <td class="bike-data" id="bike2-frame">-</td>
+                <td class="bike-data" id="bike3-frame">-</td>
+                <td class="bike-data" id="bike4-frame">-</td>
+              </tr>
+              <tr>
+                <td class="feature-name">Gears</td>
+                <td class="bike-data" id="bike1-gears">-</td>
+                <td class="bike-data" id="bike2-gears">-</td>
+                <td class="bike-data" id="bike3-gears">-</td>
+                <td class="bike-data" id="bike4-gears">-</td>
+              </tr>
+              <tr>
+                <td class="feature-name">Brakes</td>
+                <td class="bike-data" id="bike1-brakes">-</td>
+                <td class="bike-data" id="bike2-brakes">-</td>
+                <td class="bike-data" id="bike3-brakes">-</td>
+                <td class="bike-data" id="bike4-brakes">-</td>
+              </tr>
+              <tr>
+                <td class="feature-name">Suspension</td>
+                <td class="bike-data" id="bike1-suspension">-</td>
+                <td class="bike-data" id="bike2-suspension">-</td>
+                <td class="bike-data" id="bike3-suspension">-</td>
+                <td class="bike-data" id="bike4-suspension">-</td>
+              </tr>
+              <tr>
+                <td class="feature-name">Lights</td>
+                <td class="bike-data" id="bike1-lights">-</td>
+                <td class="bike-data" id="bike2-lights">-</td>
+                <td class="bike-data" id="bike3-lights">-</td>
+                <td class="bike-data" id="bike4-lights">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="comparison-actions">
+          <button class="btn btn--secondary" onclick="clearComparison()">Clear All</button>
+          <button class="btn btn--primary" onclick="exportComparison()">Export Comparison</button>
+        </div>
+      </div>
     </div>
   </div>
-  
 </div>
+
+<!-- Custom styles for bike comparison page -->
+<style>
+  .bike-comparison-container {
+    margin: 3rem 0;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 2px solid #f0f0f0;
+  }
+  
+  .comparison-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .comparison-intro h3 {
+    font-size: 1.75rem;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+  }
+  
+  .comparison-intro p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+  
+  .bike-selection {
+    margin-bottom: 2rem;
+  }
+  
+  .selection-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .bike-selector {
+    flex: 1;
+  }
+  
+  .bike-selector label {
+    display: block;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .bike-dropdown {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: #ffffff;
+  }
+  
+  .bike-dropdown:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  }
+  
+  .comparison-table-container {
+    margin: 2rem 0;
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+  }
+  
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+  }
+  
+  .comparison-table th:last-child,
+  .comparison-table td:last-child {
+    border-right: none;
+  }
+  
+  .comparison-table thead th {
+    background: #f8f9fa;
+    font-weight: 700;
+    color: #2c2c2c;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .feature-column {
+    background: #f8f9fa !important;
+    font-weight: 600;
+    color: #2c2c2c;
+    min-width: 120px;
+  }
+  
+  .bike-column {
+    min-width: 150px;
+    text-align: center;
+  }
+  
+  .feature-name {
+    font-weight: 600;
+    color: #2c2c2c;
+    background: #f8f9fa;
+  }
+  
+  .bike-data {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .bike-data.highlight {
+    background: #e3f2fd;
+    color: #1976d2;
+    font-weight: 600;
+  }
+  
+  .comparison-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .btn--secondary {
+    background: #6c757d;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn--secondary:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+  }
+  
+  .btn--primary {
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn--primary:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .bike-comparison-container {
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .selection-row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .comparison-table-container {
+      font-size: 0.8rem;
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+      padding: 0.5rem;
+    }
+    
+    .comparison-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+
+<!-- Bike comparison JavaScript -->
+<script>
+  // Bike data
+  const bikeData = {
+    'city-comfort': {
+      name: 'City Comfort Pro',
+      price: '$2,499',
+      motor: 'Bosch Active Line Plus (250W)',
+      battery: '400Wh',
+      range: '60-100 km',
+      weight: '24 kg',
+      frame: 'Aluminium',
+      gears: '8-speed',
+      brakes: 'Shimano hydraulic',
+      suspension: 'Front fork',
+      lights: 'LED system'
+    },
+    'trekking-sport': {
+      name: 'Trekking Sport X1',
+      price: '$3,299',
+      motor: 'Bosch Performance Line CX (250W)',
+      battery: '625Wh',
+      range: '80-120 km',
+      weight: '26 kg',
+      frame: 'Aluminium',
+      gears: '12-speed',
+      brakes: 'SRAM Level hydraulic',
+      suspension: 'None',
+      lights: 'Busch & Müller'
+    },
+    'mountain-trail': {
+      name: 'Mountain Trail Pro',
+      price: '$4,799',
+      motor: 'Shimano EP8 (250W)',
+      battery: '630Wh',
+      range: '60-90 km',
+      weight: '23 kg',
+      frame: 'Carbon',
+      gears: '12-speed',
+      brakes: 'Shimano XT hydraulic',
+      suspension: 'Full 140mm',
+      lights: 'Mount ready'
+    },
+    'cargo-family': {
+      name: 'Cargo Family+',
+      price: '$3,899',
+      motor: 'Bosch Cargo Line (250W)',
+      battery: '500Wh',
+      range: '50-80 km',
+      weight: '35 kg',
+      frame: 'Steel reinforced',
+      gears: '8-speed',
+      brakes: 'Magura MT5 hydraulic',
+      suspension: 'Front fork',
+      lights: 'LED system'
+    }
+  };
+
+  function updateComparison() {
+    const bikes = ['bike1', 'bike2', 'bike3', 'bike4'];
+    
+    bikes.forEach((bikeId, index) => {
+      const select = document.getElementById(bikeId);
+      const selectedValue = select.value;
+      
+      if (selectedValue && bikeData[selectedValue]) {
+        const bike = bikeData[selectedValue];
+        const bikeNum = index + 1;
+        
+        // Update header
+        document.getElementById(`${bikeId}-header`).textContent = bike.name;
+        
+        // Update data
+        document.getElementById(`${bikeId}-price`).textContent = bike.price;
+        document.getElementById(`${bikeId}-motor`).textContent = bike.motor;
+        document.getElementById(`${bikeId}-battery`).textContent = bike.battery;
+        document.getElementById(`${bikeId}-range`).textContent = bike.range;
+        document.getElementById(`${bikeId}-weight`).textContent = bike.weight;
+        document.getElementById(`${bikeId}-frame`).textContent = bike.frame;
+        document.getElementById(`${bikeId}-gears`).textContent = bike.gears;
+        document.getElementById(`${bikeId}-brakes`).textContent = bike.brakes;
+        document.getElementById(`${bikeId}-suspension`).textContent = bike.suspension;
+        document.getElementById(`${bikeId}-lights`).textContent = bike.lights;
+        
+        // Highlight the column
+        document.getElementById(`${bikeId}-price`).classList.add('highlight');
+        document.getElementById(`${bikeId}-motor`).classList.add('highlight');
+        document.getElementById(`${bikeId}-battery`).classList.add('highlight');
+        document.getElementById(`${bikeId}-range`).classList.add('highlight');
+        document.getElementById(`${bikeId}-weight`).classList.add('highlight');
+        document.getElementById(`${bikeId}-frame`).classList.add('highlight');
+        document.getElementById(`${bikeId}-gears`).classList.add('highlight');
+        document.getElementById(`${bikeId}-brakes`).classList.add('highlight');
+        document.getElementById(`${bikeId}-suspension`).classList.add('highlight');
+        document.getElementById(`${bikeId}-lights`).classList.add('highlight');
+      } else {
+        // Clear column
+        document.getElementById(`${bikeId}-header`).textContent = `Bike ${bikeNum}`;
+        document.getElementById(`${bikeId}-price`).textContent = '-';
+        document.getElementById(`${bikeId}-motor`).textContent = '-';
+        document.getElementById(`${bikeId}-battery`).textContent = '-';
+        document.getElementById(`${bikeId}-range`).textContent = '-';
+        document.getElementById(`${bikeId}-weight`).textContent = '-';
+        document.getElementById(`${bikeId}-frame`).textContent = '-';
+        document.getElementById(`${bikeId}-gears`).textContent = '-';
+        document.getElementById(`${bikeId}-brakes`).textContent = '-';
+        document.getElementById(`${bikeId}-suspension`).textContent = '-';
+        document.getElementById(`${bikeId}-lights`).textContent = '-';
+        
+        // Remove highlighting
+        document.getElementById(`${bikeId}-price`).classList.remove('highlight');
+        document.getElementById(`${bikeId}-motor`).classList.remove('highlight');
+        document.getElementById(`${bikeId}-battery`).classList.remove('highlight');
+        document.getElementById(`${bikeId}-range`).classList.remove('highlight');
+        document.getElementById(`${bikeId}-weight`).classList.remove('highlight');
+        document.getElementById(`${bikeId}-frame`).classList.remove('highlight');
+        document.getElementById(`${bikeId}-gears`).classList.remove('highlight');
+        document.getElementById(`${bikeId}-brakes`).classList.remove('highlight');
+        document.getElementById(`${bikeId}-suspension`).classList.remove('highlight');
+        document.getElementById(`${bikeId}-lights`).classList.remove('highlight');
+      }
+    });
+  }
+
+  function clearComparison() {
+    const bikes = ['bike1', 'bike2', 'bike3', 'bike4'];
+    bikes.forEach(bikeId => {
+      document.getElementById(bikeId).value = '';
+    });
+    updateComparison();
+  }
+
+  function exportComparison() {
+    const bikes = ['bike1', 'bike2', 'bike3', 'bike4'];
+    let csv = 'Feature,Bike 1,Bike 2,Bike 3,Bike 4\n';
+    
+    const features = ['price', 'motor', 'battery', 'range', 'weight', 'frame', 'gears', 'brakes', 'suspension', 'lights'];
+    
+    features.forEach(feature => {
+      const featureName = document.querySelector(`[id$="-${feature}"]`).previousElementSibling.textContent;
+      let row = featureName;
+      
+      bikes.forEach(bikeId => {
+        const value = document.getElementById(`${bikeId}-${feature}`).textContent;
+        row += `,"${value}"`;
+      });
+      
+      csv += row + '\n';
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'bike-comparison.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+</script>
 
 

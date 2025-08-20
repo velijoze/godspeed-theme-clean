@@ -1,0 +1,246 @@
+<!-- /templates/page.size-calculator.liquid -->
+{% comment %}
+  This page template is for the e-bike size calculator tool.
+  Be sure to select page.size-calculator as the template from the admin page to have this template take effect.
+{% endcomment %}
+
+<div class="wrapper page-margin">
+  <div class="grid">
+    <div class="grid__item large--two-thirds push--large--one-sixth">
+      <h1 class="text-center h2">{{ page.title }}</h1>
+      <div class="rte">
+        {{ page.content }}
+      </div>
+      
+      <!-- Size Calculator Tool -->
+      <div class="ebike-size-calculator-wrapper">
+        <div class="calculator-intro">
+          <h3>Find Your Perfect E-Bike Size</h3>
+          <p>Enter your measurements below to get personalized size recommendations for your riding style.</p>
+        </div>
+        
+        <div class="size-calculator-form">
+          <div class="form-group">
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" name="height" placeholder="170" min="120" max="220">
+          </div>
+          
+          <div class="form-group">
+            <label for="inseam">Inseam Length (cm)</label>
+            <input type="number" id="inseam" name="inseam" placeholder="80" min="60" max="120">
+          </div>
+          
+          <div class="form-group">
+            <label for="riding-style">Riding Style</label>
+            <select id="riding-style" name="riding-style">
+              <option value="">Select your style</option>
+              <option value="city">City/Commuting</option>
+              <option value="trekking">Trekking/Touring</option>
+              <option value="mountain">Mountain/Off-road</option>
+              <option value="cargo">Cargo/Utility</option>
+            </select>
+          </div>
+          
+          <button type="button" class="btn btn--primary btn--large" onclick="calculateSize()">
+            Calculate Size
+          </button>
+        </div>
+        
+        <div id="size-results" class="size-results" style="display: none;">
+          <h4>Your Size Recommendation</h4>
+          <div class="size-recommendation">
+            <div class="recommended-size">
+              <span class="size-label">Recommended Frame Size:</span>
+              <span class="size-value" id="frame-size">-</span>
+            </div>
+            <div class="size-details">
+              <p id="size-explanation">Enter your measurements above to get your personalized size recommendation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom styles for size calculator page -->
+<style>
+  .ebike-size-calculator-wrapper {
+    margin: 3rem 0;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 2px solid #f0f0f0;
+  }
+  
+  .calculator-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .calculator-intro h3 {
+    font-size: 1.75rem;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+  }
+  
+  .calculator-intro p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+  
+  .size-calculator-form {
+    max-width: 500px;
+    margin: 0 auto 2rem auto;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  }
+  
+  .btn--large {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .size-results {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+  }
+  
+  .size-results h4 {
+    text-align: center;
+    color: #2c2c2c;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .recommended-size {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .size-label {
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-right: 0.5rem;
+  }
+  
+  .size-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #007bff;
+  }
+  
+  .size-details {
+    text-align: center;
+  }
+  
+  .size-details p {
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .ebike-size-calculator-wrapper {
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .calculator-intro h3 {
+      font-size: 1.5rem;
+    }
+    
+    .size-calculator-form {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<!-- Size calculation JavaScript -->
+<script>
+  function calculateSize() {
+    const height = parseInt(document.getElementById('height').value);
+    const inseam = parseInt(document.getElementById('inseam').value);
+    const ridingStyle = document.getElementById('riding-style').value;
+    
+    if (!height || !inseam || !ridingStyle) {
+      alert('Please fill in all fields to get your size recommendation.');
+      return;
+    }
+    
+    // Simple size calculation logic
+    let frameSize = '';
+    let explanation = '';
+    
+    if (ridingStyle === 'city') {
+      if (height < 160) frameSize = 'XS (47-49cm)';
+      else if (height < 170) frameSize = 'S (50-52cm)';
+      else if (height < 180) frameSize = 'M (53-55cm)';
+      else if (height < 190) frameSize = 'L (56-58cm)';
+      else frameSize = 'XL (59-61cm)';
+      
+      explanation = 'City bikes typically have a more upright riding position, so we recommend a slightly larger frame for comfort during daily commuting.';
+    } else if (ridingStyle === 'trekking') {
+      if (height < 160) frameSize = 'XS (47-49cm)';
+      else if (height < 170) frameSize = 'S (50-52cm)';
+      else if (height < 180) frameSize = 'M (53-55cm)';
+      else if (height < 190) frameSize = 'L (56-58cm)';
+      else frameSize = 'XL (59-61cm)';
+      
+      explanation = 'Trekking bikes are designed for long-distance comfort. This size provides optimal balance between comfort and efficiency.';
+    } else if (ridingStyle === 'mountain') {
+      if (height < 160) frameSize = 'XS (14-15")';
+      else if (height < 170) frameSize = 'S (16-17")';
+      else if (height < 180) frameSize = 'M (18-19")';
+      else if (height < 190) frameSize = 'L (20-21")';
+      else frameSize = 'XL (22-23")';
+      
+      explanation = 'Mountain bikes use different sizing (inches). This size ensures proper control and maneuverability on technical terrain.';
+    } else if (ridingStyle === 'cargo') {
+      frameSize = 'One Size (Universal)';
+      explanation = 'Cargo bikes typically come in one size with adjustable components to accommodate riders of different heights.';
+    }
+    
+    // Display results
+    document.getElementById('frame-size').textContent = frameSize;
+    document.getElementById('size-explanation').textContent = explanation;
+    document.getElementById('size-results').style.display = 'block';
+    
+    // Scroll to results
+    document.getElementById('size-results').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>

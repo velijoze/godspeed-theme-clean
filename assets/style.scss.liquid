@@ -2185,6 +2185,35 @@ $infoBarPadding: 5px;
 }
 
 
+/*================ Language selector in header ================*/
+.header-locale {
+  float: right;
+  margin-left: 15px;
+  
+  .locale-selector {
+    background: transparent;
+    border: none;
+    color: $colorInfoText;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    
+    &:focus {
+      outline: none;
+      background: rgba($colorInfoText, 0.1);
+    }
+    
+    option {
+      background: $colorInfoBg;
+      color: $colorInfoText;
+      font-size: 12px;
+    }
+  }
+}
+
 /*============================================================================
   #Site Nav and Dropdowns
 ==============================================================================*/

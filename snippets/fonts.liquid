@@ -10,17 +10,15 @@
             {{ settings.font_body | remove: 'google:' | remove: 'sansStack:' | remove: 'serifStack:' }},400italic,700,700italic:latin&
           {% endif %}
           {% if settings.font_accent contains 'google:' %}
-            {% unless settings.font_accent == settings.font_body %}
-              {{ settings.font_accent | remove: 'google:' | remove: 'sansStack:' | remove: 'serifStack:' }}:latin&
-            {% endunless%}
+            {{ settings.font_accent | remove: 'google:' | remove: 'sansStack:' | remove: 'serifStack:' }}:latin&
           {% endif %}
           {% if settings.font_title contains 'google:' %}
-            {% unless settings.font_title == settings.font_body or settings.font_title == settings.font_accent %}
-              {{ settings.font_title | remove: 'google:' | remove: 'sansStack:' | remove: 'serifStack:' }}:latin&
-            {% endunless %}
+            {{ settings.font_title | remove: 'google:' | remove: 'sansStack:' | remove: 'serifStack:' }}:latin&
           {% endif %}
         {% endcapture %}
-        {% assign requestArray = requestString | remove: ' ' | strip_newlines | split: "&" %}
+        {% assign requestString = requestString | remove: ' ' | strip_newlines %}
+        {% assign requestArray = requestString | split: "&" %}
+        {% assign requestArray = requestArray | where_exp: "item", "item != ''" %}
         {{requestArray | json}}
     },
     timeout: 5000

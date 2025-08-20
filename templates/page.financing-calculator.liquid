@@ -1,0 +1,495 @@
+<!-- /templates/page.financing-calculator.liquid -->
+{% comment %}
+  This page template is for the e-bike financing calculator tool.
+  Be sure to select page.financing-calculator as the template from the admin page to have this template take effect.
+{% endcomment %}
+
+<div class="wrapper page-margin">
+  <div class="grid">
+    <div class="grid__item large--two-thirds push--large--one-sixth">
+      <h1 class="text-center h2">{{ page.title }}</h1>
+      <div class="rte">
+        {{ page.content }}
+      </div>
+      
+      <!-- Financing Calculator Tool -->
+      <div class="financing-calculator-container">
+        <div class="calculator-intro">
+          <h3>E-Bike Financing Calculator</h3>
+          <p>Calculate your monthly payments and explore financing options for your dream e-bike.</p>
+        </div>
+        
+        <!-- Calculator Form -->
+        <div class="calculator-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bike-price">E-Bike Price ($)</label>
+              <input type="number" id="bike-price" name="bike-price" placeholder="2499" min="500" max="10000" value="2499">
+            </div>
+            
+            <div class="form-group">
+              <label for="down-payment">Down Payment ($)</label>
+              <input type="number" id="down-payment" name="down-payment" placeholder="500" min="0" max="5000" value="500">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="interest-rate">Interest Rate (%)</label>
+              <input type="number" id="interest-rate" name="interest-rate" placeholder="7.99" min="0" max="25" step="0.01" value="7.99">
+            </div>
+            
+            <div class="form-group">
+              <label for="loan-term">Loan Term (months)</label>
+              <select id="loan-term" name="loan-term">
+                <option value="12">12 months</option>
+                <option value="24" selected>24 months</option>
+                <option value="36">36 months</option>
+                <option value="48">48 months</option>
+                <option value="60">60 months</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="credit-score">Credit Score Range</label>
+              <select id="credit-score" name="credit-score">
+                <option value="excellent">Excellent (750+)</option>
+                <option value="good" selected>Good (700-749)</option>
+                <option value="fair">Fair (650-699)</option>
+                <option value="poor">Poor (600-649)</option>
+                <option value="very-poor">Very Poor (300-599)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="state">State</label>
+              <select id="state" name="state">
+                <option value="">Select your state</option>
+                <option value="CA">California</option>
+                <option value="NY">New York</option>
+                <option value="TX">Texas</option>
+                <option value="FL">Florida</option>
+                <option value="IL">Illinois</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="OH">Ohio</option>
+                <option value="GA">Georgia</option>
+                <option value="NC">North Carolina</option>
+                <option value="MI">Michigan</option>
+              </select>
+            </div>
+          </div>
+          
+          <button type="button" class="btn btn--primary btn--large" onclick="calculateFinancing()">
+            Calculate Payment
+          </button>
+        </div>
+        
+        <!-- Results -->
+        <div id="financing-results" class="financing-results" style="display: none;">
+          <h4>Your Financing Summary</h4>
+          
+          <div class="results-grid">
+            <div class="result-card">
+              <div class="result-label">Loan Amount</div>
+              <div class="result-value" id="loan-amount">$1,999</div>
+            </div>
+            
+            <div class="result-card">
+              <div class="result-label">Monthly Payment</div>
+              <div class="result-value" id="monthly-payment">$89.99</div>
+            </div>
+            
+            <div class="result-card">
+              <div class="result-label">Total Interest</div>
+              <div class="result-value" id="total-interest">$159.76</div>
+            </div>
+            
+            <div class="result-card">
+              <div class="result-label">Total Cost</div>
+              <div class="result-value" id="total-cost">$2,658.76</div>
+            </div>
+          </div>
+          
+          <div class="payment-breakdown">
+            <h5>Payment Breakdown</h5>
+            <div class="breakdown-item">
+              <span>Principal:</span>
+              <span id="principal-amount">$1,999.00</span>
+            </div>
+            <div class="breakdown-item">
+              <span>Interest:</span>
+              <span id="interest-amount">$159.76</span>
+            </div>
+            <div class="breakdown-item">
+              <span>Fees:</span>
+              <span id="fees-amount">$0.00</span>
+            </div>
+            <div class="breakdown-item total">
+              <span>Total:</span>
+              <span id="final-total">$2,658.76</span>
+            </div>
+          </div>
+          
+          <div class="financing-options">
+            <h5>Available Financing Options</h5>
+            <div class="option-cards">
+              <div class="option-card">
+                <h6>0% APR (12 months)</h6>
+                <p>Pay no interest if paid in full within 12 months</p>
+                <div class="option-payment">$166.58/month</div>
+              </div>
+              
+              <div class="option-card">
+                <h6>Low APR (24 months)</h6>
+                <p>Competitive rate for longer terms</p>
+                <div class="option-payment">$89.99/month</div>
+              </div>
+              
+              <div class="option-card">
+                <h6>Extended Term (60 months)</h6>
+                <p>Lower monthly payments over 5 years</p>
+                <div class="option-payment">$40.50/month</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="calculator-actions">
+          <button class="btn btn--secondary" onclick="resetCalculator()">Reset</button>
+          <button class="btn btn--primary" onclick="applyFinancing()">Apply Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom styles for financing calculator page -->
+<style>
+  .financing-calculator-container {
+    margin: 3rem 0;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 2px solid #f0f0f0;
+  }
+  
+  .calculator-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .calculator-intro h3 {
+    font-size: 1.75rem;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+  }
+  
+  .calculator-intro p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+  
+  .calculator-form {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group {
+    flex: 1;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: #ffffff;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  }
+  
+  .btn--large {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+  
+  .financing-results {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+  }
+  
+  .financing-results h4 {
+    text-align: center;
+    color: #2c2c2c;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .result-card {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .result-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #007bff;
+  }
+  
+  .payment-breakdown {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .payment-breakdown h5 {
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  .breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .breakdown-item:last-child {
+    border-bottom: none;
+  }
+  
+  .breakdown-item.total {
+    font-weight: 700;
+    color: #2c2c2c;
+    font-size: 1.1rem;
+    border-top: 2px solid #e0e0e0;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .financing-options h5 {
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  .option-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  
+  .option-card {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+  }
+  
+  .option-card h6 {
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .option-card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .option-payment {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #28a745;
+  }
+  
+  .calculator-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .btn--secondary {
+    background: #6c757d;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn--secondary:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+  }
+  
+  .btn--primary {
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn--primary:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .financing-calculator-container {
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .form-row {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .results-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .option-cards {
+      grid-template-columns: 1fr;
+    }
+    
+    .calculator-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+
+<!-- Financing calculation JavaScript -->
+<script>
+  function calculateFinancing() {
+    const bikePrice = parseFloat(document.getElementById('bike-price').value);
+    const downPayment = parseFloat(document.getElementById('down-payment').value);
+    const interestRate = parseFloat(document.getElementById('interest-rate').value);
+    const loanTerm = parseInt(document.getElementById('loan-term').value);
+    
+    if (!bikePrice || !downPayment || !interestRate || !loanTerm) {
+      alert('Please fill in all fields to calculate financing.');
+      return;
+    }
+    
+    if (downPayment >= bikePrice) {
+      alert('Down payment cannot be greater than or equal to bike price.');
+      return;
+    }
+    
+    // Calculate loan amount
+    const loanAmount = bikePrice - downPayment;
+    
+    // Calculate monthly interest rate
+    const monthlyRate = (interestRate / 100) / 12;
+    
+    // Calculate monthly payment using loan amortization formula
+    const monthlyPayment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, loanTerm)) / 
+                          (Math.pow(1 + monthlyRate, loanTerm) - 1);
+    
+    // Calculate total interest
+    const totalInterest = (monthlyPayment * loanTerm) - loanAmount;
+    
+    // Calculate total cost
+    const totalCost = loanAmount + totalInterest;
+    
+    // Update results
+    document.getElementById('loan-amount').textContent = '$' + loanAmount.toFixed(2);
+    document.getElementById('monthly-payment').textContent = '$' + monthlyPayment.toFixed(2);
+    document.getElementById('total-interest').textContent = '$' + totalInterest.toFixed(2);
+    document.getElementById('total-cost').textContent = '$' + totalCost.toFixed(2);
+    
+    // Update breakdown
+    document.getElementById('principal-amount').textContent = '$' + loanAmount.toFixed(2);
+    document.getElementById('interest-amount').textContent = '$' + totalInterest.toFixed(2);
+    document.getElementById('fees-amount').textContent = '$0.00';
+    document.getElementById('final-total').textContent = '$' + totalCost.toFixed(2);
+    
+    // Show results
+    document.getElementById('financing-results').style.display = 'block';
+    
+    // Scroll to results
+    document.getElementById('financing-results').scrollIntoView({ behavior: 'smooth' });
+  }
+  
+  function resetCalculator() {
+    document.getElementById('bike-price').value = '2499';
+    document.getElementById('down-payment').value = '500';
+    document.getElementById('interest-rate').value = '7.99';
+    document.getElementById('loan-term').value = '24';
+    document.getElementById('credit-score').value = 'good';
+    document.getElementById('state').value = '';
+    
+    document.getElementById('financing-results').style.display = 'none';
+  }
+  
+  function applyFinancing() {
+    alert('Thank you for your interest! A financing specialist will contact you within 24 hours to complete your application.');
+  }
+</script>

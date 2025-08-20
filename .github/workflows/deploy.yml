@@ -26,35 +26,13 @@ jobs:
         echo "Store: ${{ secrets.SHOPIFY_STORE_URL }}"
         echo "Theme ID: ${{ secrets.SHOPIFY_THEME_ID }}"
         
-        # Test if secrets are set
-        if [ -z "${{ secrets.SHOPIFY_STORE_URL }}" ]; then
-          echo "❌ SHOPIFY_STORE_URL is not set"
-          exit 1
-        fi
-        
-        if [ -z "${{ secrets.SHOPIFY_THEME_ID }}" ]; then
-          echo "❌ SHOPIFY_THEME_ID is not set"
-          exit 1
-        fi
-        
-        if [ -z "${{ secrets.SHOPIFY_ACCESS_TOKEN }}" ]; then
-          echo "❌ SHOPIFY_ACCESS_TOKEN is not set"
-          exit 1
-        fi
-        
-        echo "✅ All secrets are set"
-        
-        # Deploy the theme with error handling
+        # Deploy the theme (no --live to allow unpublished themes)
         shopify theme push \
-          --store="${{ secrets.SHOPIFY_STORE_URL }}" \
-          --theme="${{ secrets.SHOPIFY_THEME_ID }}" \
-          --password="${{ secrets.SHOPIFY_ACCESS_TOKEN }}" \
-          --force || {
-            echo "❌ Theme deployment failed"
-            exit 1
-          }
+          --store=${{ secrets.SHOPIFY_STORE_URL }} \
+          --theme=${{ secrets.SHOPIFY_THEME_ID }} \
+          --password=${{ secrets.SHOPIFY_ACCESS_TOKEN }}
         
         echo "✅ Theme deployment completed successfully!"
       env:
         SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
-        SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+        SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}        SHOPIFY_THEME_ID: ${{ secrets.SHOPIFY_THEME_ID }}
