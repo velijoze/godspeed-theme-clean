@@ -1,0 +1,149 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Pagina {{ page }}"
+    },
+    "404": {
+      "title": "404 Pagina Non Trovata",
+      "subtext_html": "La pagina richiesta non esiste. Clicca <a href=\"/collections/all\">qui</a> per continuare lo shopping."
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "home_link_title": "Torna alla homepage"
+    },
+    "newsletter_form": {
+      "newsletter_email": "la-tua-email@esempio.com",
+      "submit": "Iscriviti",
+      "subscribed": "Grazie per esserti iscritto alla nostra mailing list!"
+    },
+    "search": {
+      "no_results_html": "La tua ricerca per \"{{ terms }}\" non ha prodotto risultati.",
+      "results_for_html": "La tua ricerca per \"{{ terms }}\" ha prodotto {{ count }} risultati."
+    },
+    "social": {
+      "share_on_facebook": "Condividi",
+      "tweet": "Tweet",
+      "pin_it": "Pin it"
+    },
+    "comments": {
+      "title": "Lascia un commento",
+      "name": "Nome",
+      "email": "Email",
+      "message": "Messaggio",
+      "post": "Pubblica commento",
+      "moderated": "Il commento è in attesa di moderazione.",
+      "success_moderated": "Il tuo commento è stato inviato con successo. Sarà visibile dopo l'approvazione."
+    },
+    "password_page": {
+      "login_form_heading": "Accedi",
+      "login_form_password_label": "Password",
+      "login_form_submit": "Accedi",
+      "signup_form_heading": "Registrati per ricevere aggiornamenti",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "Ti invieremo un'email quando il negozio sarà aperto.",
+      "signup_form_submit": "Registrati",
+      "powered_by_shopify": "Powered by Shopify"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Aggiungi al carrello",
+      "sold_out": "Esaurito",
+      "unavailable": "Non disponibile",
+      "on_sale": "In vendita",
+      "quantity": "Quantità",
+      "vendor": "Venditore",
+      "type": "Tipo",
+      "tags": "Tag",
+      "sku": "SKU",
+      "availability": "Disponibilità",
+      "add_to_cart": "Aggiungi al carrello",
+      "added_to_cart": "Aggiunto al carrello!",
+      "view_cart": "Visualizza carrello",
+      "continue_shopping": "Continua lo shopping",
+      "description": "Descrizione",
+      "details": "Dettagli",
+      "shipping_policy": "Politica di spedizione",
+      "return_policy": "Politica di reso",
+      "related_products": "Prodotti correlati",
+      "recently_viewed": "Visualizzati di recente"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Carrello",
+      "note": "Nota speciale per il venditore",
+      "subtotal": "Subtotale",
+      "shipping": "Spedizione",
+      "tax": "Tasse",
+      "total": "Totale",
+      "update": "Aggiorna carrello",
+      "checkout": "Procedi al checkout",
+      "continue_shopping": "Continua lo shopping",
+      "empty_cart": "Il tuo carrello è vuoto",
+      "cart_count": {
+        "one": "1 articolo",
+        "other": "{{ count }} articoli"
+      }
+    }
+  },
+  "layout": {
+    "navigation": {
+      "search": "Cerca",
+      "toggle_search": "Attiva ricerca",
+      "menu": "Menu",
+      "toggle_menu": "Attiva menu"
+    },
+    "customer": {
+      "account": "Account",
+      "log_out": "Disconnetti",
+      "log_in": "Accedi",
+      "register": "Registrati"
+    },
+    "footer": {
+      "credit": "godspeed"
+    }
+  },
+  "blogs": {
+    "article": {
+      "posted_on": "Pubblicato il {{ date }}",
+      "tags": "Tag:",
+      "back_to_blog": "Torna al blog",
+      "previous_article": "Articolo precedente",
+      "next_article": "Articolo successivo"
+    },
+    "comments": {
+      "title": "Commenti",
+      "no_comments": "Nessun commento ancora",
+      "leave_comment": "Lascia un commento"
+    }
+  },
+  "collections": {
+    "view_all": "Visualizza tutto",
+    "no_products": "Nessun prodotto trovato",
+    "sort_by": "Ordina per",
+    "sort": {
+      "featured": "In evidenza",
+      "best_selling": "Più venduti",
+      "az": "A-Z",
+      "za": "Z-A",
+      "price_ascending": "Prezzo crescente",
+      "price_descending": "Prezzo decrescente",
+      "date_ascending": "Data crescente",
+      "date_descending": "Data decrescente"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Nome",
+      "email": "Email",
+      "phone": "Telefono",
+      "message": "Messaggio",
+      "submit": "Invia messaggio",
+      "success": "Grazie per il tuo messaggio. Ti risponderemo presto!"
+    }
+  }
+}
+
+
