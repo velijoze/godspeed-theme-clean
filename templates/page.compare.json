@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "comparison_tool": {
+      "type": "bike-compare",
+      "settings": {
+        "heading": "E-Bike Comparison",
+        "subheading": "Compare up to 3 e‑bikes",
+        "intro": "<p>Select models from the list to see the key differences.</p>",
+        "columns": 3,
+        "model_keys": "city-comfort, trekking-sport, mountain-trail, cargo-family",
+        "reset_label": "Reset",
+        "cta_label": "View all e‑bikes",
+        "cta_link": "/collections/e-bikes",
+        "homepage_color": "homepage--white",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "comparison_tool"
+  ]
+}

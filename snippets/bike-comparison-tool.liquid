@@ -1,0 +1,527 @@
+{% comment %}
+  Godspeed E-Bike Comparison Tool - Enhanced Snippet
+  Theme-agnostic enhanced bike comparison with AI insights
+  
+  Usage:
+  {% render 'bike-comparison-tool', 
+     title: 'E-Bike Comparison',
+     subtitle: 'Detailed side-by-side analysis',
+     max_bikes: 4
+  %}
+  
+  Parameters:
+  - title: Custom title for the comparison tool
+  - subtitle: Custom subtitle/description
+  - max_bikes: Maximum bikes to compare (2-6, default: 4)
+  - show_specs: Show detailed specifications (default: true)
+  - show_reviews: Show customer reviews (default: true)
+  - show_availability: Show stock availability (default: true)
+  - enable_filtering: Enable advanced filtering (default: true)
+  - ai_insights: Enable AI-powered insights (default: false)
+{% endcomment %}
+
+{% liquid
+  # Set defaults
+  assign comp_title = title | default: 'E-Bike Comparison'
+  assign comp_subtitle = subtitle | default: 'Detailed side-by-side analysis with AI insights'
+  assign comp_max_bikes = max_bikes | default: 4
+  assign comp_show_specs = show_specs | default: true
+  assign comp_show_reviews = show_reviews | default: true
+  assign comp_show_availability = show_availability | default: true
+  assign comp_enable_filtering = enable_filtering | default: true
+  assign comp_ai_insights = ai_insights | default: false
+  
+  # Generate unique ID for this instance
+  assign comp_id = 'comp_' | append: section.id | default: 'default' | append: '_' | append: 'now' | date: '%s'
+  
+  # Validate max_bikes
+  if comp_max_bikes < 2
+    assign comp_max_bikes = 2
+  elsif comp_max_bikes > 6
+    assign comp_max_bikes = 6
+  endif
+%}
+
+<!-- Bike Comparison Tool Container -->
+<div class="ebike-comparison-wrapper" id="{{ comp_id }}-wrapper">
+  <!-- Tool will be rendered here by JavaScript -->
+  <div 
+    data-ebike-tool="comparison"
+    data-comparison-id="{{ comp_id }}"
+    data-title="{{ comp_title | escape }}"
+    data-subtitle="{{ comp_subtitle | escape }}"
+    data-max-bikes="{{ comp_max_bikes }}"
+    data-show-specs="{{ comp_show_specs }}"
+    data-show-reviews="{{ comp_show_reviews }}"
+    data-show-availability="{{ comp_show_availability }}"
+    data-enable-filtering="{{ comp_enable_filtering }}"
+    data-ai-insights="{{ comp_ai_insights }}"
+    class="ebike-comparison-placeholder"
+  >
+    <!-- Loading placeholder -->
+    <div class="ebike-loading-placeholder">
+      <div class="placeholder-header">
+        <h3>{{ comp_title }}</h3>
+        <p>{{ comp_subtitle }}</p>
+      </div>
+      <div class="placeholder-selectors">
+        {% for i in (1..comp_max_bikes) %}
+          <div class="placeholder-selector">
+            <div class="placeholder-label">Bike {{ i }}</div>
+            <div class="placeholder-dropdown"></div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="placeholder-table">
+        <div class="placeholder-table-header">
+          <div class="placeholder-cell">Feature</div>
+          {% for i in (1..comp_max_bikes) %}
+            <div class="placeholder-cell">Bike {{ i }}</div>
+          {% endfor %}
+        </div>
+        {% assign features = 'Price,Motor,Battery,Range,Weight' | split: ',' %}
+        {% for feature in features %}
+          <div class="placeholder-table-row">
+            <div class="placeholder-cell">{{ feature }}</div>
+            {% for i in (1..comp_max_bikes) %}
+              <div class="placeholder-cell">-</div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Enhanced bike comparison data -->
+<script>
+  // Enhanced comparison data with detailed specifications
+  window.bikeComparisonData = window.bikeComparisonData || {
+    'city-comfort': {
+      name: 'City Comfort Pro',
+      brand: 'Godspeed',
+      price: 2499,
+      category: 'city',
+      image: '{{ 'bike-city-comfort.jpg' | asset_img_url: '300x300' }}',
+      inStock: true,
+      stockLevel: 5,
+      motor: {
+        brand: 'Bosch',
+        model: 'Active Line Plus',
+        power: 250,
+        torque: 50,
+        position: 'Mid-drive'
+      },
+      battery: {
+        capacity: 400,
+        brand: 'Bosch',
+        range: '60-100',
+        chargingTime: 4.5,
+        removable: true
+      },
+      frame: {
+        material: 'Aluminium',
+        weight: '24 kg',
+        sizes: ['XS', 'S', 'M', 'L', 'XL']
+      },
+      components: {
+        gears: '8-speed',
+        brakes: 'Shimano hydraulic',
+        suspension: 'Front fork',
+        display: 'Bosch Purion'
+      },
+      features: {
+        lights: 'LED system',
+        mudguards: true,
+        rack: 'Rear included',
+        kickstand: true
+      },
+      scores: {
+        comfort: 8.5,
+        performance: 7.2,
+        value: 9.1,
+        range: 8.0
+      }
+    },
+    'trekking-sport': {
+      name: 'Trekking Sport X1',
+      brand: 'Godspeed',
+      price: 3299,
+      category: 'trekking',
+      image: '{{ 'bike-trekking-sport.jpg' | asset_img_url: '300x300' }}',
+      inStock: true,
+      stockLevel: 8,
+      motor: {
+        brand: 'Bosch',
+        model: 'Performance Line CX',
+        power: 250,
+        torque: 85,
+        position: 'Mid-drive'
+      },
+      battery: {
+        capacity: 625,
+        brand: 'Bosch',
+        range: '80-120',
+        chargingTime: 4.5,
+        removable: true
+      },
+      frame: {
+        material: 'Aluminium',
+        weight: '26 kg',
+        sizes: ['S', 'M', 'L', 'XL']
+      },
+      components: {
+        gears: '12-speed',
+        brakes: 'SRAM Level hydraulic',
+        suspension: 'None',
+        display: 'Bosch Kiox'
+      },
+      features: {
+        lights: 'Busch & Müller',
+        mudguards: true,
+        rack: 'Front & rear ready',
+        kickstand: true
+      },
+      scores: {
+        comfort: 8.2,
+        performance: 8.8,
+        value: 8.5,
+        range: 9.2
+      }
+    },
+    'mountain-trail': {
+      name: 'Mountain Trail Pro',
+      brand: 'Godspeed',
+      price: 4799,
+      category: 'mountain',
+      image: '{{ 'bike-mountain-trail.jpg' | asset_img_url: '300x300' }}',
+      inStock: false,
+      stockLevel: 0,
+      motor: {
+        brand: 'Shimano',
+        model: 'EP8',
+        power: 250,
+        torque: 85,
+        position: 'Mid-drive'
+      },
+      battery: {
+        capacity: 630,
+        brand: 'Shimano',
+        range: '60-90',
+        chargingTime: 5,
+        removable: true
+      },
+      frame: {
+        material: 'Carbon',
+        weight: '23 kg',
+        sizes: ['S', 'M', 'L', 'XL']
+      },
+      components: {
+        gears: '12-speed',
+        brakes: 'Shimano XT hydraulic',
+        suspension: 'Full 140mm',
+        display: 'Shimano EM800'
+      },
+      features: {
+        lights: 'Mount ready',
+        mudguards: false,
+        rack: false,
+        kickstand: false
+      },
+      scores: {
+        comfort: 7.8,
+        performance: 9.8,
+        value: 7.5,
+        range: 8.5
+      }
+    },
+    'cargo-family': {
+      name: 'Cargo Family+',
+      brand: 'Godspeed',
+      price: 3899,
+      category: 'cargo',
+      image: '{{ 'bike-cargo-family.jpg' | asset_img_url: '300x300' }}',
+      inStock: true,
+      stockLevel: 3,
+      motor: {
+        brand: 'Bosch',
+        model: 'Cargo Line',
+        power: 250,
+        torque: 85,
+        position: 'Mid-drive'
+      },
+      battery: {
+        capacity: 500,
+        brand: 'Bosch',
+        range: '50-80',
+        chargingTime: 6,
+        removable: true
+      },
+      frame: {
+        material: 'Steel reinforced',
+        weight: '35 kg',
+        sizes: ['One size']
+      },
+      components: {
+        gears: '8-speed',
+        brakes: 'Magura MT5 hydraulic',
+        suspension: 'Front fork',
+        display: 'Bosch Purion'
+      },
+      features: {
+        lights: 'LED system',
+        mudguards: true,
+        rack: 'Front cargo box',
+        kickstand: true
+      },
+      scores: {
+        comfort: 8.0,
+        performance: 6.5,
+        value: 8.8,
+        range: 7.2
+      }
+    }
+  };
+</script>
+
+<!-- Comparison tool specific styles -->
+<style>
+  .ebike-comparison-wrapper {
+    margin: 2rem 0;
+    width: 100%;
+  }
+  
+  /* Loading placeholder styles */
+  .ebike-loading-placeholder {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .placeholder-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .placeholder-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .placeholder-header p {
+    color: #6b7280;
+    margin: 0;
+  }
+  
+  .placeholder-selectors {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .placeholder-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .placeholder-label {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.875rem;
+  }
+  
+  .placeholder-dropdown {
+    height: 48px;
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: placeholder-shimmer 2s infinite;
+    border-radius: 8px;
+  }
+  
+  .placeholder-table {
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+  }
+  
+  .placeholder-table-header,
+  .placeholder-table-row {
+    display: grid;
+    grid-template-columns: 150px repeat({{ comp_max_bikes }}, 1fr);
+  }
+  
+  .placeholder-table-header {
+    background: #f3f4f6;
+  }
+  
+  .placeholder-table-row:nth-child(even) {
+    background: #f9fafb;
+  }
+  
+  .placeholder-cell {
+    padding: 1rem;
+    border-right: 1px solid #e5e7eb;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .placeholder-table-header .placeholder-cell {
+    font-weight: 600;
+    color: #374151;
+    background: #f3f4f6;
+  }
+  
+  .placeholder-table-row .placeholder-cell {
+    color: #6b7280;
+    background: linear-gradient(90deg, transparent 0%, #e5e7eb 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: placeholder-shimmer 2s infinite;
+    min-height: 20px;
+  }
+  
+  @keyframes placeholder-shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  /* Hide placeholder when toolkit loads */
+  .ebike-comparison-tool + .ebike-loading-placeholder,
+  .ebike-comparison-wrapper:has(.ebike-comparison-tool) .ebike-loading-placeholder {
+    display: none;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .placeholder-selectors {
+      grid-template-columns: 1fr;
+    }
+    
+    .placeholder-table-header,
+    .placeholder-table-row {
+      grid-template-columns: 100px repeat({{ comp_max_bikes }}, 1fr);
+    }
+    
+    .placeholder-cell {
+      padding: 0.75rem 0.5rem;
+      font-size: 0.75rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .ebike-loading-placeholder {
+      padding: 1rem;
+    }
+    
+    .placeholder-table-header,
+    .placeholder-table-row {
+      grid-template-columns: 80px repeat({{ comp_max_bikes }}, 1fr);
+    }
+    
+    .placeholder-cell {
+      padding: 0.5rem 0.25rem;
+      font-size: 0.7rem;
+    }
+  }
+</style>
+
+<!-- Initialize comparison tool when toolkit is ready -->
+<script>
+  document.addEventListener('ebike-toolkit:ready', function(event) {
+    const toolkit = event.detail.toolkit;
+    const comparisonModule = toolkit.getModule('comparison');
+    
+    if (comparisonModule) {
+      // Find this specific comparison tool
+      const element = document.querySelector('[data-comparison-id="{{ comp_id }}"]');
+      if (element) {
+        comparisonModule.bindElement(element);
+      }
+    }
+  });
+  
+  // Fallback for immediate binding if toolkit is already loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.EBikeToolkit && window.EBikeToolkit.initialized) {
+      const comparisonModule = window.EBikeToolkit.getModule('comparison');
+      if (comparisonModule) {
+        const element = document.querySelector('[data-comparison-id="{{ comp_id }}"]');
+        if (element) {
+          comparisonModule.bindElement(element);
+        }
+      }
+    }
+  });
+</script>
+
+{% comment %} Schema for Shopify section settings {% endcomment %}
+{% if section %}
+<script type="application/json" data-section-settings>
+{
+  "name": "E-Bike Comparison Tool",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "E-Bike Comparison"
+    },
+    {
+      "type": "text",
+      "id": "subtitle", 
+      "label": "Subtitle",
+      "default": "Detailed side-by-side analysis with AI insights"
+    },
+    {
+      "type": "range",
+      "id": "max_bikes",
+      "label": "Maximum bikes to compare",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_specs",
+      "label": "Show detailed specifications",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show customer reviews",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_availability",
+      "label": "Show stock availability",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable advanced filtering",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "ai_insights",
+      "label": "Enable AI insights",
+      "default": false,
+      "info": "Requires AI configuration"
+    }
+  ]
+}
+</script>
+{% endif %}

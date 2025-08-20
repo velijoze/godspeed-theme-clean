@@ -98,6 +98,9 @@
   <!-- Shop.js ============================================================== -->
   {{ 'shop.js' | asset_url | script_tag }}
 
+  <!-- E-Bike Toolkit ======================================================= -->
+  {{ 'godspeed-bike-toolkit.js' | asset_url | script_tag }}
+
   {% unless settings.cart_type == 'page' %}
   <!-- Ajaxify Cart Plugin ================================================== -->
     {{ 'ajaxify.scss.css' | asset_url | stylesheet_tag }}

@@ -1,0 +1,22 @@
+name: Deploy to Shopify
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Deploy to Shopify
+      uses: pgrimaud/action-shopify-cli@v1.0.1
+      with:
+        shopify_app_api_key: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+        shopify_app_api_secret: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+        shopify_store_url: t0uds3-a2.myshopify.com
+        theme_id: 185567543644
+      env:
+        SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
