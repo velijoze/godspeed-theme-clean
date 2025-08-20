@@ -2,17 +2,10 @@
   {% unless section.settings.title == '' %}
     <h4 class="home__subtitle">{{ section.settings.title | escape }}</h4>
   {% endunless %}
-  {% if section.settings.token == '' %}
-    <div class="grid-uniform grid--full">
-      {% for i in (1..section.settings.instagram_photo_count) %}
-        <div class="grid__item {{section.settings.instagram_grid_width_large}} {{section.settings.instagram_grid_width_medium}} {{section.settings.instagram_grid_width_small}}">
-          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div id="Instafeed-{{ section.id }}" class="grid-uniform" data-count="{{ section.settings.instagram_photo_count }}" data-access-token="{{ section.settings.token }}" data-grid="{{section.settings.instagram_grid_width_large}} {{section.settings.instagram_grid_width_medium}} {{section.settings.instagram_grid_width_small}}"></div>
-  {% endif %}
+  <div id="Instafeed-{{ section.id }}" class="grid-uniform" 
+       data-count="{{ section.settings.instagram_photo_count }}"
+       data-username="{{ section.settings.username }}"
+       data-grid="{{section.settings.instagram_grid_width_large}} {{section.settings.instagram_grid_width_medium}} {{section.settings.instagram_grid_width_small}}"></div>
 </div>
 
 {% schema %}
@@ -39,9 +32,10 @@
     },
     {
       "type": "text",
-      "id": "token",
-      "label": "Instagram access token",
-      "info": "Generate Instagram access token"
+      "id": "username",
+      "label": "Instagram username",
+      "info": "Your Instagram username (without @)",
+      "placeholder": "godspeed_bikes"
     },
     {
       "type": "select",

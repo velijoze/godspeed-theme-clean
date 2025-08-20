@@ -1212,24 +1212,83 @@ theme.Instagram = (function() {
   function Instagram(container) {
     var $container = this.$container = $(container);
     var id = $container.attr('data-section-id');
-    var instafeedEl = this.instagram = $('#Instafeed-' + id);
-    var instafeedId = this.instagram = 'Instafeed-' + id;
+    this.$instafeed = $('#Instafeed-' + id);
 
-    var userFeed = new Instafeed({
-      get: 'user',
-      userId: 'self',
-      target: instafeedId,
-      accessToken: instafeedEl.attr('data-access-token'),
-      sortBy: 'most-recent',
-      resolution: 'standard_resolution',
-      limit: instafeedEl.attr('data-count'),
-      template: '<a href="{{link}}" target="_blank" style="background-image: url({{image}});" class="grid__item instagram--square '+instafeedEl.attr('data-grid')+'"><span class="icon icon-instagram"></span></a>'
-    });
-    if( !_.isUndefined( userFeed.options.accessToken) ){
-      userFeed.run();
-    }
+    this.photoCount = parseInt(this.$instafeed.attr('data-count'), 10) || 6;
+    this.username = this.$instafeed.attr('data-username') || '';
+    this.gridClasses = this.$instafeed.attr('data-grid') || '';
+
+    this.init();
   }
-  Instagram.prototype = _.assignIn({}, Instagram.prototype, {});
+
+  Instagram.prototype = _.assignIn({}, Instagram.prototype, {
+    init: function() {
+      var self = this;
+
+      if (!this.username) {
+        self.renderPlaceholders();
+        return;
+      }
+
+      // Attempt a lightweight public fetch. If blocked (CORS), fall back to placeholders.
+      var url = 'https://www.instagram.com/' + encodeURIComponent(this.username) + '/?__a=1&__d=dis';
+      try {
+        fetch(url, { credentials: 'omit' })
+          .then(function(res){
+            // If CORS blocks, this may not be ok; handle gracefully
+            if (!res || !res.ok) { return null; }
+            return res.json();
+          })
+          .then(function(data){
+            var photos = [];
+            try {
+              var edges = data && data.graphql && data.graphql.user && data.graphql.user.edge_owner_to_timeline_media && data.graphql.user.edge_owner_to_timeline_media.edges;
+              if (edges && edges.length) {
+                for (var i = 0; i < Math.min(edges.length, self.photoCount); i++) {
+                  var node = edges[i].node;
+                  photos.push({
+                    image: node.display_url,
+                    link: 'https://www.instagram.com/p/' + node.shortcode + '/'
+                  });
+                }
+              }
+            } catch(e) { /* ignore parse errors */ }
+
+            if (photos.length) {
+              self.renderPhotos(photos);
+            } else {
+              self.renderPlaceholders();
+            }
+          })
+          .catch(function(){ self.renderPlaceholders(); });
+      } catch (e) {
+        self.renderPlaceholders();
+      }
+    },
+
+    renderPhotos: function(photos) {
+      var html = '';
+      for (var i = 0; i < photos.length; i++) {
+        var p = photos[i];
+        html += '<a href="' + p.link + '" target="_blank" class="grid__item instagram--square ' + this.gridClasses + '" style="background-image:url(' + p.image + ');"><span class="icon icon-instagram"></span></a>';
+      }
+      this.$instafeed.html(html);
+    },
+
+    renderPlaceholders: function() {
+      var html = '';
+      for (var i = 0; i < this.photoCount; i++) {
+        html += '<div class="grid__item instagram--square ' + this.gridClasses + '">' + (typeof placeholder_svg_tag === 'function' ? placeholder_svg_tag('image','placeholder-svg') : '') + '</div>';
+      }
+      // Fallback if placeholder_svg_tag is unavailable: empty squares with icon overlay
+      if (!html) {
+        for (var j = 0; j < this.photoCount; j++) {
+          html += '<div class="grid__item instagram--square ' + this.gridClasses + '"><span class="icon icon-instagram"></span></div>';
+        }
+      }
+      this.$instafeed.html(html);
+    }
+  });
 
   return Instagram;
 })();

@@ -26,12 +26,11 @@ jobs:
         echo "Store: ${{ secrets.SHOPIFY_STORE_URL }}"
         echo "Theme ID: ${{ secrets.SHOPIFY_THEME_ID }}"
         
-        # Deploy the theme
+        # Deploy the theme (no --live to allow unpublished themes)
         shopify theme push \
           --store=${{ secrets.SHOPIFY_STORE_URL }} \
           --theme=${{ secrets.SHOPIFY_THEME_ID }} \
-          --password=${{ secrets.SHOPIFY_ACCESS_TOKEN }} \
-          --live
+          --password=${{ secrets.SHOPIFY_ACCESS_TOKEN }}
         
         echo "✅ Theme deployment completed successfully!"
       env:
