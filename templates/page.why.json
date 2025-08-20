@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": true
+      }
+    },
+    "reasons": {
+      "type": "why-reasons"
+    },
+    "testimonials": {
+      "type": "testimonials"
+    },
+    "awards": {
+      "type": "awards"
+    }
+  },
+  "order": [
+    "main",
+    "reasons",
+    "testimonials",
+    "awards"
+  ]
+}

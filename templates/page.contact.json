@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": true
+      }
+    },
+    "form": {
+      "type": "contact-form"
+    },
+    "info": {
+      "type": "contact-info"
+    },
+    "locations": {
+      "type": "store-locations-list"
+    }
+  },
+  "order": [
+    "main",
+    "form",
+    "info",
+    "locations"
+  ]
+}

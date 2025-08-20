@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": true
+      }
+    },
+    "map": {
+      "type": "store-locations-map",
+      "settings": {
+        "title": "Our Locations",
+        "description": "Visit one of our stores to experience our e-bikes firsthand",
+        "google_maps_api_key": "",
+        "map_height": 500
+      }
+    },
+    "list": {
+      "type": "store-locations-list"
+    }
+  },
+  "order": [
+    "main",
+    "map",
+    "list"
+  ]
+}

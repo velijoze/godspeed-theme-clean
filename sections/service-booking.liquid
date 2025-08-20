@@ -3,7 +3,8 @@
   E-bike service scheduling with tiered packages
 {% endcomment %}
 
-<div class="service-booking-section page-width">
+<section class="section-spacing">
+  <div class="page-width">
   <div class="section-header text-center">
     {% if section.settings.title != blank %}
       <h2>{{ section.settings.title }}</h2>
@@ -16,7 +17,8 @@
   <div id="service-booking-{{ section.id }}" class="service-booking-container">
     <!-- Service booking will be initialized here by JavaScript -->
   </div>
-</div>
+  </div>
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -27,11 +29,6 @@
   });
 </script>
 
-<style>
-  .service-booking-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-  }
-</style>
 
 {% schema %}
 {

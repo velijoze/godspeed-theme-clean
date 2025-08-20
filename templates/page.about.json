@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": true
+      }
+    },
+    "hero": {
+      "type": "about-hero"
+    },
+    "values": {
+      "type": "about-values"
+    },
+    "stats": {
+      "type": "about-stats"
+    },
+    "timeline": {
+      "type": "about-timeline"
+    }
+  },
+  "order": [
+    "main",
+    "hero",
+    "values",
+    "stats",
+    "timeline"
+  ]
+}

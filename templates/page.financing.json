@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": true
+      }
+    },
+    "calculator": {
+      "type": "heylight-calculator"
+    },
+    "benefits": {
+      "type": "financing-benefits"
+    },
+    "faq": {
+      "type": "financing-faq"
+    }
+  },
+  "order": [
+    "main",
+    "calculator",
+    "benefits",
+    "faq"
+  ]
+}

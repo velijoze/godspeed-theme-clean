@@ -1,1 +1,21 @@
-
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": true
+      }
+    },
+    "members": {
+      "type": "team-members"
+    },
+    "culture": {
+      "type": "team-culture"
+    }
+  },
+  "order": [
+    "main",
+    "members",
+    "culture"
+  ]
+}
