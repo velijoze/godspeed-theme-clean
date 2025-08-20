@@ -10,67 +10,117 @@
       <div class="tab-buttons">
         {% for block in section.blocks %}
           {% if block.type == 'collection_tab' %}
-                         <button class="tab-button{% if forloop.first %} active{% endif %}" 
-                     data-tab="{{ block.settings.collection.handle }}">
-               {{ block.settings.tab_title }}
-             </button>
+            {% assign collection = block.settings.collection %}
+            {% if collection %}
+              <button class="tab-button{% if forloop.first %} active{% endif %}" 
+                      data-tab="{{ collection.handle }}">
+                {{ block.settings.tab_title }}
+              </button>
+            {% endif %}
           {% endif %}
         {% endfor %}
       </div>
     </div>
     
     <!-- Collection Content -->
-            {% for block in section.blocks %}
-          {% if block.type == 'collection_tab' %}
-            {% assign collection = block.settings.collection %}
-                     <div class="collection-content{% if forloop.first %} active{% endif %}" 
-                  data-tab="{{ block.settings.collection.handle }}">
-          <div class="collection-grid">
-            {% if collection.products.size > 0 %}
-              {% for product in collection.products limit: section.settings.products_per_tab %}
-                <div class="collection-product">
-                  <div class="product-image-wrapper">
-                    <a href="{{ product.url }}" class="product-image-link">
-                      <img src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}" 
-                           alt="{{ product.title | escape }}"
-                           class="product-image"
-                           loading="lazy">
-                      {% unless product.available %}
-                        <div class="sold-out-badge">SOLD OUT</div>
-                      {% endunless %}
-                    </a>
-                    <div class="product-actions">
-                      <button class="quick-view-btn" 
-                              data-product-id="{{ product.id }}"
-                              data-product-handle="{{ product.handle }}">
-                        Quick View
-                      </button>
+    {% for block in section.blocks %}
+      {% if block.type == 'collection_tab' %}
+        {% assign collection = block.settings.collection %}
+        {% if collection %}
+          <div class="collection-content{% if forloop.first %} active{% endif %}" 
+               data-tab="{{ collection.handle }}">
+            <div class="collection-grid">
+              {% if collection.products.size > 0 %}
+                {% for product in collection.products limit: section.settings.products_per_tab %}
+                  <div class="collection-product">
+                    <div class="product-image-wrapper">
+                      <a href="{{ product.url }}" class="product-image-link">
+                        <img src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}" 
+                             alt="{{ product.title | escape }}"
+                             class="product-image"
+                             loading="lazy">
+                        {% unless product.available %}
+                          <div class="sold-out-badge">SOLD OUT</div>
+                        {% endunless %}
+                      </a>
+                      <div class="product-actions">
+                        <button class="quick-view-btn" 
+                                data-product-id="{{ product.id }}"
+                                data-product-handle="{{ product.handle }}">
+                          Quick View
+                        </button>
+                      </div>
+                    </div>
+                    <div class="product-info">
+                      <h3 class="product-title">
+                        <a href="{{ product.url }}">{{ product.title }}</a>
+                      </h3>
+                      <div class="product-price">
+                        {% if product.compare_at_price > product.price %}
+                          <span class="price-sale">{{ product.price | money }}</span>
+                          <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                        {% else %}
+                          <span class="price-regular">{{ product.price | money }}</span>
+                        {% endif %}
+                      </div>
                     </div>
                   </div>
-                  <div class="product-info">
-                    <h3 class="product-title">
-                      <a href="{{ product.url }}">{{ product.title }}</a>
-                    </h3>
-                    <div class="product-price">
-                      {% if product.compare_at_price > product.price %}
-                        <span class="price-sale">{{ product.price | money }}</span>
-                        <span class="price-compare">{{ product.compare_at_price | money }}</span>
-                      {% else %}
-                        <span class="price-regular">{{ product.price | money }}</span>
-                      {% endif %}
-                    </div>
-                  </div>
+                {% endfor %}
+              {% else %}
+                <div class="no-products">
+                  <p>No products found in this collection.</p>
                 </div>
-              {% endfor %}
-            {% else %}
-              <div class="no-products">
-                <p>No products found in this collection.</p>
-              </div>
-            {% endif %}
+              {% endif %}
+            </div>
           </div>
-        </div>
+        {% else %}
+          <!-- No collection selected - show setup message -->
+          <div class="collection-content{% if forloop.first %} active{% endif %}" 
+               data-tab="setup-{{ forloop.index }}">
+            <div class="collection-setup">
+              <h3>Collection Not Set</h3>
+              <p>The "{{ block.settings.tab_title }}" tab doesn't have a collection selected.</p>
+              <div class="setup-instructions">
+                <p><strong>To fix this:</strong></p>
+                <ol>
+                  <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong></li>
+                  <li>Find this "Featured Collections" section</li>
+                  <li>Click on the "{{ block.settings.tab_title }}" block</li>
+                  <li>Select a collection from the "Collection" dropdown</li>
+                  <li>Save your changes</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        {% endif %}
       {% endif %}
     {% endfor %}
+    
+    <!-- No collections set at all -->
+    {% assign has_collections = false %}
+    {% for block in section.blocks %}
+      {% if block.type == 'collection_tab' and block.settings.collection %}
+        {% assign has_collections = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+    
+    {% unless has_collections %}
+      <div class="no-collections-setup">
+        <h3>Featured Collections Setup</h3>
+        <p>No collections have been selected for this section.</p>
+        <div class="setup-instructions">
+          <p><strong>To set up featured collections:</strong></p>
+          <ol>
+            <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong></li>
+            <li>Find this "Featured Collections" section</li>
+            <li>Click on each tab block (FIRE, AIR, EARTH)</li>
+            <li>Select collections from the "Collection" dropdowns</li>
+            <li>Save your changes</li>
+          </ol>
+        </div>
+      </div>
+    {% endunless %}
   </div>
 </div>
 
@@ -238,6 +288,47 @@
     font-weight: 600;
   }
   
+  /* Setup Messages */
+  .collection-setup,
+  .no-collections-setup {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin: 2rem 0;
+  }
+  
+  .collection-setup h3,
+  .no-collections-setup h3 {
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .collection-setup p,
+  .no-collections-setup p {
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  
+  .setup-instructions {
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+  }
+  
+  .setup-instructions ol {
+    margin: 0.5rem 0 0 1.5rem;
+    color: #666;
+  }
+  
+  .setup-instructions li {
+    margin-bottom: 0.5rem;
+  }
+  
   /* Quick View Modal */
   .quick-view-modal {
     position: fixed;
@@ -300,6 +391,11 @@
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1rem;
     }
+    
+    .setup-instructions {
+      text-align: left;
+      margin: 1rem 0;
+    }
   }
 </style>
 
@@ -319,7 +415,10 @@
         
         // Add active class to clicked button and corresponding content
         this.classList.add('active');
-        document.querySelector(`[data-tab="${targetTab}"]`).classList.add('active');
+        const targetContent = document.querySelector(`[data-tab="${targetTab}"]`);
+        if (targetContent) {
+          targetContent.classList.add('active');
+        }
       });
     });
     

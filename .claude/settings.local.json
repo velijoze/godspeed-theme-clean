@@ -5,7 +5,11 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(shopify:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(node:*)",
+      "Bash(rm:*)",
+      "WebFetch(domain:t0uds3-a2.myshopify.com)",
+      "Bash(timeout:*)"
     ],
     "deny": [],
     "ask": []

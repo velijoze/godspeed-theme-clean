@@ -1,0 +1,287 @@
+<!-- /sections/heylight-banner.liquid -->
+{% comment %}
+  Heylight Banner Section - Add this to any page using the page builder
+{% endcomment %}
+
+<div class="heylight-banner" style="background: {{ section.settings.background_color }};">
+  <div class="heylight-banner__container">
+    <div class="heylight-banner__content">
+      <div class="heylight-logo">
+        {% if section.settings.logo_image %}
+          <img src="{{ section.settings.logo_image | img_url: '200x' }}" alt="Heylight" loading="lazy">
+        {% else %}
+          <div class="heylight-logo-text">
+            <span class="logo-icon">💚</span>
+            <span class="logo-text">HeyLight</span>
+          </div>
+        {% endif %}
+      </div>
+      
+      <h2 class="heylight-banner__title">{{ section.settings.title | default: "Swiss 0% Financing" }}</h2>
+      <p class="heylight-banner__subtitle">{{ section.settings.subtitle | default: "Get your dream e-bike with 0% interest financing" }}</p>
+      
+      <div class="heylight-features">
+        {% for block in section.blocks %}
+          {% if block.type == 'feature' %}
+            <div class="feature-item">
+              <span class="feature-icon">{{ block.settings.icon | default: "✓" }}</span>
+              <span>{{ block.settings.text | default: "Feature" }}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      {% if section.settings.button_text and section.settings.button_link %}
+        <a href="{{ section.settings.button_link }}" class="btn btn--heylight">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+    
+    <div class="heylight-banner__image">
+      {% if section.settings.banner_image %}
+        <img src="{{ section.settings.banner_image | img_url: '400x' }}" alt="Heylight Financing" loading="lazy">
+      {% else %}
+        <div class="placeholder-image">
+          <span>🚴‍♂️</span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .heylight-banner {
+    padding: 3rem 0;
+    margin: 2rem 0;
+  }
+  
+  .heylight-banner__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  
+  .heylight-banner__content {
+    text-align: left;
+  }
+  
+  .heylight-logo {
+    margin-bottom: 1.5rem;
+  }
+  
+  .heylight-logo img {
+    max-width: 150px;
+    height: auto;
+  }
+  
+  .heylight-logo-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00D4AA;
+  }
+  
+  .logo-icon {
+    font-size: 2rem;
+  }
+  
+  .heylight-banner__title {
+    font-size: 2.5rem;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  .heylight-banner__subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .heylight-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    color: #2c2c2c;
+  }
+  
+  .feature-icon {
+    color: #00D4AA;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .btn--heylight {
+    display: inline-block;
+    background: #00D4AA;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .btn--heylight:hover {
+    background: #00B894;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,212,170,0.3);
+  }
+  
+  .heylight-banner__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .heylight-banner__image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  .placeholder-image {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, #00D4AA 0%, #00B894 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    box-shadow: 0 10px 30px rgba(0,212,170,0.3);
+  }
+  
+  @media (max-width: 768px) {
+    .heylight-banner__container {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 2rem;
+    }
+    
+    .heylight-banner__title {
+      font-size: 2rem;
+    }
+    
+    .placeholder-image {
+      width: 200px;
+      height: 200px;
+      font-size: 4rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Heylight Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Banner Title",
+      "default": "Swiss 0% Financing"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Banner Subtitle",
+      "default": "Get your dream e-bike with 0% interest financing through Heylight"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Heylight Logo (optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Image (optional)"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text (optional)"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link (optional)"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f8f9fa"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Feature Icon",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Feature Text",
+          "default": "0% Interest"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Heylight Banner",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "✓",
+            "text": "0% Interest"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "⚡",
+            "text": "Quick Approval"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🛡️",
+            "text": "No Hidden Fees"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

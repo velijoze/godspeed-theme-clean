@@ -18,17 +18,48 @@
       <h4 class="home__subtitle">{{ section.settings.title | escape }}</h4>
     {% endunless %}
     
+    <!-- Debug Info (remove in production) -->
+    {% if section.settings.homepage_blog %}
+      <div class="debug-info" style="background: #f0f0f0; padding: 1rem; margin: 1rem 0; border-radius: 4px; font-size: 12px;">
+        <strong>Debug:</strong> Blog handle: "{{ section.settings.homepage_blog }}" | 
+        Blog exists: {{ blog != blank }} | 
+        Articles count: {{ blog.articles.size }} | 
+        Published articles: {{ blog.articles | where: "published", true | size }}
+      </div>
+    {% endif %}
+    
     <div class="grid-uniform">
       {% unless blog == blank or blog.empty? %}
         {% if blog.articles.size > 0 %}
-          {% for article in blog.articles limit:post_count %}
-            {% include 'article-grid-item' %}
-          {% endfor %}
+          <!-- Show published articles -->
+          {% assign published_articles = blog.articles | where: "published", true %}
+          {% if published_articles.size > 0 %}
+            {% for article in published_articles limit:post_count %}
+              {% include 'article-grid-item' %}
+            {% endfor %}
+          {% else %}
+            <!-- No published articles -->
+            <div class="grid__item large--one-whole text-center">
+              <div class="blog__empty-state">
+                <h3>No Published Blog Posts</h3>
+                <p>You have {{ blog.articles.size }} blog posts, but none are published.</p>
+                <div class="blog__setup-steps">
+                  <p><strong>To publish your posts:</strong></p>
+                  <ol>
+                    <li>Go to <strong>Content</strong> → <strong>Blog posts</strong></li>
+                    <li>Find your unpublished posts</li>
+                    <li>Click on each post and change status to "Published"</li>
+                    <li>Save each post</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          {% endif %}
         {% else %}
           <!-- No articles in the selected blog -->
           <div class="grid__item large--one-whole text-center">
             <div class="blog__empty-state">
-              <h3>No blog posts yet</h3>
+              <h3>No Blog Posts Yet</h3>
               <p>The selected blog doesn't have any posts yet. Create your first blog post to see it here!</p>
               <a href="/admin/blogs" class="btn btn--primary">Create Blog Post</a>
             </div>

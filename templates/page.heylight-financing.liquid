@@ -1,0 +1,780 @@
+<!-- /templates/page.heylight-financing.liquid -->
+{% comment %}
+  This page template is for Heylight financing options and calculator.
+  Be sure to select page.heylight-financing as the template from the admin page to have this template take effect.
+{% endcomment %}
+
+<div class="wrapper page-margin">
+  <!-- Heylight Hero Section -->
+  <div class="heylight-hero">
+    <div class="heylight-hero__content">
+      <div class="heylight-logo">
+        <svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 8h20v24H10z" fill="#00D4AA"/>
+          <text x="35" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2C2C2C">HeyLight</text>
+        </svg>
+      </div>
+      <h1 class="heylight-hero__title">Swiss 0% Financing</h1>
+      <p class="heylight-hero__subtitle">Get your dream e-bike with 0% interest financing through Heylight</p>
+      <div class="heylight-features">
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>0% Interest</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>Quick Approval</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>No Hidden Fees</span>
+        </div>
+      </div>
+    </div>
+    <div class="heylight-hero__image">
+      <div class="placeholder-image">
+        <span>🚴‍♂️</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heylight Benefits Section -->
+  <div class="heylight-benefits">
+    <h2>Why Choose Heylight Financing?</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🇨🇭</div>
+        <h3>Swiss Quality</h3>
+        <p>Trusted Swiss financial services with over 20 years of experience</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💰</div>
+        <h3>0% Interest</h3>
+        <p>Pay exactly what you see - no interest charges or hidden costs</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <h3>Fast Approval</h3>
+        <p>Get approved in minutes, not days. Start riding tomorrow!</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🛡️</div>
+        <h3>Secure & Safe</h3>
+        <p>Bank-level security and protection for your financial information</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Financing Calculator Section -->
+  <div class="calculator-section">
+    <div class="calculator-header">
+      <h2>Calculate Your Monthly Payment</h2>
+      <p>Use our calculator to see exactly what you'll pay each month with Heylight financing</p>
+    </div>
+    
+    <div class="financing-calculator-container">
+      <!-- Calculator Form -->
+      <div class="calculator-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="bike-price">E-Bike Price (CHF)</label>
+            <input type="number" id="bike-price" name="bike-price" placeholder="2499" min="500" max="10000" value="2499">
+          </div>
+          
+          <div class="form-group">
+            <label for="down-payment">Down Payment (CHF)</label>
+            <input type="number" id="down-payment" name="down-payment" placeholder="500" min="0" max="5000" value="500">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="loan-term">Loan Term</label>
+            <select id="loan-term" name="loan-term">
+              <option value="12">12 months</option>
+              <option value="24" selected>24 months</option>
+              <option value="36">36 months</option>
+              <option value="48">48 months</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="credit-score">Credit Score Range</label>
+            <select id="credit-score" name="credit-score">
+              <option value="excellent">Excellent (750+)</option>
+              <option value="good" selected>Good (700-749)</option>
+              <option value="fair">Fair (650-699)</option>
+              <option value="poor">Poor (600-649)</option>
+            </select>
+          </div>
+        </div>
+        
+        <button type="button" class="btn btn--heylight btn--large" onclick="calculateHeylightFinancing()">
+          Calculate with Heylight
+        </button>
+      </div>
+      
+      <!-- Results -->
+      <div id="financing-results" class="financing-results" style="display: none;">
+        <div class="heylight-results-header">
+          <div class="heylight-logo-small">
+            <span>💚</span>
+          </div>
+          <h4>Your Heylight Financing Summary</h4>
+        </div>
+        
+        <div class="results-grid">
+          <div class="result-card heylight-card">
+            <div class="result-label">Loan Amount</div>
+            <div class="result-value" id="loan-amount">CHF 1,999</div>
+          </div>
+          
+          <div class="result-card heylight-card">
+            <div class="result-label">Monthly Payment</div>
+            <div class="result-value" id="monthly-payment">CHF 83.29</div>
+          </div>
+          
+          <div class="result-card heylight-card">
+            <div class="result-label">Interest Rate</div>
+            <div class="result-value" id="interest-rate">0%</div>
+          </div>
+          
+          <div class="result-card heylight-card">
+            <div class="result-label">Total Cost</div>
+            <div class="result-value" id="total-cost">CHF 1,999</div>
+          </div>
+        </div>
+        
+        <div class="heylight-advantage">
+          <div class="advantage-icon">🎉</div>
+          <div class="advantage-text">
+            <h5>You Save CHF 0 in Interest!</h5>
+            <p>With Heylight's 0% financing, you pay exactly the bike price - no more, no less.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="calculator-actions">
+        <button class="btn btn--secondary" onclick="resetCalculator()">Reset</button>
+        <button class="btn btn--heylight" onclick="applyHeylightFinancing()">Apply with Heylight</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works Section -->
+  <div class="how-it-works">
+    <h2>How Heylight Financing Works</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Choose Your E-Bike</h3>
+        <p>Select any e-bike from our collection that fits your needs and budget</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Apply Online</h3>
+        <p>Fill out a simple application form - takes less than 5 minutes</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Get Instant Approval</h3>
+        <p>Receive your financing decision within minutes</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>Ride Away Today</h3>
+        <p>Pick up your new e-bike and start enjoying the ride</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h3>What credit score do I need?</h3>
+        <p>Heylight offers financing options for various credit scores. Even with fair credit, you may qualify for competitive rates.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Are there any hidden fees?</h3>
+        <p>No hidden fees! Heylight is transparent about all costs. You'll see exactly what you'll pay upfront.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How long does approval take?</h3>
+        <p>Most applications are approved within minutes. You can start shopping for your e-bike right away!</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I pay off early?</h3>
+        <p>Yes! There are no prepayment penalties. Pay off your loan early and save even more.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="heylight-cta">
+    <h2>Ready to Ride?</h2>
+    <p>Get your dream e-bike with Heylight's 0% financing today</p>
+    <div class="cta-buttons">
+      <button class="btn btn--heylight btn--large" onclick="applyHeylightFinancing()">Apply Now</button>
+      <button class="btn btn--outline" onclick="contactUs()">Contact Us</button>
+    </div>
+  </div>
+</div>
+
+<!-- Custom styles for Heylight financing page -->
+<style>
+  .heylight-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin: 3rem 0;
+    padding: 3rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    border: 2px solid #e0e0e0;
+  }
+
+  .heylight-hero__content {
+    text-align: left;
+  }
+
+  .heylight-logo {
+    margin-bottom: 1.5rem;
+  }
+
+  .heylight-hero__title {
+    font-size: 2.5rem;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .heylight-hero__subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .heylight-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    color: #2c2c2c;
+  }
+
+  .feature-icon {
+    color: #00D4AA;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .heylight-hero__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .placeholder-image {
+    width: 200px;
+    height: 200px;
+    background: #00D4AA;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+  }
+
+  .heylight-benefits {
+    margin: 4rem 0;
+    text-align: center;
+  }
+
+  .heylight-benefits h2 {
+    font-size: 2rem;
+    color: #2c2c2c;
+    margin-bottom: 3rem;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .benefit-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px solid #f0f0f0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+
+  .benefit-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .benefit-card h3 {
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .benefit-card p {
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .calculator-section {
+    margin: 4rem 0;
+  }
+
+  .calculator-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .calculator-header h2 {
+    font-size: 2rem;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+  }
+
+  .calculator-header p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .financing-calculator-container {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    border: 2px solid #f0f0f0;
+  }
+
+  .calculator-form {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    flex: 1;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: #ffffff;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #00D4AA;
+    box-shadow: 0 0 0 3px rgba(0,212,170,0.1);
+  }
+
+  .btn--heylight {
+    background: #00D4AA;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn--heylight:hover {
+    background: #00B894;
+    transform: translateY(-1px);
+  }
+
+  .btn--large {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+
+  .financing-results {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 16px;
+    border: 2px solid #e0e0e0;
+  }
+
+  .heylight-results-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+  }
+
+  .heylight-logo-small {
+    font-size: 2rem;
+  }
+
+  .financing-results h4 {
+    color: #2c2c2c;
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .result-card {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+  }
+
+  .heylight-card {
+    border-color: #00D4AA;
+    background: linear-gradient(135deg, #ffffff 0%, #f0fffd 100%);
+  }
+
+  .result-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #00D4AA;
+  }
+
+  .heylight-advantage {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #00D4AA;
+    margin-bottom: 2rem;
+  }
+
+  .advantage-icon {
+    font-size: 2rem;
+  }
+
+  .advantage-text h5 {
+    color: #00D4AA;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+  }
+
+  .advantage-text p {
+    color: #666;
+    margin: 0;
+  }
+
+  .calculator-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .btn--secondary {
+    background: #6c757d;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn--secondary:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+  }
+
+  .how-it-works {
+    margin: 4rem 0;
+    text-align: center;
+  }
+
+  .how-it-works h2 {
+    font-size: 2rem;
+    color: #2c2c2c;
+    margin-bottom: 3rem;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .step-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px solid #f0f0f0;
+    position: relative;
+  }
+
+  .step-number {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    background: #00D4AA;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  .step-card h3 {
+    color: #2c2c2c;
+    margin: 1rem 0 1rem 0;
+    font-size: 1.3rem;
+  }
+
+  .step-card p {
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .faq-section {
+    margin: 4rem 0;
+  }
+
+  .faq-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #2c2c2c;
+    margin-bottom: 3rem;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+
+  .faq-item {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid #f0f0f0;
+  }
+
+  .faq-item h3 {
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .faq-item p {
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .heylight-cta {
+    text-align: center;
+    margin: 4rem 0;
+    padding: 3rem;
+    background: linear-gradient(135deg, #00D4AA 0%, #00B894 100%);
+    border-radius: 20px;
+    color: #ffffff;
+  }
+
+  .heylight-cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .heylight-cta p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn--outline {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn--outline:hover {
+    background: #ffffff;
+    color: #00D4AA;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .heylight-hero {
+      grid-template-columns: 1fr;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .heylight-hero__title {
+      font-size: 2rem;
+    }
+
+    .financing-calculator-container {
+      padding: 2rem;
+    }
+
+    .form-row {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .results-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- Heylight financing calculation JavaScript -->
+<script>
+  function calculateHeylightFinancing() {
+    const bikePrice = parseFloat(document.getElementById('bike-price').value);
+    const downPayment = parseFloat(document.getElementById('down-payment').value);
+    const loanTerm = parseInt(document.getElementById('loan-term').value);
+    
+    if (!bikePrice || !downPayment || !loanTerm) {
+      alert('Please fill in all fields to calculate financing.');
+      return;
+    }
+    
+    if (downPayment >= bikePrice) {
+      alert('Down payment cannot be greater than or equal to bike price.');
+      return;
+    }
+    
+    // Calculate loan amount
+    const loanAmount = bikePrice - downPayment;
+    
+    // With Heylight 0% financing, monthly payment is simply loan amount / term
+    const monthlyPayment = loanAmount / loanTerm;
+    
+    // No interest with Heylight
+    const totalInterest = 0;
+    
+    // Total cost is just the loan amount (no interest)
+    const totalCost = loanAmount;
+    
+    // Update results
+    document.getElementById('loan-amount').textContent = 'CHF ' + loanAmount.toFixed(2);
+    document.getElementById('monthly-payment').textContent = 'CHF ' + monthlyPayment.toFixed(2);
+    document.getElementById('interest-rate').textContent = '0%';
+    document.getElementById('total-cost').textContent = 'CHF ' + totalCost.toFixed(2);
+    
+    // Show results
+    document.getElementById('financing-results').style.display = 'block';
+    
+    // Scroll to results
+    document.getElementById('financing-results').scrollIntoView({ behavior: 'smooth' });
+  }
+  
+  function resetCalculator() {
+    document.getElementById('bike-price').value = '2499';
+    document.getElementById('down-payment').value = '500';
+    document.getElementById('loan-term').value = '24';
+    document.getElementById('credit-score').value = 'good';
+    
+    document.getElementById('financing-results').style.display = 'none';
+  }
+  
+  function applyHeylightFinancing() {
+    alert('Thank you for choosing Heylight! A financing specialist will contact you within 24 hours to complete your application.');
+  }
+  
+  function contactUs() {
+    window.location.href = '/pages/contact';
+  }
+</script>
