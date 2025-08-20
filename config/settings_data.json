@@ -83,7 +83,7 @@
           "main_menu_linklist": "main-menu",
           "height": "header--medium",
           "meganav_link": "",
-          "header_message": "Your announcement text",
+          "header_message": "0% FINANCING AVAILABLE | RIDE NOW, PAY LATER",
           "header_message_url": "",
           "header_enable_account": true,
           "header_enable_search": true,
@@ -229,20 +229,6 @@
           "description": "",
           "text_align": "text-center",
           "color": "homepage--splash"
-        }
-      },
-      "index-instagram": {
-        "type": "index-instagram",
-        "settings": {
-          "title": "Instagram",
-          "subtitle": "Stay connected with our latest updates and community highlights",
-          "instagram_username": "",
-          "instagram_embed_code": "",
-          "show_cta": true,
-          "cta_title": "Join Our Community",
-          "cta_description": "Connect with fellow e-bike enthusiasts and stay updated with our latest products and news.",
-          "cta_button_text": "Get Started",
-          "cta_button_link": ""
         }
       },
       "bike-compare": {
