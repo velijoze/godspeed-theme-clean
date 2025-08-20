@@ -3,8 +3,8 @@
   Displays team photos, names, titles, and bios in a professional grid
 {% endcomment %}
 
-<div class="team-section" style="background-color: {{ section.settings.background_color }};">
-  <div class="page-width">
+<div class="team-section" data-section-id="{{ section.id }}" data-section-type="team-members" style="background-color: {{ section.settings.background_color }};">
+  <div class="wrapper">
     {% if section.settings.title != blank %}
       <div class="section-header text-center">
         <h2 class="section-header__title">{{ section.settings.title }}</h2>
