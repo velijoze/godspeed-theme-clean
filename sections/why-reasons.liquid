@@ -3,145 +3,50 @@
   Reasons to choose Godspeed over competitors
 {% endcomment %}
 
-<div class="why-reasons-section">
-  <div class="page-width">
-    {% if section.settings.title != blank %}
-      <div class="section-header text-center">
-        <h2>{{ section.settings.title }}</h2>
-        {% if section.settings.description != blank %}
-          <p>{{ section.settings.description }}</p>
+<div class="page-width">
+  {% if section.settings.title != blank %}
+    <div class="section-header text-center">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+        <p class="rte">{{ section.settings.description }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="grid">
+    {% for block in section.blocks %}
+      <div class="grid__item large--one-third medium--one-half text-center" {{ block.shopify_attributes }}>
+        {% if block.settings.icon != blank %}
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+            {{ block.settings.icon }}
+          </div>
+        {% endif %}
+        
+        {% if block.settings.title != blank %}
+          <h3 class="h4">{{ block.settings.title }}</h3>
+        {% endif %}
+        
+        {% if block.settings.description != blank %}
+          <p style="margin-bottom: 1rem;">{{ block.settings.description }}</p>
+        {% endif %}
+        
+        {% if block.settings.highlight != blank %}
+          <div class="label" style="font-weight: 600;">
+            {{ block.settings.highlight }}
+          </div>
         {% endif %}
       </div>
-    {% endif %}
-
-    <div class="reasons-grid">
-      {% for block in section.blocks %}
-        <div class="reason-card" {{ block.shopify_attributes }}>
-          {% if block.settings.icon != blank %}
-            <div class="reason-icon">
-              {{ block.settings.icon }}
-            </div>
-          {% endif %}
-          
-          {% if block.settings.title != blank %}
-            <h3>{{ block.settings.title }}</h3>
-          {% endif %}
-          
-          {% if block.settings.description != blank %}
-            <p>{{ block.settings.description }}</p>
-          {% endif %}
-          
-          {% if block.settings.highlight != blank %}
-            <div class="reason-highlight">
-              {{ block.settings.highlight }}
-            </div>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
-
-    {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
-      <div class="reasons-cta">
-        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--large">
-          {{ section.settings.cta_text }}
-        </a>
-      </div>
-    {% endif %}
+    {% endfor %}
   </div>
+
+  {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
+    <div class="text-center" style="margin-top: 3rem;">
+      <a href="{{ section.settings.cta_link }}" class="btn btn--primary">
+        {{ section.settings.cta_text }}
+      </a>
+    </div>
+  {% endif %}
 </div>
-
-<style>
-  .why-reasons-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-  }
-
-  .reasons-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-  }
-
-  .reason-card {
-    background: #ffffff;
-    padding: 2.5rem 2rem;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-  }
-
-  .reason-card:hover {
-    transform: translateY(-8px);
-    border-color: #E1306C;
-    box-shadow: 0 8px 30px rgba(225,48,108,0.15);
-  }
-
-  .reason-icon {
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
-    color: #E1306C;
-  }
-
-  .reason-card h3 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 1rem;
-  }
-
-  .reason-card p {
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-
-  .reason-highlight {
-    background: #E1306C;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    display: inline-block;
-  }
-
-  .reasons-cta {
-    text-align: center;
-    margin-top: 3rem;
-  }
-
-  .btn--large {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-  }
-
-  @media (max-width: 768px) {
-    .why-reasons-section {
-      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
-    }
-    
-    .reasons-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    
-    .reason-card {
-      padding: 2rem 1.5rem;
-    }
-    
-    .reason-icon {
-      font-size: 3rem;
-    }
-    
-    .reason-card h3 {
-      font-size: 1.2rem;
-    }
-  }
-</style>
 
 {% schema %}
 {
@@ -160,12 +65,6 @@
       "default": "Discover what makes us Switzerland's trusted e-bike partner"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#ffffff"
-    },
-    {
       "type": "text",
       "id": "cta_text",
       "label": "Call to Action Text",
@@ -175,26 +74,6 @@
       "type": "url",
       "id": "cta_link",
       "label": "Call to Action Link"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 80
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 80
     }
   ],
   "blocks": [

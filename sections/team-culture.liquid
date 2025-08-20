@@ -3,293 +3,130 @@
   Display team culture, values, and work environment
 {% endcomment %}
 
-<div class="team-culture-section">
-  <div class="page-width">
-    {% if section.settings.title != blank %}
-      <div class="section-header text-center">
-        <h2>{{ section.settings.title }}</h2>
-        {% if section.settings.description != blank %}
-          <p>{{ section.settings.description }}</p>
-        {% endif %}
-      </div>
-    {% endif %}
-
-    <div class="culture-content">
-      {% for block in section.blocks %}
-        {% case block.type %}
-          {% when 'culture_item' %}
-            <div class="culture-item" {{ block.shopify_attributes }}>
-              {% if block.settings.image != blank %}
-                <div class="culture-image">
-                  <img src="{{ block.settings.image | img_url: '600x400' }}" alt="{{ block.settings.title }}" loading="lazy">
-                </div>
-              {% endif %}
-              
-              <div class="culture-text">
-                {% if block.settings.icon != blank %}
-                  <div class="culture-icon">
-                    {{ block.settings.icon }}
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.title != blank %}
-                  <h3>{{ block.settings.title }}</h3>
-                {% endif %}
-                
-                {% if block.settings.description != blank %}
-                  <p>{{ block.settings.description }}</p>
-                {% endif %}
-                
-                {% if block.settings.quote != blank %}
-                  <blockquote class="culture-quote">
-                    "{{ block.settings.quote }}"
-                    {% if block.settings.quote_author != blank %}
-                      <cite>— {{ block.settings.quote_author }}</cite>
-                    {% endif %}
-                  </blockquote>
-                {% endif %}
-              </div>
-            </div>
-
-          {% when 'team_values' %}
-            <div class="team-values" {{ block.shopify_attributes }}>
-              {% if block.settings.title != blank %}
-                <h3>{{ block.settings.title }}</h3>
-              {% endif %}
-              
-              <div class="values-list">
-                {% if block.settings.value_1 != blank %}
-                  <div class="value-item">
-                    <div class="value-icon">{{ block.settings.value_1_icon | default: "💡" }}</div>
-                    <div class="value-text">
-                      <strong>{{ block.settings.value_1 }}</strong>
-                      {% if block.settings.value_1_desc != blank %}
-                        <p>{{ block.settings.value_1_desc }}</p>
-                      {% endif %}
-                    </div>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.value_2 != blank %}
-                  <div class="value-item">
-                    <div class="value-icon">{{ block.settings.value_2_icon | default: "🤝" }}</div>
-                    <div class="value-text">
-                      <strong>{{ block.settings.value_2 }}</strong>
-                      {% if block.settings.value_2_desc != blank %}
-                        <p>{{ block.settings.value_2_desc }}</p>
-                      {% endif %}
-                    </div>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.value_3 != blank %}
-                  <div class="value-item">
-                    <div class="value-icon">{{ block.settings.value_3_icon | default: "🌟" }}</div>
-                    <div class="value-text">
-                      <strong>{{ block.settings.value_3 }}</strong>
-                      {% if block.settings.value_3_desc != blank %}
-                        <p>{{ block.settings.value_3_desc }}</p>
-                      {% endif %}
-                    </div>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.value_4 != blank %}
-                  <div class="value-item">
-                    <div class="value-icon">{{ block.settings.value_4_icon | default: "🚀" }}</div>
-                    <div class="value-text">
-                      <strong>{{ block.settings.value_4 }}</strong>
-                      {% if block.settings.value_4_desc != blank %}
-                        <p>{{ block.settings.value_4_desc }}</p>
-                      {% endif %}
-                    </div>
-                  </div>
-                {% endif %}
-              </div>
-            </div>
-        {% endcase %}
-      {% endfor %}
+<div class="page-width">
+  {% if section.settings.title != blank %}
+    <div class="section-header text-center">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+        <p class="rte">{{ section.settings.description }}</p>
+      {% endif %}
     </div>
+  {% endif %}
 
-    {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
-      <div class="culture-cta">
-        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--large">
-          {{ section.settings.cta_text }}
-        </a>
-      </div>
-    {% endif %}
-  </div>
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'culture_item' %}
+        <div class="grid" {{ block.shopify_attributes }} style="margin-bottom: 2rem;">
+          {% if block.settings.image != blank %}
+            <div class="grid__item large--one-half medium--one-half">
+              <img src="{{ block.settings.image | img_url: '600x400' }}" alt="{{ block.settings.title }}" loading="lazy" style="width: 100%; height: 300px; object-fit: cover;">
+            </div>
+          {% endif %}
+          
+          <div class="grid__item {% if block.settings.image != blank %}large--one-half medium--one-half{% else %}{% endif %}">
+            {% if block.settings.icon != blank %}
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+                {{ block.settings.icon }}
+              </div>
+            {% endif %}
+            
+            {% if block.settings.title != blank %}
+              <h3 class="h3">{{ block.settings.title }}</h3>
+            {% endif %}
+            
+            {% if block.settings.description != blank %}
+              <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{{ block.settings.description }}</p>
+            {% endif %}
+            
+            {% if block.settings.quote != blank %}
+              <blockquote style="background: #f8f9fa; padding: 1.5rem; border-left: 4px solid #333; font-style: italic; margin: 0;">
+                "{{ block.settings.quote }}"
+                {% if block.settings.quote_author != blank %}
+                  <cite style="display: block; margin-top: 0.5rem; font-weight: 600; font-style: normal; font-size: 0.9rem;">— {{ block.settings.quote_author }}</cite>
+                {% endif %}
+              </blockquote>
+            {% endif %}
+          </div>
+        </div>
+
+      {% when 'team_values' %}
+        <div {{ block.shopify_attributes }} style="margin-bottom: 2rem;">
+          {% if block.settings.title != blank %}
+            <div class="text-center">
+              <h3 class="h3">{{ block.settings.title }}</h3>
+            </div>
+          {% endif %}
+          
+          <div class="grid">
+            {% if block.settings.value_1 != blank %}
+              <div class="grid__item large--one-quarter medium--one-half">
+                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                  <div style="font-size: 2rem; flex-shrink: 0;">{{ block.settings.value_1_icon | default: "💡" }}</div>
+                  <div>
+                    <strong style="display: block; font-size: 1rem; margin-bottom: 0.5rem;">{{ block.settings.value_1 }}</strong>
+                    {% if block.settings.value_1_desc != blank %}
+                      <p style="font-size: 0.9rem; line-height: 1.5; margin: 0;">{{ block.settings.value_1_desc }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if block.settings.value_2 != blank %}
+              <div class="grid__item large--one-quarter medium--one-half">
+                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                  <div style="font-size: 2rem; flex-shrink: 0;">{{ block.settings.value_2_icon | default: "🤝" }}</div>
+                  <div>
+                    <strong style="display: block; font-size: 1rem; margin-bottom: 0.5rem;">{{ block.settings.value_2 }}</strong>
+                    {% if block.settings.value_2_desc != blank %}
+                      <p style="font-size: 0.9rem; line-height: 1.5; margin: 0;">{{ block.settings.value_2_desc }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if block.settings.value_3 != blank %}
+              <div class="grid__item large--one-quarter medium--one-half">
+                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                  <div style="font-size: 2rem; flex-shrink: 0;">{{ block.settings.value_3_icon | default: "🌟" }}</div>
+                  <div>
+                    <strong style="display: block; font-size: 1rem; margin-bottom: 0.5rem;">{{ block.settings.value_3 }}</strong>
+                    {% if block.settings.value_3_desc != blank %}
+                      <p style="font-size: 0.9rem; line-height: 1.5; margin: 0;">{{ block.settings.value_3_desc }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if block.settings.value_4 != blank %}
+              <div class="grid__item large--one-quarter medium--one-half">
+                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                  <div style="font-size: 2rem; flex-shrink: 0;">{{ block.settings.value_4_icon | default: "🚀" }}</div>
+                  <div>
+                    <strong style="display: block; font-size: 1rem; margin-bottom: 0.5rem;">{{ block.settings.value_4 }}</strong>
+                    {% if block.settings.value_4_desc != blank %}
+                      <p style="font-size: 0.9rem; line-height: 1.5; margin: 0;">{{ block.settings.value_4_desc }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+    {% endcase %}
+  {% endfor %}
+
+  {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
+    <div class="text-center" style="margin-top: 3rem;">
+      <a href="{{ section.settings.cta_link }}" class="btn btn--primary">
+        {{ section.settings.cta_text }}
+      </a>
+    </div>
+  {% endif %}
 </div>
 
-<style>
-  .team-culture-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-  }
-
-  .culture-content {
-    margin: 3rem 0;
-  }
-
-  .culture-item {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
-    margin-bottom: 4rem;
-    background: #ffffff;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  }
-
-  .culture-item:nth-child(even) {
-    flex-direction: row-reverse;
-  }
-
-  .culture-image {
-    flex: 1;
-    min-width: 300px;
-  }
-
-  .culture-image img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-
-  .culture-text {
-    flex: 1;
-  }
-
-  .culture-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #E1306C;
-  }
-
-  .culture-text h3 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 1rem;
-  }
-
-  .culture-text p {
-    color: #666;
-    line-height: 1.6;
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .culture-quote {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-left: 4px solid #E1306C;
-    font-style: italic;
-    color: #2c2c2c;
-    margin: 0;
-  }
-
-  .culture-quote cite {
-    display: block;
-    margin-top: 0.5rem;
-    font-weight: 600;
-    color: #E1306C;
-    font-style: normal;
-    font-size: 0.9rem;
-  }
-
-  .team-values {
-    background: #ffffff;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    margin-bottom: 3rem;
-  }
-
-  .team-values h3 {
-    text-align: center;
-    font-size: 1.6rem;
-    color: #2c2c2c;
-    margin-bottom: 2rem;
-  }
-
-  .values-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-  }
-
-  .value-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .value-icon {
-    font-size: 2rem;
-    flex-shrink: 0;
-  }
-
-  .value-text strong {
-    display: block;
-    font-size: 1.1rem;
-    color: #2c2c2c;
-    margin-bottom: 0.5rem;
-  }
-
-  .value-text p {
-    color: #666;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin: 0;
-  }
-
-  .culture-cta {
-    text-align: center;
-    margin-top: 3rem;
-  }
-
-  .btn--large {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-  }
-
-  @media (max-width: 768px) {
-    .team-culture-section {
-      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
-    }
-    
-    .culture-item {
-      flex-direction: column !important;
-      gap: 2rem;
-      padding: 2rem;
-      margin-bottom: 2rem;
-    }
-    
-    .culture-image {
-      min-width: auto;
-    }
-    
-    .culture-image img {
-      height: 250px;
-    }
-    
-    .culture-text h3 {
-      font-size: 1.5rem;
-    }
-    
-    .culture-text p {
-      font-size: 1rem;
-    }
-    
-    .values-list {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-  }
-</style>
 
 {% schema %}
 {
@@ -308,12 +145,6 @@
       "default": "What makes Godspeed a great place to work and serve customers"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#f8f9fa"
-    },
-    {
       "type": "text",
       "id": "cta_text",
       "label": "Call to Action Text",
@@ -323,26 +154,6 @@
       "type": "url",
       "id": "cta_link",
       "label": "Call to Action Link"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 80
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 80
     }
   ],
   "blocks": [

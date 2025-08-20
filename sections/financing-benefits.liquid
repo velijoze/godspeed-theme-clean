@@ -3,138 +3,52 @@
   Display HeyLight financing benefits and features
 {% endcomment %}
 
-<div class="financing-benefits-section">
+<section class="section-spacing">
   <div class="page-width">
     {% if section.settings.title != blank %}
-      <div class="section-header text-center">
-        <h2>{{ section.settings.title }}</h2>
+      <header class="section-header text-center">
+        <h2 class="section-header__title">{{ section.settings.title }}</h2>
         {% if section.settings.description != blank %}
           <p>{{ section.settings.description }}</p>
         {% endif %}
-      </div>
+      </header>
     {% endif %}
 
-    <div class="benefits-grid">
+    <div class="grid grid-uniform">
       {% for block in section.blocks %}
-        <div class="benefit-card" {{ block.shopify_attributes }}>
-          {% if block.settings.icon != blank %}
-            <div class="benefit-icon">
-              {{ block.settings.icon }}
-            </div>
-          {% endif %}
-          
-          {% if block.settings.title != blank %}
-            <h3>{{ block.settings.title }}</h3>
-          {% endif %}
-          
-          {% if block.settings.description != blank %}
-            <p>{{ block.settings.description }}</p>
-          {% endif %}
-          
-          {% if block.settings.highlight != blank %}
-            <div class="benefit-highlight">
-              {{ block.settings.highlight }}
-            </div>
-          {% endif %}
+        <div class="grid__item medium--one-half large--one-third" {{ block.shopify_attributes }}>
+          <div class="feature-card text-center">
+            {% if block.settings.icon != blank %}
+              <div class="feature-icon">
+                {{ block.settings.icon }}
+              </div>
+            {% endif %}
+            
+            {% if block.settings.title != blank %}
+              <h3 class="h4">{{ block.settings.title }}</h3>
+            {% endif %}
+            
+            {% if block.settings.description != blank %}
+              <p>{{ block.settings.description }}</p>
+            {% endif %}
+            
+            {% if block.settings.highlight != blank %}
+              <span class="label label--success">{{ block.settings.highlight }}</span>
+            {% endif %}
+          </div>
         </div>
       {% endfor %}
     </div>
 
     {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
-      <div class="benefits-cta">
-        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--large">
+      <div class="text-center">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--large">
           {{ section.settings.cta_text }}
         </a>
       </div>
     {% endif %}
   </div>
-</div>
-
-<style>
-  .financing-benefits-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-  }
-
-  .benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-  }
-
-  .benefit-card {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-  }
-
-  .benefit-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .benefit-icon {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-    color: #E1306C;
-  }
-
-  .benefit-card h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 1rem;
-  }
-
-  .benefit-card p {
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-
-  .benefit-highlight {
-    background: #E1306C;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    display: inline-block;
-  }
-
-  .benefits-cta {
-    text-align: center;
-    margin-top: 3rem;
-  }
-
-  .btn--large {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-  }
-
-  @media (max-width: 768px) {
-    .financing-benefits-section {
-      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
-    }
-    
-    .benefits-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    
-    .benefit-card {
-      padding: 1.5rem;
-    }
-    
-    .benefit-icon {
-      font-size: 2.5rem;
-    }
-  }
-</style>
+</section>
 
 {% schema %}
 {
@@ -153,12 +67,6 @@
       "default": "Make your e-bike dreams affordable with HeyLight's flexible payment options"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#f8f9fa"
-    },
-    {
       "type": "text",
       "id": "cta_text",
       "label": "Call to Action Text",
@@ -168,26 +76,6 @@
       "type": "url",
       "id": "cta_link",
       "label": "Call to Action Link"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
     }
   ],
   "blocks": [
@@ -252,15 +140,6 @@
             "title": "Digital Process",
             "description": "Complete everything online or in-store with our digital financing platform.",
             "highlight": "No paperwork"
-          }
-        },
-        {
-          "type": "benefit",
-          "settings": {
-            "icon": "🛡️",
-            "title": "Secure & Safe",
-            "description": "Your personal information is protected with bank-level security measures.",
-            "highlight": "Trusted partner"
           }
         }
       ]

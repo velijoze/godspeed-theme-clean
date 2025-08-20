@@ -3,219 +3,66 @@
   Display customer reviews and testimonials
 {% endcomment %}
 
-<div class="testimonials-section">
-  <div class="page-width">
-    {% if section.settings.title != blank %}
-      <div class="section-header text-center">
-        <h2>{{ section.settings.title }}</h2>
-        {% if section.settings.description != blank %}
-          <p>{{ section.settings.description }}</p>
+<div class="page-width">
+  {% if section.settings.title != blank %}
+    <div class="section-header text-center">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+        <p class="rte">{{ section.settings.description }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="grid">
+    {% for block in section.blocks %}
+      <div class="grid__item large--one-third medium--one-half text-center" {{ block.shopify_attributes }}>
+        {% if block.settings.stars != blank %}
+          <div style="margin-bottom: 1rem;">
+            {% assign star_count = block.settings.stars | plus: 0 %}
+            {% for i in (1..5) %}
+              {% if i <= star_count %}
+                <span style="color: #FFD700; font-size: 1.2rem;">⭐</span>
+              {% else %}
+                <span style="color: #ddd; font-size: 1.2rem;">☆</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        
+        {% if block.settings.quote != blank %}
+          <blockquote style="font-style: italic; margin-bottom: 1rem;">
+            "{{ block.settings.quote }}"
+          </blockquote>
+        {% endif %}
+        
+        {% if block.settings.photo != blank %}
+          <img src="{{ block.settings.photo | img_url: '100x100' }}" alt="{{ block.settings.name }}" loading="lazy" style="width: 50px; height: 50px; border-radius: 50%; margin-bottom: 0.5rem;">
+        {% endif %}
+        
+        {% if block.settings.name != blank %}
+          <div class="h5">{{ block.settings.name }}</div>
+        {% endif %}
+        
+        {% if block.settings.location != blank %}
+          <div style="color: #666; font-size: 0.9rem;">{{ block.settings.location }}</div>
+        {% endif %}
+        
+        {% if block.settings.bike_model != blank %}
+          <div class="label" style="font-size: 0.85rem;">{{ block.settings.bike_model }}</div>
         {% endif %}
       </div>
-    {% endif %}
-
-    <div class="testimonials-grid">
-      {% for block in section.blocks %}
-        <div class="testimonial-card" {{ block.shopify_attributes }}>
-          {% if block.settings.stars != blank %}
-            <div class="testimonial-rating">
-              {% assign star_count = block.settings.stars | plus: 0 %}
-              {% for i in (1..5) %}
-                {% if i <= star_count %}
-                  <span class="star filled">⭐</span>
-                {% else %}
-                  <span class="star">☆</span>
-                {% endif %}
-              {% endfor %}
-            </div>
-          {% endif %}
-          
-          {% if block.settings.quote != blank %}
-            <blockquote class="testimonial-quote">
-              "{{ block.settings.quote }}"
-            </blockquote>
-          {% endif %}
-          
-          <div class="testimonial-author">
-            {% if block.settings.photo != blank %}
-              <div class="author-photo">
-                <img src="{{ block.settings.photo | img_url: '100x100' }}" alt="{{ block.settings.name }}" loading="lazy">
-              </div>
-            {% endif %}
-            
-            <div class="author-details">
-              {% if block.settings.name != blank %}
-                <div class="author-name">{{ block.settings.name }}</div>
-              {% endif %}
-              
-              {% if block.settings.location != blank %}
-                <div class="author-location">{{ block.settings.location }}</div>
-              {% endif %}
-              
-              {% if block.settings.bike_model != blank %}
-                <div class="author-bike">{{ block.settings.bike_model }}</div>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-
-    {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
-      <div class="testimonials-cta">
-        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--large">
-          {{ section.settings.cta_text }}
-        </a>
-      </div>
-    {% endif %}
+    {% endfor %}
   </div>
+
+  {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
+    <div class="text-center" style="margin-top: 3rem;">
+      <a href="{{ section.settings.cta_link }}" class="btn btn--primary">
+        {{ section.settings.cta_text }}
+      </a>
+    </div>
+  {% endif %}
 </div>
 
-<style>
-  .testimonials-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-  }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-  }
-
-  .testimonial-card {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-    position: relative;
-  }
-
-  .testimonial-card::before {
-    content: '"';
-    font-size: 6rem;
-    color: #E1306C;
-    font-family: Georgia, serif;
-    position: absolute;
-    top: -1rem;
-    left: 1.5rem;
-    line-height: 1;
-    opacity: 0.3;
-  }
-
-  .testimonial-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .testimonial-rating {
-    display: flex;
-    gap: 0.25rem;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-  }
-
-  .star.filled {
-    color: #FFD700;
-  }
-
-  .star {
-    color: #ddd;
-  }
-
-  .testimonial-quote {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #2c2c2c;
-    margin: 0 0 2rem 0;
-    font-style: italic;
-    position: relative;
-    z-index: 1;
-  }
-
-  .testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .author-photo {
-    flex-shrink: 0;
-  }
-
-  .author-photo img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #E1306C;
-  }
-
-  .author-details {
-    flex: 1;
-  }
-
-  .author-name {
-    font-weight: 600;
-    color: #2c2c2c;
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .author-location {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .author-bike {
-    color: #E1306C;
-    font-size: 0.85rem;
-    font-weight: 600;
-  }
-
-  .testimonials-cta {
-    text-align: center;
-    margin-top: 3rem;
-  }
-
-  .btn--large {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-  }
-
-  @media (max-width: 768px) {
-    .testimonials-section {
-      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
-    }
-    
-    .testimonials-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    
-    .testimonial-card {
-      padding: 1.5rem;
-    }
-    
-    .testimonial-card::before {
-      font-size: 4rem;
-      top: -0.5rem;
-      left: 1rem;
-    }
-    
-    .testimonial-quote {
-      font-size: 1rem;
-    }
-    
-    .author-photo img {
-      width: 50px;
-      height: 50px;
-    }
-  }
-</style>
 
 {% schema %}
 {
@@ -234,12 +81,6 @@
       "default": "Real experiences from real e-bike riders"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#f8f9fa"
-    },
-    {
       "type": "text",
       "id": "cta_text",
       "label": "Call to Action Text",
@@ -249,26 +90,6 @@
       "type": "url",
       "id": "cta_link",
       "label": "Call to Action Link"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 80
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 80
     }
   ],
   "blocks": [

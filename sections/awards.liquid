@@ -3,144 +3,46 @@
   Display company awards, certifications, and recognitions
 {% endcomment %}
 
-<div class="awards-section">
-  <div class="page-width">
-    {% if section.settings.title != blank %}
-      <div class="section-header text-center">
-        <h2>{{ section.settings.title }}</h2>
-        {% if section.settings.description != blank %}
-          <p>{{ section.settings.description }}</p>
+<div class="page-width">
+  {% if section.settings.title != blank %}
+    <div class="section-header text-center">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+        <p class="rte">{{ section.settings.description }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="grid">
+    {% for block in section.blocks %}
+      <div class="grid__item large--one-quarter medium--one-half text-center" {{ block.shopify_attributes }}>
+        {% if block.settings.image != blank %}
+          <img src="{{ block.settings.image | img_url: '200x200' }}" alt="{{ block.settings.title }}" loading="lazy" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 1rem;">
+        {% elsif block.settings.icon != blank %}
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+            {{ block.settings.icon }}
+          </div>
+        {% endif %}
+        
+        {% if block.settings.title != blank %}
+          <h3 class="h5">{{ block.settings.title }}</h3>
+        {% endif %}
+        
+        {% if block.settings.year != blank %}
+          <div class="label" style="font-weight: 600; margin-bottom: 0.5rem;">{{ block.settings.year }}</div>
+        {% endif %}
+        
+        {% if block.settings.description != blank %}
+          <p style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.5rem;">{{ block.settings.description }}</p>
+        {% endif %}
+        
+        {% if block.settings.issuer != blank %}
+          <div style="font-size: 0.85rem; color: #888; font-style: italic;">{{ block.settings.issuer }}</div>
         {% endif %}
       </div>
-    {% endif %}
-
-    <div class="awards-grid">
-      {% for block in section.blocks %}
-        <div class="award-card" {{ block.shopify_attributes }}>
-          {% if block.settings.image != blank %}
-            <div class="award-image">
-              <img src="{{ block.settings.image | img_url: '200x200' }}" alt="{{ block.settings.title }}" loading="lazy">
-            </div>
-          {% elsif block.settings.icon != blank %}
-            <div class="award-icon">
-              {{ block.settings.icon }}
-            </div>
-          {% endif %}
-          
-          {% if block.settings.title != blank %}
-            <h3>{{ block.settings.title }}</h3>
-          {% endif %}
-          
-          {% if block.settings.year != blank %}
-            <div class="award-year">{{ block.settings.year }}</div>
-          {% endif %}
-          
-          {% if block.settings.description != blank %}
-            <p>{{ block.settings.description }}</p>
-          {% endif %}
-          
-          {% if block.settings.issuer != blank %}
-            <div class="award-issuer">{{ block.settings.issuer }}</div>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
   </div>
 </div>
-
-<style>
-  .awards-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-  }
-
-  .awards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-  }
-
-  .award-card {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-    border: 2px solid transparent;
-  }
-
-  .award-card:hover {
-    transform: translateY(-4px);
-    border-color: #E1306C;
-  }
-
-  .award-image img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: 1rem;
-  }
-
-  .award-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    color: #E1306C;
-  }
-
-  .award-card h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 0.5rem;
-  }
-
-  .award-year {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #E1306C;
-    margin-bottom: 1rem;
-  }
-
-  .award-card p {
-    color: #666;
-    line-height: 1.5;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-  }
-
-  .award-issuer {
-    font-size: 0.85rem;
-    color: #888;
-    font-style: italic;
-  }
-
-  @media (max-width: 768px) {
-    .awards-section {
-      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
-    }
-    
-    .awards-grid {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    
-    .award-card {
-      padding: 1.5rem;
-    }
-    
-    .award-image img {
-      width: 80px;
-      height: 80px;
-    }
-    
-    .award-icon {
-      font-size: 3rem;
-    }
-  }
-</style>
 
 {% schema %}
 {
@@ -157,32 +59,6 @@
       "id": "description",
       "label": "Description",
       "default": "Recognition for our commitment to excellence"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
     }
   ],
   "blocks": [

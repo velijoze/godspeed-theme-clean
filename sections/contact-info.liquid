@@ -3,349 +3,168 @@
   Display contact details and business information
 {% endcomment %}
 
-<div class="contact-info-section">
-  <div class="page-width">
-    {% if section.settings.title != blank %}
-      <div class="section-header text-center">
-        <h2>{{ section.settings.title }}</h2>
-        {% if section.settings.description != blank %}
-          <p>{{ section.settings.description }}</p>
-        {% endif %}
-      </div>
-    {% endif %}
+<div class="page-width">
+  {% if section.settings.title != blank %}
+    <div class="section-header text-center">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+        <p class="rte">{{ section.settings.description }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
 
-    <div class="contact-info-grid">
-      {% for block in section.blocks %}
-        {% case block.type %}
-          {% when 'contact_method' %}
-            <div class="contact-method-card" {{ block.shopify_attributes }}>
-              {% if block.settings.icon != blank %}
-                <div class="contact-icon">
-                  {{ block.settings.icon }}
+  <div class="grid">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'contact_method' %}
+          <div class="grid__item large--one-third medium--one-half text-center" {{ block.shopify_attributes }}>
+            {% if block.settings.icon != blank %}
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+                {{ block.settings.icon }}
+              </div>
+            {% endif %}
+            
+            {% if block.settings.title != blank %}
+              <h3 class="h4">{{ block.settings.title }}</h3>
+            {% endif %}
+            
+            {% if block.settings.content != blank %}
+              <div class="rte" style="margin-bottom: 1.5rem;">
+                {{ block.settings.content }}
+              </div>
+            {% endif %}
+            
+            {% if block.settings.link_text != blank and block.settings.link_url != blank %}
+              <a href="{{ block.settings.link_url }}" class="btn" 
+                 {% if block.settings.link_url contains 'tel:' or block.settings.link_url contains 'mailto:' %}
+                   {% assign link_class = 'direct-link' %}
+                 {% else %}
+                   target="_blank" rel="noopener"
+                 {% endif %}>
+                {{ block.settings.link_text }}
+              </a>
+            {% endif %}
+          </div>
+
+        {% when 'business_hours' %}
+          <div class="grid__item large--one-third medium--one-half text-center" {{ block.shopify_attributes }}>
+            {% if block.settings.icon != blank %}
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+                {{ block.settings.icon }}
+              </div>
+            {% endif %}
+            
+            <h3 class="h4">{{ block.settings.title | default: "Business Hours" }}</h3>
+            
+            <div style="text-align: left; max-width: 280px; margin: 0 auto;">
+              {% if block.settings.monday_hours != blank %}
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                  <span><strong>Monday:</strong></span>
+                  <span>{{ block.settings.monday_hours }}</span>
                 </div>
               {% endif %}
               
-              {% if block.settings.title != blank %}
-                <h3>{{ block.settings.title }}</h3>
-              {% endif %}
-              
-              {% if block.settings.content != blank %}
-                <div class="contact-content">
-                  {{ block.settings.content }}
+              {% if block.settings.tuesday_hours != blank %}
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                  <span><strong>Tuesday:</strong></span>
+                  <span>{{ block.settings.tuesday_hours }}</span>
                 </div>
               {% endif %}
               
-              {% if block.settings.link_text != blank and block.settings.link_url != blank %}
-                <a href="{{ block.settings.link_url }}" class="contact-link" 
-                   {% if block.settings.link_url contains 'tel:' or block.settings.link_url contains 'mailto:' %}
-                     {% assign link_class = 'direct-link' %}
-                   {% else %}
-                     target="_blank" rel="noopener"
-                   {% endif %}>
-                  {{ block.settings.link_text }}
+              {% if block.settings.wednesday_hours != blank %}
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                  <span><strong>Wednesday:</strong></span>
+                  <span>{{ block.settings.wednesday_hours }}</span>
+                </div>
+              {% endif %}
+              
+              {% if block.settings.thursday_hours != blank %}
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                  <span><strong>Thursday:</strong></span>
+                  <span>{{ block.settings.thursday_hours }}</span>
+                </div>
+              {% endif %}
+              
+              {% if block.settings.friday_hours != blank %}
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                  <span><strong>Friday:</strong></span>
+                  <span>{{ block.settings.friday_hours }}</span>
+                </div>
+              {% endif %}
+              
+              {% if block.settings.saturday_hours != blank %}
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                  <span><strong>Saturday:</strong></span>
+                  <span>{{ block.settings.saturday_hours }}</span>
+                </div>
+              {% endif %}
+              
+              {% if block.settings.sunday_hours != blank %}
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
+                  <span><strong>Sunday:</strong></span>
+                  <span>{{ block.settings.sunday_hours }}</span>
+                </div>
+              {% endif %}
+            </div>
+            
+            {% if block.settings.special_note != blank %}
+              <div class="note" style="margin-top: 1rem;">
+                {{ block.settings.special_note }}
+              </div>
+            {% endif %}
+          </div>
+
+        {% when 'social_media' %}
+          <div class="grid__item large--one-third medium--one-half text-center" {{ block.shopify_attributes }}>
+            {% if block.settings.icon != blank %}
+              <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+                {{ block.settings.icon }}
+              </div>
+            {% endif %}
+            
+            <h3 class="h4">{{ block.settings.title | default: "Follow Us" }}</h3>
+            
+            <div>
+              {% if block.settings.facebook_url != blank %}
+                <a href="{{ block.settings.facebook_url }}" target="_blank" rel="noopener" class="btn" style="display: block; margin-bottom: 0.5rem;">
+                  <span style="font-size: 1.2rem;">📘</span>
+                  Facebook
+                </a>
+              {% endif %}
+              
+              {% if block.settings.instagram_url != blank %}
+                <a href="{{ block.settings.instagram_url }}" target="_blank" rel="noopener" class="btn" style="display: block; margin-bottom: 0.5rem;">
+                  <span style="font-size: 1.2rem;">📷</span>
+                  Instagram
+                </a>
+              {% endif %}
+              
+              {% if block.settings.twitter_url != blank %}
+                <a href="{{ block.settings.twitter_url }}" target="_blank" rel="noopener" class="btn" style="display: block; margin-bottom: 0.5rem;">
+                  <span style="font-size: 1.2rem;">🐦</span>
+                  Twitter
+                </a>
+              {% endif %}
+              
+              {% if block.settings.youtube_url != blank %}
+                <a href="{{ block.settings.youtube_url }}" target="_blank" rel="noopener" class="btn" style="display: block; margin-bottom: 0.5rem;">
+                  <span style="font-size: 1.2rem;">📺</span>
+                  YouTube
+                </a>
+              {% endif %}
+              
+              {% if block.settings.linkedin_url != blank %}
+                <a href="{{ block.settings.linkedin_url }}" target="_blank" rel="noopener" class="btn" style="display: block; margin-bottom: 0.5rem;">
+                  <span style="font-size: 1.2rem;">💼</span>
+                  LinkedIn
                 </a>
               {% endif %}
             </div>
-
-          {% when 'business_hours' %}
-            <div class="business-hours-card" {{ block.shopify_attributes }}>
-              {% if block.settings.icon != blank %}
-                <div class="contact-icon">
-                  {{ block.settings.icon }}
-                </div>
-              {% endif %}
-              
-              <h3>{{ block.settings.title | default: "Business Hours" }}</h3>
-              
-              <div class="hours-list">
-                {% if block.settings.monday_hours != blank %}
-                  <div class="hours-item">
-                    <span class="day">Monday:</span>
-                    <span class="hours">{{ block.settings.monday_hours }}</span>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.tuesday_hours != blank %}
-                  <div class="hours-item">
-                    <span class="day">Tuesday:</span>
-                    <span class="hours">{{ block.settings.tuesday_hours }}</span>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.wednesday_hours != blank %}
-                  <div class="hours-item">
-                    <span class="day">Wednesday:</span>
-                    <span class="hours">{{ block.settings.wednesday_hours }}</span>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.thursday_hours != blank %}
-                  <div class="hours-item">
-                    <span class="day">Thursday:</span>
-                    <span class="hours">{{ block.settings.thursday_hours }}</span>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.friday_hours != blank %}
-                  <div class="hours-item">
-                    <span class="day">Friday:</span>
-                    <span class="hours">{{ block.settings.friday_hours }}</span>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.saturday_hours != blank %}
-                  <div class="hours-item">
-                    <span class="day">Saturday:</span>
-                    <span class="hours">{{ block.settings.saturday_hours }}</span>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.sunday_hours != blank %}
-                  <div class="hours-item">
-                    <span class="day">Sunday:</span>
-                    <span class="hours">{{ block.settings.sunday_hours }}</span>
-                  </div>
-                {% endif %}
-              </div>
-              
-              {% if block.settings.special_note != blank %}
-                <div class="hours-note">
-                  {{ block.settings.special_note }}
-                </div>
-              {% endif %}
-            </div>
-
-          {% when 'social_media' %}
-            <div class="social-media-card" {{ block.shopify_attributes }}>
-              {% if block.settings.icon != blank %}
-                <div class="contact-icon">
-                  {{ block.settings.icon }}
-                </div>
-              {% endif %}
-              
-              <h3>{{ block.settings.title | default: "Follow Us" }}</h3>
-              
-              <div class="social-links">
-                {% if block.settings.facebook_url != blank %}
-                  <a href="{{ block.settings.facebook_url }}" target="_blank" rel="noopener" class="social-link facebook">
-                    <span class="social-icon">📘</span>
-                    Facebook
-                  </a>
-                {% endif %}
-                
-                {% if block.settings.instagram_url != blank %}
-                  <a href="{{ block.settings.instagram_url }}" target="_blank" rel="noopener" class="social-link instagram">
-                    <span class="social-icon">📷</span>
-                    Instagram
-                  </a>
-                {% endif %}
-                
-                {% if block.settings.twitter_url != blank %}
-                  <a href="{{ block.settings.twitter_url }}" target="_blank" rel="noopener" class="social-link twitter">
-                    <span class="social-icon">🐦</span>
-                    Twitter
-                  </a>
-                {% endif %}
-                
-                {% if block.settings.youtube_url != blank %}
-                  <a href="{{ block.settings.youtube_url }}" target="_blank" rel="noopener" class="social-link youtube">
-                    <span class="social-icon">📺</span>
-                    YouTube
-                  </a>
-                {% endif %}
-                
-                {% if block.settings.linkedin_url != blank %}
-                  <a href="{{ block.settings.linkedin_url }}" target="_blank" rel="noopener" class="social-link linkedin">
-                    <span class="social-icon">💼</span>
-                    LinkedIn
-                  </a>
-                {% endif %}
-              </div>
-            </div>
-        {% endcase %}
-      {% endfor %}
-    </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
   </div>
 </div>
-
-<style>
-  .contact-info-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-  }
-
-  .contact-info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 2rem 0;
-  }
-
-  .contact-method-card,
-  .business-hours-card,
-  .social-media-card {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-  }
-
-  .contact-method-card:hover,
-  .business-hours-card:hover,
-  .social-media-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .contact-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #E1306C;
-  }
-
-  .contact-method-card h3,
-  .business-hours-card h3,
-  .social-media-card h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 1rem;
-  }
-
-  .contact-content {
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-
-  .contact-link {
-    display: inline-block;
-    background: #E1306C;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-
-  .contact-link:hover {
-    background: #C13584;
-    color: white;
-    transform: translateY(-1px);
-  }
-
-  .hours-list {
-    text-align: left;
-    max-width: 280px;
-    margin: 0 auto;
-  }
-
-  .hours-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #f0f0f0;
-  }
-
-  .hours-item:last-child {
-    border-bottom: none;
-  }
-
-  .day {
-    font-weight: 600;
-    color: #2c2c2c;
-  }
-
-  .hours {
-    color: #666;
-  }
-
-  .hours-note {
-    background: #f8f9fa;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: #666;
-    font-style: italic;
-  }
-
-  .social-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    align-items: center;
-  }
-
-  .social-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    background: #f8f9fa;
-    border-radius: 25px;
-    text-decoration: none;
-    color: #2c2c2c;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    min-width: 140px;
-    justify-content: center;
-  }
-
-  .social-link:hover {
-    background: #E1306C;
-    color: white;
-    transform: translateY(-1px);
-  }
-
-  .social-link.facebook:hover {
-    background: #1877F2;
-  }
-
-  .social-link.instagram:hover {
-    background: #E4405F;
-  }
-
-  .social-link.twitter:hover {
-    background: #1DA1F2;
-  }
-
-  .social-link.youtube:hover {
-    background: #FF0000;
-  }
-
-  .social-link.linkedin:hover {
-    background: #0A66C2;
-  }
-
-  .social-icon {
-    font-size: 1.2rem;
-  }
-
-  @media (max-width: 768px) {
-    .contact-info-section {
-      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
-    }
-    
-    .contact-info-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin: 1.5rem 0;
-    }
-    
-    .contact-method-card,
-    .business-hours-card,
-    .social-media-card {
-      padding: 1.5rem;
-    }
-    
-    .contact-icon {
-      font-size: 2.5rem;
-    }
-  }
-</style>
 
 {% schema %}
 {
@@ -362,32 +181,6 @@
       "id": "description",
       "label": "Description",
       "default": "Get in touch with us through any of these channels"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 50
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 50
     }
   ],
   "blocks": [

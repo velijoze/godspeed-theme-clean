@@ -3,117 +3,37 @@
   Hero section for about page
 {% endcomment %}
 
-<div class="about-hero-section">
-  <div class="page-width">
-    <div class="hero-content">
-      {% if section.settings.image != blank %}
-        <div class="hero-image">
-          <img src="{{ section.settings.image | img_url: '800x600' }}" alt="{{ section.settings.image.alt | default: section.settings.title }}" loading="lazy">
+<div class="page-width">
+  <div class="grid">
+    {% if section.settings.image != blank %}
+      <div class="grid__item large--one-half medium--one-half">
+        <img src="{{ section.settings.image | img_url: '800x600' }}" alt="{{ section.settings.image.alt | default: section.settings.title }}" loading="lazy" style="width: 100%; height: auto;">
+      </div>
+    {% endif %}
+    
+    <div class="grid__item {% if section.settings.image != blank %}large--one-half medium--one-half{% else %}{% endif %} {% unless section.settings.image %}text-center{% endunless %}">
+      {% if section.settings.title != blank %}
+        <h1 class="h1">{{ section.settings.title }}</h1>
+      {% endif %}
+      
+      {% if section.settings.subtitle != blank %}
+        <h2 class="h2">{{ section.settings.subtitle }}</h2>
+      {% endif %}
+      
+      {% if section.settings.description != blank %}
+        <div class="rte" style="margin-bottom: 2rem;">
+          {{ section.settings.description }}
         </div>
       {% endif %}
       
-      <div class="hero-text">
-        {% if section.settings.title != blank %}
-          <h1>{{ section.settings.title }}</h1>
-        {% endif %}
-        
-        {% if section.settings.subtitle != blank %}
-          <h2>{{ section.settings.subtitle }}</h2>
-        {% endif %}
-        
-        {% if section.settings.description != blank %}
-          <div class="hero-description">
-            {{ section.settings.description }}
-          </div>
-        {% endif %}
-        
-        {% if section.settings.button_text != blank and section.settings.button_link != blank %}
-          <a href="{{ section.settings.button_link }}" class="btn btn--primary btn--large">
-            {{ section.settings.button_text }}
-          </a>
-        {% endif %}
-      </div>
+      {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="btn btn--primary">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
     </div>
   </div>
 </div>
-
-<style>
-  .about-hero-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-  }
-
-  .hero-content {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
-    min-height: 500px;
-  }
-
-  .hero-image {
-    flex: 1;
-  }
-
-  .hero-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-  }
-
-  .hero-text {
-    flex: 1;
-  }
-
-  .hero-text h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #2c2c2c;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-  }
-
-  .hero-text h2 {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: #E1306C;
-    margin-bottom: 1.5rem;
-    line-height: 1.4;
-  }
-
-  .hero-description {
-    font-size: 1.1rem;
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-
-  .btn--large {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-  }
-
-  @media (max-width: 768px) {
-    .about-hero-section {
-      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
-    }
-    
-    .hero-content {
-      flex-direction: column;
-      text-align: center;
-      min-height: auto;
-      gap: 2rem;
-    }
-    
-    .hero-text h1 {
-      font-size: 2.5rem;
-    }
-    
-    .hero-text h2 {
-      font-size: 1.3rem;
-    }
-  }
-</style>
 
 {% schema %}
 {
@@ -152,32 +72,6 @@
       "type": "url",
       "id": "button_link",
       "label": "Button Link"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 80
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 80
     }
   ],
   "presets": [

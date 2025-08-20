@@ -3,112 +3,36 @@
   Company statistics and achievements
 {% endcomment %}
 
-<div class="about-stats-section">
-  <div class="page-width">
-    {% if section.settings.title != blank %}
-      <div class="section-header text-center">
-        <h2>{{ section.settings.title }}</h2>
-        {% if section.settings.description != blank %}
-          <p>{{ section.settings.description }}</p>
+<div class="page-width">
+  {% if section.settings.title != blank %}
+    <div class="section-header text-center">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+        <p class="rte">{{ section.settings.description }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="grid">
+    {% for block in section.blocks %}
+      <div class="grid__item large--one-quarter medium--one-half text-center" {{ block.shopify_attributes }}>
+        {% if block.settings.number != blank %}
+          <div class="h1" style="margin-bottom: 0.5rem;">
+            {{ block.settings.number }}{% if block.settings.suffix != blank %}{{ block.settings.suffix }}{% endif %}
+          </div>
+        {% endif %}
+        
+        {% if block.settings.label != blank %}
+          <div class="h4" style="margin-bottom: 0.5rem;">{{ block.settings.label }}</div>
+        {% endif %}
+        
+        {% if block.settings.description != blank %}
+          <div style="font-size: 0.9rem; line-height: 1.4;">{{ block.settings.description }}</div>
         {% endif %}
       </div>
-    {% endif %}
-
-    <div class="stats-grid">
-      {% for block in section.blocks %}
-        <div class="stat-card" {{ block.shopify_attributes }}>
-          {% if block.settings.number != blank %}
-            <div class="stat-number">
-              {{ block.settings.number }}{% if block.settings.suffix != blank %}{{ block.settings.suffix }}{% endif %}
-            </div>
-          {% endif %}
-          
-          {% if block.settings.label != blank %}
-            <div class="stat-label">{{ block.settings.label }}</div>
-          {% endif %}
-          
-          {% if block.settings.description != blank %}
-            <div class="stat-description">{{ block.settings.description }}</div>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
   </div>
 </div>
-
-<style>
-  .about-stats-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-  }
-
-  .stat-card {
-    text-align: center;
-    padding: 2rem 1rem;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-  }
-
-  .stat-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .stat-number {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #E1306C;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
-  .stat-label {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .stat-description {
-    font-size: 0.9rem;
-    color: #666;
-    line-height: 1.4;
-  }
-
-  @media (max-width: 768px) {
-    .about-stats-section {
-      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
-    }
-    
-    .stats-grid {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    
-    .stat-card {
-      padding: 1.5rem 1rem;
-    }
-    
-    .stat-number {
-      font-size: 2.5rem;
-    }
-    
-    .stat-label {
-      font-size: 1rem;
-    }
-  }
-</style>
 
 {% schema %}
 {
@@ -125,32 +49,6 @@
       "id": "description",
       "label": "Description",
       "default": "Numbers that tell our story"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#f8f9fa"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
     }
   ],
   "blocks": [

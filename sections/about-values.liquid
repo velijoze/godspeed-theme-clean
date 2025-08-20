@@ -3,98 +3,36 @@
   Company values and mission
 {% endcomment %}
 
-<div class="about-values-section">
-  <div class="page-width">
-    {% if section.settings.title != blank %}
-      <div class="section-header text-center">
-        <h2>{{ section.settings.title }}</h2>
-        {% if section.settings.description != blank %}
-          <p>{{ section.settings.description }}</p>
+<div class="page-width">
+  {% if section.settings.title != blank %}
+    <div class="section-header text-center">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+        <p class="rte">{{ section.settings.description }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="grid">
+    {% for block in section.blocks %}
+      <div class="grid__item large--one-third medium--one-half text-center" {{ block.shopify_attributes }}>
+        {% if block.settings.icon != blank %}
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+            {{ block.settings.icon }}
+          </div>
+        {% endif %}
+        
+        {% if block.settings.title != blank %}
+          <h3 class="h4">{{ block.settings.title }}</h3>
+        {% endif %}
+        
+        {% if block.settings.description != blank %}
+          <p>{{ block.settings.description }}</p>
         {% endif %}
       </div>
-    {% endif %}
-
-    <div class="values-grid">
-      {% for block in section.blocks %}
-        <div class="value-card" {{ block.shopify_attributes }}>
-          {% if block.settings.icon != blank %}
-            <div class="value-icon">
-              {{ block.settings.icon }}
-            </div>
-          {% endif %}
-          
-          {% if block.settings.title != blank %}
-            <h3>{{ block.settings.title }}</h3>
-          {% endif %}
-          
-          {% if block.settings.description != blank %}
-            <p>{{ block.settings.description }}</p>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
   </div>
 </div>
-
-<style>
-  .about-values-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    background: {{ section.settings.background_color }};
-  }
-
-  .values-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-  }
-
-  .value-card {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-  }
-
-  .value-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .value-icon {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-    color: #E1306C;
-  }
-
-  .value-card h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 1rem;
-  }
-
-  .value-card p {
-    color: #666;
-    line-height: 1.6;
-  }
-
-  @media (max-width: 768px) {
-    .about-values-section {
-      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
-    }
-    
-    .values-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-    
-    .value-card {
-      padding: 1.5rem;
-    }
-  }
-</style>
 
 {% schema %}
 {
@@ -111,32 +49,6 @@
       "id": "description",
       "label": "Description",
       "default": "What drives us every day"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#f8f9fa"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
     }
   ],
   "blocks": [
