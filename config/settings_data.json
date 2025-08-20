@@ -329,7 +329,7 @@
         ],
         "name": "Logo list",
         "settings": {
-          "title": "",
+          "title": "Our Brands",
           "homepage_logos_bg_color": "homepage--light"
         }
       },
@@ -367,7 +367,7 @@
           "overlay": "image-overlay-15"
         }
       },
-      "index_blog_q6nFip": {
+      "index_blog_6zJUw4": {
         "type": "index-blog",
         "name": "Blog posts",
         "settings": {
@@ -384,7 +384,7 @@
       "index-video",
       "index_logos_e8qw4V",
       "index_collection_grid_P3keXh",
-      "index_blog_q6nFip"
+      "index_blog_6zJUw4"
     ]
   },
   "presets": {
