@@ -376,6 +376,56 @@
           "homepage_blog_color": "homepage--white",
           "homepage_blog_count": "2"
         }
+      },
+      "index_sustainability_rFiKFj": {
+        "type": "index-sustainability",
+        "name": "Sustainability Section",
+        "settings": {
+          "title": "ECO-FRIENDLY TRANSPORT",
+          "subtitle": "Join the green revolution with our sustainable e-bike solutions.",
+          "commuting_title": "Green Commuting",
+          "commuting_description": "Reduce your carbon footprint by choosing e-bikes for daily transportation.",
+          "energy_title": "Energy Efficient",
+          "energy_description": "Our e-bikes use minimal electricity compared to cars and public transport.",
+          "materials_title": "Sustainable Materials",
+          "materials_description": "Built with eco-friendly components and recyclable materials."
+        }
+      },
+      "index_featured_collections_KWKDEg": {
+        "type": "index-featured-collections",
+        "blocks": {
+          "collection_tab_G9EqC7": {
+            "type": "collection_tab",
+            "settings": {
+              "tab_title": "FIRE",
+              "collection": ""
+            }
+          },
+          "collection_tab_AAcX3t": {
+            "type": "collection_tab",
+            "settings": {
+              "tab_title": "AIR",
+              "collection": ""
+            }
+          },
+          "collection_tab_U9QJmW": {
+            "type": "collection_tab",
+            "settings": {
+              "tab_title": "EARTH",
+              "collection": ""
+            }
+          }
+        },
+        "block_order": [
+          "collection_tab_G9EqC7",
+          "collection_tab_AAcX3t",
+          "collection_tab_U9QJmW"
+        ],
+        "name": "Featured Collections",
+        "settings": {
+          "title": "FEATURED COLLECTIONS",
+          "products_per_tab": 6
+        }
       }
     },
     "content_for_index": [
@@ -384,7 +434,9 @@
       "index-video",
       "index_logos_e8qw4V",
       "index_collection_grid_P3keXh",
-      "index_blog_6zJUw4"
+      "index_blog_6zJUw4",
+      "index_sustainability_rFiKFj",
+      "index_featured_collections_KWKDEg"
     ]
   },
   "presets": {
