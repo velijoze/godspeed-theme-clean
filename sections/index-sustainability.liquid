@@ -34,17 +34,6 @@
         <p class="sustainability-description">{{ section.settings.materials_description | default: 'Built with eco-friendly components and recyclable materials.' }}</p>
       </div>
     </div>
-    
-    <!-- Call to Action -->
-    <div class="sustainability-cta">
-      <h3 class="cta-title">{{ section.settings.cta_title | default: 'Choose Sustainable Transportation' }}</h3>
-      <p class="cta-description">{{ section.settings.cta_description | default: 'Every ride contributes to a cleaner environment and healthier cities.' }}</p>
-      {% if section.settings.cta_button_text and section.settings.cta_button_link %}
-        <a href="{{ section.settings.cta_button_link }}" class="btn btn--primary btn--large">
-          {{ section.settings.cta_button_text }}
-        </a>
-      {% endif %}
-    </div>
   </div>
 </div>
 
@@ -115,54 +104,6 @@
     margin: 0;
   }
   
-  .sustainability-cta {
-    text-align: center;
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  }
-  
-  .cta-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 0.75rem;
-  }
-  
-  .cta-description {
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .btn--large {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 6px;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-  }
-  
-  .btn--primary {
-    background: #4CAF50;
-    color: #ffffff;
-    border: 2px solid #4CAF50;
-  }
-  
-  .btn--primary:hover {
-    background: #45a049;
-    border-color: #45a049;
-    transform: translateY(-1px);
-  }
-  
   /* Responsive design */
   @media (max-width: 768px) {
     .sustainability-section {
@@ -177,19 +118,6 @@
     
     .sustainability-item {
       padding: 1rem;
-    }
-    
-    .sustainability-cta {
-      margin-top: 1.5rem;
-      padding: 1rem;
-    }
-    
-    .cta-title {
-      font-size: 1.2rem;
-    }
-    
-    .cta-description {
-      font-size: 0.9rem;
     }
   }
 </style>
@@ -257,33 +185,6 @@
       "id": "materials_description",
       "label": "Materials Description",
       "default": "Built with eco-friendly components and recyclable materials."
-    },
-    {
-      "type": "header",
-      "content": "Call to Action"
-    },
-    {
-      "type": "text",
-      "id": "cta_title",
-      "label": "CTA Title",
-      "default": "Choose Sustainable Transportation"
-    },
-    {
-      "type": "text",
-      "id": "cta_description",
-      "label": "CTA Description",
-      "default": "Every ride contributes to a cleaner environment and healthier cities."
-    },
-    {
-      "type": "text",
-      "id": "cta_button_text",
-      "label": "CTA Button Text",
-      "default": "Shop E-Bikes"
-    },
-    {
-      "type": "url",
-      "id": "cta_button_link",
-      "label": "CTA Button Link"
     }
   ],
   "presets": [
