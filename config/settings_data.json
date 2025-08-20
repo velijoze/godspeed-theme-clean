@@ -236,6 +236,7 @@
         "settings": {
           "title": "Instagram",
           "homepage_instagram_color": "homepage--white",
+          "username": "",
           "instagram_photo_count": "6",
           "instagram_grid_width_large": "large--one-sixth",
           "instagram_grid_width_medium": "medium--one-third",
@@ -253,13 +254,90 @@
           "padding_top": 36,
           "padding_bottom": 36
         }
+      },
+      "index_logos_e8qw4V": {
+        "type": "index-logos",
+        "blocks": {
+          "logo_image_UgUw6R": {
+            "type": "logo_image",
+            "settings": {
+              "image": "shopify://shop_images/RM_Logo_black.jpg",
+              "link": ""
+            }
+          },
+          "logo_image_YtnPDe": {
+            "type": "logo_image",
+            "settings": {
+              "image": "shopify://shop_images/CUBE_Logo.png",
+              "link": ""
+            }
+          },
+          "logo_image_k9BGJr": {
+            "type": "logo_image",
+            "settings": {
+              "image": "shopify://shop_images/Bosch-logotype-b-n.png",
+              "link": ""
+            }
+          },
+          "logo_image_xx38T4": {
+            "type": "logo_image",
+            "settings": {
+              "image": "shopify://shop_images/orbea-logo.png",
+              "link": ""
+            }
+          },
+          "logo_image_dQ4HKb": {
+            "type": "logo_image",
+            "settings": {
+              "image": "shopify://shop_images/benno_logo2018.gif",
+              "link": ""
+            }
+          },
+          "logo_image_yWHXNX": {
+            "type": "logo_image",
+            "settings": {
+              "image": "shopify://shop_images/Brompton_Bicycle_logo_svg.png",
+              "link": ""
+            }
+          },
+          "logo_image_kpbNxK": {
+            "type": "logo_image",
+            "settings": {
+              "image": "shopify://shop_images/mondraker_1200x627_67625aa8-57cc-4c62-a485-cc3ef45083d8.png",
+              "link": ""
+            }
+          },
+          "logo_image_nxTxrU": {
+            "type": "logo_image",
+            "settings": {
+              "image": "shopify://shop_images/sram.png",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "logo_image_UgUw6R",
+          "logo_image_YtnPDe",
+          "logo_image_k9BGJr",
+          "logo_image_xx38T4",
+          "logo_image_dQ4HKb",
+          "logo_image_yWHXNX",
+          "logo_image_kpbNxK",
+          "logo_image_nxTxrU"
+        ],
+        "name": "Logo list",
+        "settings": {
+          "title": "",
+          "homepage_logos_bg_color": "homepage--light"
+        }
       }
     },
     "content_for_index": [
       "index-banner-image",
       "index-collection",
       "index-video",
-      "index-instagram"
+      "index-instagram",
+      "index_logos_e8qw4V"
     ]
   },
   "presets": {
