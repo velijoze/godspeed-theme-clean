@@ -1210,83 +1210,114 @@ theme.Variants = (function() {
 
 theme.Instagram = (function() {
   function Instagram(container) {
-    var $container = this.$container = $(container);
-    var id = $container.attr('data-section-id');
-    this.$instafeed = $('#Instafeed-' + id);
+    var $container = (this.$container = $(container));
+    var sectionId = $container.attr('data-section-id');
+    var instafeed = (this.instafeed = $('#Instafeed-' + sectionId, $container));
+    this.username = instafeed.data('username');
+    this.count = instafeed.data('count');
+    this.grid = instafeed.data('grid');
 
-    this.photoCount = parseInt(this.$instafeed.attr('data-count'), 10) || 6;
-    this.username = this.$instafeed.attr('data-username') || '';
-    this.gridClasses = this.$instafeed.attr('data-grid') || '';
+    if (!this.username) {
+      this.renderPlaceholders();
+      return;
+    }
 
-    this.init();
+    this.fetchInstagramPhotos();
   }
 
   Instagram.prototype = _.assignIn({}, Instagram.prototype, {
-    init: function() {
+    fetchInstagramPhotos: function() {
       var self = this;
+      
+      // Use a CORS proxy to prevent blocking issues.
+      var corsProxy = 'https://cors-anywhere.herokuapp.com/';
+      var url = corsProxy + 'https://www.instagram.com/' + encodeURIComponent(this.username) + '/';
 
-      if (!this.username) {
-        self.renderPlaceholders();
-        return;
-      }
-
-      // Attempt a lightweight public fetch. If blocked (CORS), fall back to placeholders.
-      var url = 'https://www.instagram.com/' + encodeURIComponent(this.username) + '/?__a=1&__d=dis';
-      try {
-        fetch(url, { credentials: 'omit' })
-          .then(function(res){
-            // If CORS blocks, this may not be ok; handle gracefully
-            if (!res || !res.ok) { return null; }
-            return res.json();
-          })
-          .then(function(data){
-            var photos = [];
-            try {
-              var edges = data && data.graphql && data.graphql.user && data.graphql.user.edge_owner_to_timeline_media && data.graphql.user.edge_owner_to_timeline_media.edges;
-              if (edges && edges.length) {
-                for (var i = 0; i < Math.min(edges.length, self.photoCount); i++) {
-                  var node = edges[i].node;
-                  photos.push({
-                    image: node.display_url,
-                    link: 'https://www.instagram.com/p/' + node.shortcode + '/'
-                  });
-                }
-              }
-            } catch(e) { /* ignore parse errors */ }
-
-            if (photos.length) {
-              self.renderPhotos(photos);
+      $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(data) {
+          try {
+            var jsonData = data.split("window._sharedData = ")[1].split(";</script>")[0];
+            var media = JSON.parse(jsonData).entry_data.ProfilePage[0].graphql.user.edge_owner_to_timeline_media.edges;
+            
+            if (media && media.length > 0) {
+                self.renderPhotos(media);
             } else {
-              self.renderPlaceholders();
+                self.renderPlaceholders();
             }
-          })
-          .catch(function(){ self.renderPlaceholders(); });
-      } catch (e) {
-        self.renderPlaceholders();
-      }
-    },
-
-    renderPhotos: function(photos) {
-      var html = '';
-      for (var i = 0; i < photos.length; i++) {
-        var p = photos[i];
-        html += '<a href="' + p.link + '" target="_blank" class="grid__item instagram--square ' + this.gridClasses + '" style="background-image:url(' + p.image + ');"><span class="icon icon-instagram"></span></a>';
-      }
-      this.$instafeed.html(html);
-    },
-
-    renderPlaceholders: function() {
-      var html = '';
-      for (var i = 0; i < this.photoCount; i++) {
-        html += '<div class="grid__item instagram--square ' + this.gridClasses + '">' + (typeof placeholder_svg_tag === 'function' ? placeholder_svg_tag('image','placeholder-svg') : '') + '</div>';
-      }
-      // Fallback if placeholder_svg_tag is unavailable: empty squares with icon overlay
-      if (!html) {
-        for (var j = 0; j < this.photoCount; j++) {
-          html += '<div class="grid__item instagram--square ' + this.gridClasses + '"><span class="icon icon-instagram"></span></div>';
+          } catch (e) {
+            console.error('Instagram feed parsing error:', e);
+            self.renderPlaceholders();
+          }
+        },
+        error: function(err) {
+            console.error('Failed to fetch Instagram feed:', err);
+            self.renderPlaceholders();
         }
-      }
-      this.$instafeed.html(html);
+      });
+    },
+
+    renderPhotos: function(media) {
+      var self = this;
+      var photoGrid = self.grid.split(' ');
+      var gridClasses = photoGrid[0] + ' ' + photoGrid[1] + ' ' + photoGrid[2];
+      var html = '';
+
+      var photosToRender = media.slice(0, self.count);
+
+      $.each(photosToRender, function(i, photo) {
+        var imageUrl = photo.node.thumbnail_src;
+        var postUrl = 'https://www.instagram.com/p/' + photo.node.shortcode;
+        var caption = photo.node.edge_media_to_caption.edges.length > 0 ? photo.node.edge_media_to_caption.edges[0].node.text : '';
+
+        html +=
+          '<div class="grid__item ' +
+          gridClasses +
+          '">' +
+          '<a href="' +
+          postUrl +
+          '" target="_blank" rel="noopener" class="instagram-photo">' +
+          '<img src="' +
+          imageUrl +
+          '" alt="' + self.escapeHtml(caption) + '" class="instagram-image">' +
+          '</a>' +
+          '</div>';
+      });
+      
+      self.instafeed.html(html);
+    },
+    
+    renderPlaceholders: function() {
+        var self = this;
+        var photoGrid = self.grid.split(' ');
+        var gridClasses = photoGrid[0] + ' ' + photoGrid[1] + ' ' + photoGrid[2];
+        var placeholderUrl = 'https://via.placeholder.com/300.png/cccccc/969696?text=Instagram';
+        var html = '';
+
+        for (var i = 0; i < self.count; i++) {
+            html +=
+              '<div class="grid__item ' +
+              gridClasses +
+              '">' +
+              '<a href="#" class="instagram-photo" style="pointer-events: none;">' +
+              '<img src="' + placeholderUrl + '" alt="Instagram placeholder" class="instagram-image">' +
+              '</a>' +
+              '</div>';
+        }
+        self.instafeed.html(html);
+    },
+    
+    escapeHtml: function(text) {
+        if (!text) return '';
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     }
   });
 
