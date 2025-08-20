@@ -9,14 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
     
-    - name: Deploy to Shopify
-      uses: pgrimaud/action-shopify-cli@v1.0.1
+    - name: Setup Node
+      uses: actions/setup-node@v4
       with:
-        shopify_app_api_key: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
-        shopify_app_api_secret: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
-        shopify_store_url: t0uds3-a2.myshopify.com
-        theme_id: 185567543644
+        node-version: '18'
+    
+    - name: Install Shopify CLI
+      run: npm install -g @shopify/cli @shopify/theme
+    
+    - name: Deploy theme
+      run: shopify theme push --live --store=t0uds3-a2.myshopify.com
       env:
         SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
