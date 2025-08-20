@@ -1,103 +1,373 @@
-<div class="homepage-instagram {{ section.settings.homepage_instagram_color }}" data-section-id="{{ section.id }}" data-section-type="instagram">
-  {% unless section.settings.title == '' %}
-    <h4 class="home__subtitle">{{ section.settings.title | escape }}</h4>
-  {% endunless %}
-  <div id="Instafeed-{{ section.id }}" class="grid-uniform" 
-       data-count="{{ section.settings.instagram_photo_count }}"
-       data-username="{{ section.settings.username }}"
-       data-grid="{{section.settings.instagram_grid_width_large}} {{section.settings.instagram_grid_width_medium}} {{section.settings.instagram_grid_width_small}}"></div>
+<div class="instagram-section" data-section-id="{{ section.id }}" data-section-type="instagram">
+  <div class="wrapper">
+    <div class="section-header text-center">
+      <h2 class="section-header__title">{{ section.settings.title | default: 'FOLLOW US ON INSTAGRAM' }}</h2>
+      <div class="section-header__divider"></div>
+      <p class="section-header__subtitle">{{ section.settings.subtitle | default: 'Stay connected with our latest updates and community highlights' }}</p>
+    </div>
+    
+    <!-- Instagram Feed Options -->
+    <div class="instagram-options">
+      {% if section.settings.instagram_username %}
+        <!-- Option 1: Instagram Profile Link -->
+        <div class="instagram-profile-link">
+          <a href="https://www.instagram.com/{{ section.settings.instagram_username }}" 
+             target="_blank" 
+             rel="noopener" 
+             class="instagram-follow-btn">
+            <span class="icon icon-instagram"></span>
+            Follow @{{ section.settings.instagram_username }}
+          </a>
+        </div>
+      {% endif %}
+      
+      {% if section.settings.instagram_embed_code %}
+        <!-- Option 2: Instagram Embed Code -->
+        <div class="instagram-embed">
+          {{ section.settings.instagram_embed_code }}
+        </div>
+      {% endif %}
+      
+      {% unless section.settings.instagram_username or section.settings.instagram_embed_code %}
+        <!-- Option 3: Fallback Social Media Showcase -->
+        <div class="social-showcase">
+          <div class="social-grid">
+            <div class="social-item">
+              <div class="social-icon">
+                <span class="icon icon-instagram"></span>
+              </div>
+              <h3>Instagram</h3>
+              <p>Follow us for behind-the-scenes content and community highlights</p>
+              <a href="#" class="social-link">Coming Soon</a>
+            </div>
+            
+            <div class="social-item">
+              <div class="social-icon">
+                <span class="icon icon-facebook"></span>
+              </div>
+              <h3>Facebook</h3>
+              <p>Join our community for updates, events, and exclusive offers</p>
+              <a href="#" class="social-link">Coming Soon</a>
+            </div>
+            
+            <div class="social-item">
+              <div class="social-icon">
+                <span class="icon icon-twitter"></span>
+              </div>
+              <h3>Twitter</h3>
+              <p>Stay updated with the latest news and announcements</p>
+              <a href="#" class="social-link">Coming Soon</a>
+            </div>
+          </div>
+        </div>
+      {% endunless %}
+    </div>
+    
+    <!-- Call to Action -->
+    {% if section.settings.show_cta %}
+      <div class="instagram-cta">
+        <h3>{{ section.settings.cta_title | default: 'Join Our Community' }}</h3>
+        <p>{{ section.settings.cta_description | default: 'Connect with fellow e-bike enthusiasts and stay updated with our latest products and news.' }}</p>
+        {% if section.settings.cta_button_text and section.settings.cta_button_link %}
+          <a href="{{ section.settings.cta_button_link }}" class="btn btn--primary btn--large">
+            {{ section.settings.cta_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
 </div>
+
+<style>
+  .instagram-section {
+    padding: 3rem 0;
+    background: #f8f9fa;
+  }
+  
+  .section-header__divider {
+    width: 60px;
+    height: 2px;
+    background: #E1306C;
+    margin: 1rem auto;
+  }
+  
+  .section-header__subtitle {
+    font-size: 1rem;
+    color: #666;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+  
+  .instagram-options {
+    margin: 2rem 0;
+  }
+  
+  .instagram-profile-link {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  
+  .instagram-follow-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
+  }
+  
+  .instagram-follow-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 39, 67, 0.4);
+    color: #ffffff;
+  }
+  
+  .instagram-follow-btn .icon {
+    font-size: 1.2rem;
+  }
+  
+  .instagram-embed {
+    margin: 2rem 0;
+    text-align: center;
+  }
+  
+  .instagram-embed iframe {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  
+  .social-showcase {
+    margin: 2rem 0;
+  }
+  
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .social-item {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .social-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+  
+  .social-icon {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .social-icon .icon {
+    font-size: 2.5rem;
+    color: #E1306C;
+  }
+  
+  .social-icon .icon-facebook {
+    color: #1877F2;
+  }
+  
+  .social-icon .icon-twitter {
+    color: #1DA1F2;
+  }
+  
+  .social-item h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.75rem;
+  }
+  
+  .social-item p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+  
+  .social-link {
+    display: inline-block;
+    background: #E1306C;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+  
+  .social-link:hover {
+    background: #C13584;
+    color: #ffffff;
+  }
+  
+  .instagram-cta {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
+  
+  .instagram-cta h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.75rem;
+  }
+  
+  .instagram-cta p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .btn--large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+  
+  .btn--primary {
+    background: #E1306C;
+    color: #ffffff;
+    border: 2px solid #E1306C;
+  }
+  
+  .btn--primary:hover {
+    background: #C13584;
+    border-color: #C13584;
+    transform: translateY(-1px);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .instagram-section {
+      padding: 2rem 0;
+    }
+    
+    .social-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-item {
+      padding: 1.5rem 1rem;
+    }
+    
+    .instagram-cta {
+      margin-top: 2rem;
+      padding: 1.5rem;
+    }
+    
+    .instagram-cta h3 {
+      font-size: 1.3rem;
+    }
+    
+    .instagram-cta p {
+      font-size: 0.9rem;
+    }
+  }
+</style>
 
 {% schema %}
 {
-  "name": "Instagram feed",
+  "name": "Instagram Section",
   "settings": [
     {
       "type": "text",
       "id": "title",
-      "label": "Heading",
-      "default": "Instagram"
-    },
-    {
-      "type": "select",
-      "id": "homepage_instagram_color",
-      "label": "Background color",
-      "default": "homepage--white",
-      "options": [
-        { "value": "homepage--white", "label": "White"},
-        { "value": "homepage--light", "label": "Light"},
-        { "value": "homepage--splash", "label": "Accent"},
-        { "value": "homepage--dark", "label": "Dark"}
-      ]
+      "label": "Section Title",
+      "default": "FOLLOW US ON INSTAGRAM"
     },
     {
       "type": "text",
-      "id": "username",
-      "label": "Instagram username",
-      "info": "Your Instagram username (without @)",
-      "placeholder": "godspeed_bikes"
-    },
-    {
-      "type": "select",
-      "id": "instagram_photo_count",
-      "options": [
-        { "value": "3", "label": "3 photos"},
-        { "value": "4", "label": "4 photos"},
-        { "value": "5", "label": "5 photos"},
-        { "value": "6", "label": "6 photos"},
-        { "value": "7", "label": "7 photos"},
-        { "value": "8", "label": "8 photos"},
-        { "value": "9", "label": "9 photos"},
-        { "value": "10", "label": "10 photos"},
-        { "value": "11", "label": "11 photos"},
-        { "value": "12", "label": "12 photos"}
-      ],
-      "default": "6",
-      "label": "Number of photos to display"
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Stay connected with our latest updates and community highlights"
     },
     {
       "type": "header",
-      "content": "Photo grid"
+      "content": "Instagram Options"
     },
     {
-      "type": "select",
-      "id": "instagram_grid_width_large",
-      "label": "Desktop",
-      "default": "large--one-sixth",
-      "options": [
-        { "value": "large--one-half", "label": "2 per row"},
-        { "value": "large--one-third", "label": "3 per row"},
-        { "value": "large--one-quarter", "label": "4 per row"},
-        { "value": "large--one-fifth", "label": "5 per row"},
-        { "value": "large--one-sixth", "label": "6 per row"}
-      ]
+      "type": "text",
+      "id": "instagram_username",
+      "label": "Instagram Username",
+      "info": "Enter your Instagram username (without @) to show a follow button"
     },
     {
-      "type": "select",
-      "id": "instagram_grid_width_medium",
-      "default": "medium--one-third",
-      "label": "Tablet",
-      "options": [
-        { "value": "medium--one-half", "label": "2 per row"},
-        { "value": "medium--one-third", "label": "3 per row"},
-        { "value": "medium--one-quarter", "label": "4 per row"}
-      ]
+      "type": "html",
+      "id": "instagram_embed_code",
+      "label": "Instagram Embed Code",
+      "info": "Paste Instagram embed code from instagram.com (recommended for reliable display)"
     },
     {
-      "type": "select",
-      "id": "instagram_grid_width_small",
-      "default": "small--one-third",
-      "label": "Mobile",
-      "options": [
-        { "value": "small--one-half", "label": "2 per row"},
-        { "value": "small--one-third", "label": "3 per row"}
-      ]
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show Call to Action",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_title",
+      "label": "CTA Title",
+      "default": "Join Our Community"
+    },
+    {
+      "type": "text",
+      "id": "cta_description",
+      "label": "CTA Description",
+      "default": "Connect with fellow e-bike enthusiasts and stay updated with our latest products and news."
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA Button Text",
+      "default": "Get Started"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_link",
+      "label": "CTA Button Link"
     }
   ],
   "presets": [
     {
-      "name": "Instagram feed",
-      "category": "Social"
+      "name": "Instagram Section",
+      "category": "Social Media"
     }
   ]
 }
