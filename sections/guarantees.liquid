@@ -1,0 +1,310 @@
+{% comment %}
+  Section: Service Guarantees
+  Display service guarantees and warranties
+{% endcomment %}
+
+<div class="guarantees-section">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <div class="section-header text-center">
+        <h2>{{ section.settings.title }}</h2>
+        {% if section.settings.description != blank %}
+          <p>{{ section.settings.description }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="guarantees-grid">
+      {% for block in section.blocks %}
+        <div class="guarantee-card" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <div class="guarantee-icon">
+              {{ block.settings.icon }}
+            </div>
+          {% endif %}
+          
+          {% if block.settings.title != blank %}
+            <h3>{{ block.settings.title }}</h3>
+          {% endif %}
+          
+          {% if block.settings.duration != blank %}
+            <div class="guarantee-duration">{{ block.settings.duration }}</div>
+          {% endif %}
+          
+          {% if block.settings.description != blank %}
+            <p>{{ block.settings.description }}</p>
+          {% endif %}
+          
+          {% if block.settings.features != blank %}
+            <div class="guarantee-features">
+              {% assign features = block.settings.features | split: ',' %}
+              <ul>
+                {% for feature in features %}
+                  <li>{{ feature | strip }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+          
+          {% if block.settings.badge_text != blank %}
+            <div class="guarantee-badge">
+              {{ block.settings.badge_text }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .guarantees-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+  }
+
+  .guarantees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+
+  .guarantee-card {
+    background: #ffffff;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .guarantee-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #E1306C, #C13584);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .guarantee-card:hover {
+    transform: translateY(-4px);
+    border-color: #E1306C;
+    box-shadow: 0 8px 30px rgba(225,48,108,0.15);
+  }
+
+  .guarantee-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .guarantee-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    color: #E1306C;
+  }
+
+  .guarantee-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+  }
+
+  .guarantee-duration {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #E1306C;
+    margin-bottom: 1rem;
+  }
+
+  .guarantee-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .guarantee-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    text-align: left;
+  }
+
+  .guarantee-features li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  .guarantee-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #E1306C;
+    font-weight: bold;
+  }
+
+  .guarantee-badge {
+    background: linear-gradient(135deg, #E1306C, #C13584);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .guarantees-section {
+      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
+    }
+    
+    .guarantees-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .guarantee-card {
+      padding: 2rem 1.5rem;
+    }
+    
+    .guarantee-icon {
+      font-size: 3rem;
+    }
+    
+    .guarantee-card h3 {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Service Guarantees",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Our Guarantees"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Your peace of mind is our priority"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "guarantee",
+      "name": "Guarantee",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji or symbol)",
+          "default": "🛡️"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Comprehensive Warranty"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Duration/Period",
+          "default": "2 Years"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Complete coverage for parts, labor, and electrical components on all e-bikes purchased from Godspeed."
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features (comma separated)",
+          "default": "Free repairs, Replacement parts included, Expert technician service, Nationwide coverage"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text",
+          "default": "Industry Leading"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service Guarantees",
+      "category": "Services",
+      "blocks": [
+        {
+          "type": "guarantee",
+          "settings": {
+            "icon": "🛡️",
+            "title": "Comprehensive Warranty",
+            "duration": "2 Years",
+            "description": "Complete coverage for parts, labor, and electrical components on all e-bikes purchased from Godspeed.",
+            "features": "Free repairs, Replacement parts included, Expert technician service, Nationwide coverage",
+            "badge_text": "Industry Leading"
+          }
+        },
+        {
+          "type": "guarantee",
+          "settings": {
+            "icon": "💯",
+            "title": "Satisfaction Guarantee",
+            "duration": "30 Days",
+            "description": "Not completely happy with your purchase? Return it within 30 days for a full refund.",
+            "features": "Full refund, No restocking fees, Easy return process, Customer support included",
+            "badge_text": "Risk Free"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

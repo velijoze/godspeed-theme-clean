@@ -1,0 +1,495 @@
+{% comment %}
+  Section: Team Culture
+  Display team culture, values, and work environment
+{% endcomment %}
+
+<div class="team-culture-section">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <div class="section-header text-center">
+        <h2>{{ section.settings.title }}</h2>
+        {% if section.settings.description != blank %}
+          <p>{{ section.settings.description }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="culture-content">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'culture_item' %}
+            <div class="culture-item" {{ block.shopify_attributes }}>
+              {% if block.settings.image != blank %}
+                <div class="culture-image">
+                  <img src="{{ block.settings.image | img_url: '600x400' }}" alt="{{ block.settings.title }}" loading="lazy">
+                </div>
+              {% endif %}
+              
+              <div class="culture-text">
+                {% if block.settings.icon != blank %}
+                  <div class="culture-icon">
+                    {{ block.settings.icon }}
+                  </div>
+                {% endif %}
+                
+                {% if block.settings.title != blank %}
+                  <h3>{{ block.settings.title }}</h3>
+                {% endif %}
+                
+                {% if block.settings.description != blank %}
+                  <p>{{ block.settings.description }}</p>
+                {% endif %}
+                
+                {% if block.settings.quote != blank %}
+                  <blockquote class="culture-quote">
+                    "{{ block.settings.quote }}"
+                    {% if block.settings.quote_author != blank %}
+                      <cite>— {{ block.settings.quote_author }}</cite>
+                    {% endif %}
+                  </blockquote>
+                {% endif %}
+              </div>
+            </div>
+
+          {% when 'team_values' %}
+            <div class="team-values" {{ block.shopify_attributes }}>
+              {% if block.settings.title != blank %}
+                <h3>{{ block.settings.title }}</h3>
+              {% endif %}
+              
+              <div class="values-list">
+                {% if block.settings.value_1 != blank %}
+                  <div class="value-item">
+                    <div class="value-icon">{{ block.settings.value_1_icon | default: "💡" }}</div>
+                    <div class="value-text">
+                      <strong>{{ block.settings.value_1 }}</strong>
+                      {% if block.settings.value_1_desc != blank %}
+                        <p>{{ block.settings.value_1_desc }}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+                
+                {% if block.settings.value_2 != blank %}
+                  <div class="value-item">
+                    <div class="value-icon">{{ block.settings.value_2_icon | default: "🤝" }}</div>
+                    <div class="value-text">
+                      <strong>{{ block.settings.value_2 }}</strong>
+                      {% if block.settings.value_2_desc != blank %}
+                        <p>{{ block.settings.value_2_desc }}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+                
+                {% if block.settings.value_3 != blank %}
+                  <div class="value-item">
+                    <div class="value-icon">{{ block.settings.value_3_icon | default: "🌟" }}</div>
+                    <div class="value-text">
+                      <strong>{{ block.settings.value_3 }}</strong>
+                      {% if block.settings.value_3_desc != blank %}
+                        <p>{{ block.settings.value_3_desc }}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+                
+                {% if block.settings.value_4 != blank %}
+                  <div class="value-item">
+                    <div class="value-icon">{{ block.settings.value_4_icon | default: "🚀" }}</div>
+                    <div class="value-text">
+                      <strong>{{ block.settings.value_4 }}</strong>
+                      {% if block.settings.value_4_desc != blank %}
+                        <p>{{ block.settings.value_4_desc }}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
+      <div class="culture-cta">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--large">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .team-culture-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+  }
+
+  .culture-content {
+    margin: 3rem 0;
+  }
+
+  .culture-item {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .culture-item:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+
+  .culture-image {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .culture-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .culture-text {
+    flex: 1;
+  }
+
+  .culture-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #E1306C;
+  }
+
+  .culture-text h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 1rem;
+  }
+
+  .culture-text p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .culture-quote {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-left: 4px solid #E1306C;
+    font-style: italic;
+    color: #2c2c2c;
+    margin: 0;
+  }
+
+  .culture-quote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: #E1306C;
+    font-style: normal;
+    font-size: 0.9rem;
+  }
+
+  .team-values {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-bottom: 3rem;
+  }
+
+  .team-values h3 {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #2c2c2c;
+    margin-bottom: 2rem;
+  }
+
+  .values-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .value-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .value-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .value-text strong {
+    display: block;
+    font-size: 1.1rem;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+  }
+
+  .value-text p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .culture-cta {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .btn--large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 768px) {
+    .team-culture-section {
+      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
+    }
+    
+    .culture-item {
+      flex-direction: column !important;
+      gap: 2rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .culture-image {
+      min-width: auto;
+    }
+    
+    .culture-image img {
+      height: 250px;
+    }
+    
+    .culture-text h3 {
+      font-size: 1.5rem;
+    }
+    
+    .culture-text p {
+      font-size: 1rem;
+    }
+    
+    .values-list {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Team Culture",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Our Team Culture"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "What makes Godspeed a great place to work and serve customers"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Call to Action Text",
+      "default": "Join Our Team"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Call to Action Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "culture_item",
+      "name": "Culture Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji or symbol)",
+          "default": "💼"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Passion for E-Mobility"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Our team shares a genuine passion for sustainable transportation and helping customers find the perfect e-bike solution."
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "quote_author",
+          "label": "Quote Author"
+        }
+      ]
+    },
+    {
+      "type": "team_values",
+      "name": "Team Values",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Our Core Values"
+        },
+        {
+          "type": "text",
+          "id": "value_1",
+          "label": "Value 1",
+          "default": "Customer First"
+        },
+        {
+          "type": "text",
+          "id": "value_1_icon",
+          "label": "Value 1 Icon",
+          "default": "💝"
+        },
+        {
+          "type": "textarea",
+          "id": "value_1_desc",
+          "label": "Value 1 Description",
+          "default": "Every decision we make starts with our customers' needs"
+        },
+        {
+          "type": "text",
+          "id": "value_2",
+          "label": "Value 2",
+          "default": "Teamwork"
+        },
+        {
+          "type": "text",
+          "id": "value_2_icon",
+          "label": "Value 2 Icon",
+          "default": "🤝"
+        },
+        {
+          "type": "textarea",
+          "id": "value_2_desc",
+          "label": "Value 2 Description",
+          "default": "We achieve more when we work together"
+        },
+        {
+          "type": "text",
+          "id": "value_3",
+          "label": "Value 3",
+          "default": "Excellence"
+        },
+        {
+          "type": "text",
+          "id": "value_3_icon",
+          "label": "Value 3 Icon",
+          "default": "🌟"
+        },
+        {
+          "type": "textarea",
+          "id": "value_3_desc",
+          "label": "Value 3 Description",
+          "default": "We strive for excellence in everything we do"
+        },
+        {
+          "type": "text",
+          "id": "value_4",
+          "label": "Value 4",
+          "default": "Innovation"
+        },
+        {
+          "type": "text",
+          "id": "value_4_icon",
+          "label": "Value 4 Icon",
+          "default": "🚀"
+        },
+        {
+          "type": "textarea",
+          "id": "value_4_desc",
+          "label": "Value 4 Description",
+          "default": "We embrace new ideas and continuous improvement"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Team Culture",
+      "category": "About",
+      "blocks": [
+        {
+          "type": "culture_item",
+          "settings": {
+            "icon": "💼",
+            "title": "Passion for E-Mobility",
+            "description": "Our team shares a genuine passion for sustainable transportation and helping customers find the perfect e-bike solution.",
+            "quote": "Working at Godspeed means being part of Switzerland's sustainable future every single day.",
+            "quote_author": "Sarah, Store Manager"
+          }
+        },
+        {
+          "type": "team_values"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

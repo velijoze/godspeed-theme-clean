@@ -1,0 +1,387 @@
+{% comment %}
+  Section: Financing FAQ
+  Frequently asked questions about financing options
+{% endcomment %}
+
+<div class="financing-faq-section">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <div class="section-header text-center">
+        <h2>{{ section.settings.title }}</h2>
+        {% if section.settings.description != blank %}
+          <p>{{ section.settings.description }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="faq-container">
+      {% for block in section.blocks %}
+        <div class="faq-item" {{ block.shopify_attributes }}>
+          {% if block.settings.question != blank %}
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              {{ block.settings.question }}
+              <span class="faq-toggle">+</span>
+            </button>
+          {% endif %}
+          
+          {% if block.settings.answer != blank %}
+            <div class="faq-answer">
+              {{ block.settings.answer }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_contact %}
+      <div class="faq-contact">
+        <h3>{{ section.settings.contact_title | default: "Still have questions?" }}</h3>
+        <p>{{ section.settings.contact_text | default: "Our financing experts are here to help" }}</p>
+        
+        <div class="contact-options">
+          {% if section.settings.phone != blank %}
+            <div class="contact-option">
+              <span class="contact-icon">📞</span>
+              <div>
+                <strong>Call us</strong>
+                <a href="tel:{{ section.settings.phone }}">{{ section.settings.phone }}</a>
+              </div>
+            </div>
+          {% endif %}
+          
+          {% if section.settings.email != blank %}
+            <div class="contact-option">
+              <span class="contact-icon">✉️</span>
+              <div>
+                <strong>Email us</strong>
+                <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+              </div>
+            </div>
+          {% endif %}
+          
+          {% if section.settings.hours != blank %}
+            <div class="contact-option">
+              <span class="contact-icon">🕒</span>
+              <div>
+                <strong>Business hours</strong>
+                <span>{{ section.settings.hours }}</span>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .financing-faq-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+  }
+
+  .faq-container {
+    max-width: 800px;
+    margin: 3rem auto;
+  }
+
+  .faq-item {
+    margin-bottom: 1rem;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  .faq-question {
+    width: 100%;
+    padding: 1.5rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.3s ease;
+  }
+
+  .faq-question:hover {
+    color: #E1306C;
+  }
+
+  .faq-toggle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #E1306C;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item.active .faq-toggle {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    color: #666;
+    line-height: 1.6;
+    display: none;
+  }
+
+  .faq-item.active .faq-answer {
+    display: block;
+  }
+
+  .faq-contact {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 3rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .faq-contact h3 {
+    font-size: 1.5rem;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-contact p {
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  .contact-options {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+  }
+
+  .contact-icon {
+    font-size: 2rem;
+  }
+
+  .contact-option strong {
+    display: block;
+    color: #2c2c2c;
+    margin-bottom: 0.25rem;
+  }
+
+  .contact-option a {
+    color: #E1306C;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .contact-option a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .financing-faq-section {
+      padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px;
+    }
+    
+    .faq-container {
+      margin: 2rem auto;
+    }
+    
+    .faq-question {
+      padding: 1.25rem;
+      font-size: 1rem;
+    }
+    
+    .faq-answer {
+      padding: 0 1.25rem 1.25rem 1.25rem;
+    }
+    
+    .faq-contact {
+      padding: 2rem;
+      margin: 0 1rem;
+      margin-top: 2rem;
+    }
+    
+    .contact-options {
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+    }
+  }
+</style>
+
+<script>
+  function toggleFAQ(button) {
+    const faqItem = button.parentElement;
+    const allFAQs = document.querySelectorAll('.faq-item');
+    
+    // Close all other FAQs
+    allFAQs.forEach(item => {
+      if (item !== faqItem) {
+        item.classList.remove('active');
+      }
+    });
+    
+    // Toggle current FAQ
+    faqItem.classList.toggle('active');
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Financing FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Financing Questions & Answers"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Everything you need to know about our 0% financing options"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Contact Information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact",
+      "label": "Show Contact Section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Contact Title",
+      "default": "Still have questions?"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_text",
+      "label": "Contact Text",
+      "default": "Our financing experts are here to help you find the perfect payment plan."
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "+41 123 456 789"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address",
+      "default": "financing@godspeed.ch"
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "Business Hours",
+      "default": "Mon-Fri 9AM-6PM"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does 0% financing work?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Our 0% financing means you pay no interest on your e-bike purchase when you choose qualifying payment terms. Simply select your preferred payment period and enjoy your e-bike while paying in manageable monthly installments.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Financing FAQ",
+      "category": "Financing",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How does 0% financing work?",
+            "answer": "<p>Our 0% financing means you pay no interest on your e-bike purchase when you choose qualifying payment terms. Simply select your preferred payment period and enjoy your e-bike while paying in manageable monthly installments.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What are the requirements to qualify?",
+            "answer": "<p>To qualify for 0% financing, you must be at least 18 years old, have a valid Swiss ID, and meet our credit requirements. The application process is quick and can be completed online or in-store.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How long does approval take?",
+            "answer": "<p>Most applications are approved within minutes using HeyLight's automated system. In some cases, additional verification may be required, which can take up to 24 hours.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I pay off my financing early?",
+            "answer": "<p>Yes! You can pay off your financing early at any time without any prepayment penalties. This can be done through your HeyLight account or by contacting our customer service team.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What happens if I miss a payment?",
+            "answer": "<p>If you miss a payment, HeyLight will contact you to arrange payment. Late fees may apply according to the terms of your agreement. We recommend setting up automatic payments to avoid any issues.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
