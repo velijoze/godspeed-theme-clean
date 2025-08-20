@@ -3,60 +3,54 @@
   Displays team photos, names, titles, and bios in a professional grid
 {% endcomment %}
 
-<div class="team-section" data-section-id="{{ section.id }}" data-section-type="team-members" style="background-color: {{ section.settings.background_color }};">
-  <div class="wrapper">
+<section class="section-spacing">
+  <div class="page-width">
     {% if section.settings.title != blank %}
-      <div class="section-header text-center">
+      <header class="section-header text-center">
         <h2 class="section-header__title">{{ section.settings.title }}</h2>
         {% if section.settings.subtitle != blank %}
-          <p class="section-header__subtitle">{{ section.settings.subtitle }}</p>
+          <p>{{ section.settings.subtitle }}</p>
         {% endif %}
-      </div>
+      </header>
     {% endif %}
 
-    <div class="team-grid" style="grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);">
+    <div class="grid grid-uniform">
       {% for block in section.blocks %}
         {% case block.type %}
           {% when 'team_member' %}
-            <div class="team-member" {{ block.shopify_attributes }}>
-              <div class="team-member__image-wrapper">
+            <div class="grid__item large--one-third medium--one-half" {{ block.shopify_attributes }}>
+              <div class="feature-card text-center">
                 {% if block.settings.photo %}
                   <img 
-                    src="{{ block.settings.photo | img_url: '400x400', crop: 'center' }}"
+                    src="{{ block.settings.photo | img_url: '300x300', crop: 'center' }}"
                     alt="{{ block.settings.name }}"
-                    class="team-member__photo"
                     loading="lazy"
-                    width="400"
-                    height="400"
+                    style="width: 100%; height: auto; max-width: 300px; margin: 0 auto 1rem;"
                   >
-                {% else %}
-                  <div class="team-member__placeholder">
-                    <span class="icon-user"></span>
-                  </div>
+                {% endif %}
+                
+                <h3 class="h4">{{ block.settings.name }}</h3>
+                
+                {% if block.settings.title != blank %}
+                  <p><strong>{{ block.settings.title }}</strong></p>
+                {% endif %}
+                
+                {% if block.settings.bio != blank %}
+                  <div class="rte">{{ block.settings.bio }}</div>
                 {% endif %}
                 
                 {% if block.settings.social_links != blank %}
-                  <div class="team-member__social">
+                  <div style="margin-top: 1rem;">
                     {% assign social_links = block.settings.social_links | split: ',' %}
                     {% for link in social_links %}
                       {% assign link_parts = link | split: '|' %}
                       {% if link_parts.size == 2 %}
-                        <a href="{{ link_parts[1] | strip }}" target="_blank" rel="noopener" class="social-link">
+                        <a href="{{ link_parts[1] | strip }}" target="_blank" rel="noopener" class="btn btn--small" style="margin: 0.25rem;">
                           {{ link_parts[0] | strip }}
                         </a>
                       {% endif %}
                     {% endfor %}
                   </div>
-                {% endif %}
-              </div>
-              
-              <div class="team-member__content">
-                <h3 class="team-member__name">{{ block.settings.name }}</h3>
-                {% if block.settings.title != blank %}
-                  <p class="team-member__title">{{ block.settings.title }}</p>
-                {% endif %}
-                {% if block.settings.bio != blank %}
-                  <div class="team-member__bio">{{ block.settings.bio }}</div>
                 {% endif %}
               </div>
             </div>
@@ -65,193 +59,16 @@
     </div>
 
     {% if section.blocks.size == 0 %}
-      <div class="team-section__empty">
-        <p>No team members added yet. Add team member blocks in the customizer.</p>
+      <div class="text-center">
+        <p><em>No team members added yet. Add team member blocks in the theme customizer.</em></p>
       </div>
     {% endif %}
   </div>
-</div>
-
-<style>
-.team-section {
-  padding: 4rem 0;
-}
-
-.section-header {
-  margin-bottom: 3rem;
-}
-
-.section-header__title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.section-header__subtitle {
-  font-size: 1.1rem;
-  color: #7f8c8d;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-.team-grid {
-  display: grid;
-  gap: 2.5rem;
-  margin-top: 3rem;
-}
-
-.team-member {
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-
-.team-member:hover {
-  transform: translateY(-5px);
-}
-
-.team-member__image-wrapper {
-  position: relative;
-  margin-bottom: 1.5rem;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-}
-
-.team-member__photo {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.team-member:hover .team-member__photo {
-  transform: scale(1.05);
-}
-
-.team-member__placeholder {
-  width: 100%;
-  height: 300px;
-  background-color: #ecf0f1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #bdc3c7;
-}
-
-.team-member__placeholder .icon-user {
-  font-size: 4rem;
-}
-
-.team-member__social {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
-  padding: 2rem 1rem 1rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.team-member:hover .team-member__social {
-  opacity: 1;
-}
-
-.social-link {
-  display: inline-block;
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem;
-  background-color: white;
-  color: #2c3e50;
-  text-decoration: none;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.social-link:hover {
-  background-color: #3498db;
-  color: white;
-  transform: translateY(-2px);
-}
-
-.team-member__content {
-  padding: 0 1rem;
-}
-
-.team-member__name {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.team-member__title {
-  font-size: 1.1rem;
-  color: #3498db;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.team-member__bio {
-  color: #7f8c8d;
-  line-height: 1.6;
-  font-size: 0.95rem;
-}
-
-.team-section__empty {
-  text-align: center;
-  padding: 3rem;
-  color: #7f8c8d;
-  font-style: italic;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .team-section {
-    padding: 3rem 0;
-  }
-  
-  .section-header__title {
-    font-size: 2rem;
-  }
-  
-  .team-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .team-grid {
-    grid-template-columns: 1fr !important;
-    gap: 2rem;
-  }
-  
-  .section-header__title {
-    font-size: 1.75rem;
-  }
-  
-  .team-member__name {
-    font-size: 1.25rem;
-  }
-}
-</style>
+</section>
 
 {% schema %}
 {
   "name": "Team Members",
-  "tag": "section",
-  "class": "section",
   "settings": [
     {
       "type": "text",
@@ -264,21 +81,6 @@
       "id": "subtitle",
       "label": "Section Subtitle",
       "default": "The passionate people behind our success"
-    },
-    {
-      "type": "range",
-      "id": "columns_desktop",
-      "min": 2,
-      "max": 4,
-      "step": 1,
-      "label": "Columns on Desktop",
-      "default": 3
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#ffffff"
     }
   ],
   "blocks": [
@@ -321,7 +123,12 @@
   "presets": [
     {
       "name": "Team Members",
-      "category": "Content"
+      "category": "Content",
+      "blocks": [
+        {
+          "type": "team_member"
+        }
+      ]
     }
   ]
 }
