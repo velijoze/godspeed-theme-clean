@@ -2,6 +2,8 @@
 
 A clean, nulled Shopify theme ready for production use.
 
+<!-- Test deployment fix - GitHub Actions should now work properly -->
+
 ## Features
 - Responsive design
 - Clean, modern layout
