@@ -1,0 +1,75 @@
+One-Pass Category Normalization Report
+====================================
+
+Type equals Category mismatches: 0
+Rows with non-ASCII in Category: 0
+Remaining foreign terms (should be empty):
+- Jacke: 9
+- Zoll: 3
+- compatta: 2
+- pieghevole: 2
+- Mentoniera: 1
+
+Category overview:
+Accessories (Total: 687)
+  - (No subcategory): 44
+  - Bags: 68
+  - Baskets: 27
+  - Bells: 12
+  - Bike Computers: 2
+  - Bottles: 40
+  - Chargers: 1
+  - Child Seats: 37
+  - Clothing: 86
+  - Fenders: 47
+  - Helmets: 33
+  - Lights: 51
+  - Locks: 32
+  - Luggage Racks: 36
+  - Mirrors: 9
+  - Phone Mounts: 38
+  - Pumps: 22
+  - Rain Protection: 11
+  - Stands: 28
+  - Tools: 42
+  - Trailers: 21
+Bikes (Total: 45)
+  - City / Trekking: 2
+  - Dirt Bikes: 3
+  - Foldable: 9
+  - Gravel: 2
+  - Kids: 8
+  - Kids Bikes: 6
+  - Mountain Bikes: 8
+  - Road: 7
+E-Bikes (Total: 76)
+  - Cargo e-bike: 10
+  - E-Bike Cargo: 6
+  - E-Gravel: 1
+  - E-MTB Full Suspension: 13
+  - E-MTB Hardtail: 6
+  - E-bike 24 Zoll: 2
+  - E-bike 26 Zoll: 1
+  - E-bike City & Trekking: 16
+  - E-bike City, Tour & Trekking: 15
+  - Gravel: 3
+  - Sale: 2
+  - Used: 1
+General (Total: 6)
+  - (No subcategory): 6
+Indoor Trainers (Total: 1)
+  - Rollers: 1
+Parts (Total: 1114)
+  - (No subcategory): 58
+  - Bike Care: 59
+  - Bosch: 88
+  - Brakes: 150
+  - Gears and Transmission: 223
+  - Grips: 49
+  - Handlebars: 50
+  - Pedals: 73
+  - Powerplay: 6
+  - Saddles: 30
+  - Seatpost: 47
+  - Suspension: 17
+  - Wheels: 264
