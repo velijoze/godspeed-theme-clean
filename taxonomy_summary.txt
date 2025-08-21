@@ -1,0 +1,8 @@
+Assigned Product Category summary (valid Shopify taxonomy)
+========================================================
+
+Sporting Goods > Outdoor Recreation > Cycling > Bicycle Components: 1114
+Sporting Goods > Outdoor Recreation > Cycling > Bicycle Accessories: 687
+Sporting Goods > Outdoor Recreation > Cycling: 150
+Sporting Goods > Outdoor Recreation > Cycling > Bicycles > Electric Bicycles: 76
+Sporting Goods > Outdoor Recreation > Cycling > Bicycles: 45
