@@ -383,21 +383,18 @@
           "collection_tab_G9EqC7": {
             "type": "collection_tab",
             "settings": {
-              "tab_title": "E-BIKES",
               "collection": "e-bikes-city-and-commuter"
             }
           },
           "collection_tab_AAcX3t": {
             "type": "collection_tab",
             "settings": {
-              "tab_title": "BIKES",
               "collection": "bikes-city-and-urban"
             }
           },
           "collection_tab_U9QJmW": {
             "type": "collection_tab",
             "settings": {
-              "tab_title": "EARTH",
               "collection": "accessories-mtb-helmets"
             }
           }
