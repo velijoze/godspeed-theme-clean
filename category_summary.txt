@@ -1,0 +1,130 @@
+Category Structure Summary:
+=======================
+
+Accessories (Total: 687)
+  └─ Bags (68)
+  └─ Baskets (27)
+  └─ Bells (12)
+  └─ Bike Computers (2)
+  └─ Bottles (40)
+  └─ Chargers (1)
+  └─ Child Seats (37)
+  └─ Clothing (7)
+  └─ Clothing (6)
+  └─ Clothing (10)
+  └─ Clothing (6)
+  └─ Clothing (2)
+  └─ Clothing (9)
+  └─ Clothing (8)
+  └─ Clothing (4)
+  └─ Clothing (7)
+  └─ Clothing (9)
+  └─ Clothing (18)
+  └─ Fenders (47)
+  └─ Handy (38)
+  └─ Helmets (4)
+  └─ Helmets (2)
+  └─ Helmets (10)
+  └─ Helmets (1)
+  └─ Helmets (16)
+  └─ Lights (51)
+  └─ Locks (32)
+  └─ Luggage Racks (36)
+  └─ Mirrors (9)
+  └─ Pumps (22)
+  └─ Rain Protection (11)
+  └─ Stands (28)
+  └─ Tools (42)
+  └─ Trailers (21)
+
+Bikes (Total: 33)
+  └─ City / Trekking (2)
+  └─ Dirt Bikes (1)
+  └─ Foldable (9)
+  └─ Gravel (2)
+  └─ Kids Bikes (1)
+  └─ Kids Bikes (3)
+  └─ Kids Bikes (1)
+  └─ Kids Bikes (1)
+  └─ Mountain Bike (6)
+  └─ Mountain Bike (1)
+  └─ Road (6)
+
+Bikes - Dirt Bikes (Total: 2)
+
+Bikes - Kids - 14" (kid =< 95 cm) (Total: 3)
+
+Bikes - Kids - 16" (kid = < 95cm) (Total: 1)
+
+Bikes - Kids - 18" (kid = < 104cm) (Total: 2)
+
+Bikes - Kids - 20" (kid = < 111cm) (Total: 1)
+
+Bikes - Kids - 24" (kid = < 118 cm) (Total: 1)
+
+Bikes - Mountainbike - Fully (Total: 1)
+
+Bikes - Road (Total: 1)
+
+E-Bikes (Total: 47)
+  └─ Bike Sale (2)
+  └─ Cargo e-bike (10)
+  └─ E-Gravel (1)
+  └─ E-MTB Full Suspension (1)
+  └─ E-MTB Full Suspension (1)
+  └─ E-MTB Full Suspension (1)
+  └─ E-MTB Full Suspension (7)
+  └─ E-MTB Hardtail (1)
+  └─ E-bike 24 Inch (2)
+  └─ E-bike 26 Inch (1)
+  └─ E-bike City & Trekking (2)
+  └─ E-bike City & Trekking (2)
+  └─ E-bike City & Trekking (4)
+  └─ E-bike City & Trekking (1)
+  └─ E-bike City & Trekking (4)
+  └─ E-bike City & Trekking (2)
+  └─ E-bike City & Trekking (1)
+  └─ Gravel (3)
+  └─ Used (1)
+
+E-Bikes - E-Bike Cargo (Total: 6)
+
+E-Bikes - E-MTB Full Suspension - 140-150 (Total: 3)
+
+E-Bikes - E-MTB Hardtail (Total: 5)
+
+E-Bikes - E-bike City, Tour & Trekking (Total: 2)
+
+E-Bikes - E-bike City, Tour & Trekking - E-bike Easy Entry (Total: 4)
+
+E-Bikes - E-bike City, Tour & Trekking - E-bike compatta & - pieghevole (Total: 1)
+
+E-Bikes - E-bike City, Tour & Trekking - E-bike compatta pieghevole (Total: 1)
+
+E-Bikes - E-bike City, Tour & Trekking - On-Road (Total: 2)
+
+E-Bikes - E-bike City, Tour & Trekking - S-Pedelec 45km& - h (Total: 2)
+
+E-Bikes - E-bike City, Tour & Trekking - S-Pedelec 45kmh (Total: 1)
+
+E-Bikes - E-bike City, Tour & Trekking - Stylish E-Bikes & - Vintage (Total: 2)
+
+General (Total: 6)
+
+Indoor Trainers (Total: 1)
+  └─ Rollers (1)
+
+Parts (Total: 1114)
+  └─ Bike Care (59)
+  └─ Bosch (88)
+  └─ Brakes (150)
+  └─ Gears and Transmission (223)
+  └─ Grips (49)
+  └─ Handlebars (50)
+  └─ Pedals (73)
+  └─ Powerplay (6)
+  └─ Saddles (30)
+  └─ Seatpost (47)
+  └─ Shocks & Suspension Forks (17)
+  └─ Wheels (264)
+

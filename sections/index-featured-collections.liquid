@@ -4,217 +4,205 @@
       <h2 class="section-header__title">{{ section.settings.title | default: 'FEATURED COLLECTIONS' }}</h2>
     </header>
     
-    <!-- Collection Category Tabs -->
-    <div class="collection-tabs">
-             <div class="tab-buttons">
-         {% for block in section.blocks %}
-           {% if block.type == 'collection_tab' %}
-             {% assign collection = block.settings.collection %}
-             {% if collection %}
-               <button class="tab-button{% if forloop.first %} active{% endif %}" 
-                       data-tab="{{ collection.handle }}">
-                 {{ collection.title }}
-               </button>
-             {% endif %}
-           {% endif %}
-         {% endfor %}
-       </div>
+    <div class="featured-collections-tabs">
+      <div class="tab-nav">
+        {% for block in section.blocks %}
+          {% if block.type == 'collection_tab' %}
+            {% assign collection = block.settings.collection %}
+            {% if collection and collection.products.size > 0 %}
+              <button class="tab-button{% if forloop.first %} active{% endif %}" data-tab="{{ forloop.index }}">
+                {{ collection.title }}
+              </button>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      <div class="tab-content">
+        {% for block in section.blocks %}
+          {% if block.type == 'collection_tab' %}
+            {% assign collection = block.settings.collection %}
+            {% if collection and collection.products.size > 0 %}
+              <div class="tab-pane{% if forloop.first %} active{% endif %}" id="tab-{{ forloop.index }}">
+                <div class="products-grid">
+                  {% for product in collection.products limit: section.settings.products_per_tab %}
+                    <div class="product-card">
+                      <a href="{{ product.url }}">
+                        <img src="{{ product.featured_image | img_url: '300x300', crop: 'center' }}" 
+                             alt="{{ product.title | escape }}"
+                             class="product-image">
+                      </a>
+                      <div class="product-info">
+                        <h3 class="product-title">
+                          <a href="{{ product.url }}">{{ product.title }}</a>
+                        </h3>
+                        <div class="product-price">
+                          {% if product.compare_at_price > product.price %}
+                            <span class="sale-price">{{ product.price | money }}</span>
+                            <span class="original-price">{{ product.compare_at_price | money }}</span>
+                          {% else %}
+                            {{ product.price | money }}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
     
-    <!-- Collection Content -->
+    {% assign has_products = false %}
     {% for block in section.blocks %}
-      {% if block.type == 'collection_tab' %}
-        {% assign collection = block.settings.collection %}
-        {% if collection %}
-          <div class="collection-content{% if forloop.first %} active{% endif %}" 
-               data-tab="{{ collection.handle }}">
-            <div class="collection-grid">
-              {% if collection.products.size > 0 %}
-                {% for product in collection.products limit: section.settings.products_per_tab %}
-                  <div class="collection-product">
-                    <div class="product-image-wrapper">
-                      <a href="{{ product.url }}" class="product-image-link">
-                        <img src="{{ product.featured_image | img_url: '250x250', crop: 'center' }}" 
-                             alt="{{ product.title | escape }}"
-                             class="product-image"
-                             loading="lazy">
-                        {% unless product.available %}
-                          <div class="sold-out-badge">SOLD OUT</div>
-                        {% endunless %}
-                      </a>
-                      <div class="product-actions">
-                        <button class="quick-view-btn" 
-                                data-product-id="{{ product.id }}"
-                                data-product-handle="{{ product.handle }}">
-                          Quick View
-                        </button>
-                      </div>
-                    </div>
-                    <div class="product-info">
-                      <h3 class="product-title h6">
-                        <a href="{{ product.url }}">{{ product.title }}</a>
-                      </h3>
-                      <div class="product-price">
-                        {% if product.compare_at_price > product.price %}
-                          <span class="price-sale">{{ product.price | money }}</span>
-                          <span class="price-compare">{{ product.compare_at_price | money }}</span>
-                        {% else %}
-                          <span class="price-regular">{{ product.price | money }}</span>
-                        {% endif %}
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
-              {% else %}
-                <div class="no-products">
-                  <p>No products found in this collection.</p>
-                </div>
-              {% endif %}
-            </div>
-          </div>
-        {% else %}
-          <!-- No collection selected - show setup message -->
-          <div class="collection-content{% if forloop.first %} active{% endif %}" 
-               data-tab="setup-{{ forloop.index }}">
-                       <div class="collection-setup">
-             <h3>Collection Not Set</h3>
-             <p>This collection tab doesn't have a collection selected.</p>
-             <div class="setup-instructions">
-               <p><strong>To fix this:</strong></p>
-               <ol>
-                 <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong></li>
-                 <li>Find this "Featured Collections" section</li>
-                 <li>Click on the "Collection Tab" block</li>
-                 <li>Select a collection from the "Collection" dropdown</li>
-                 <li>Save your changes</li>
-               </ol>
-             </div>
-           </div>
-          </div>
-        {% endif %}
-      {% endif %}
-    {% endfor %}
-    
-    <!-- No collections set at all -->
-    {% assign has_collections = false %}
-    {% for block in section.blocks %}
-      {% if block.type == 'collection_tab' and block.settings.collection %}
-        {% assign has_collections = true %}
+      {% if block.type == 'collection_tab' and block.settings.collection and block.settings.collection.products.size > 0 %}
+        {% assign has_products = true %}
         {% break %}
       {% endif %}
     {% endfor %}
     
-    {% unless has_collections %}
-             <div class="no-collections-setup">
-         <h3>Featured Collections Setup</h3>
-         <p>No collections have been selected for this section.</p>
-         <div class="setup-instructions">
-           <p><strong>To set up featured collections:</strong></p>
-           <ol>
-             <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong></li>
-             <li>Find this "Featured Collections" section</li>
-             <li>Click on each "Collection Tab" block</li>
-             <li>Select collections from the "Collection" dropdowns</li>
-             <li>Save your changes</li>
-           </ol>
-         </div>
-       </div>
+    {% unless has_products %}
+      <div style="text-align: center; padding: 50px; border: 2px dashed #e0e0e0; margin-top: 30px;">
+        <h3>No Collections Selected</h3>
+        <p>Please select collections in the theme customizer to display products here.</p>
+      </div>
     {% endunless %}
   </div>
 </section>
 
-<!-- Quick View Modal -->
-<div id="quick-view-modal" class="quick-view-modal" style="display: none;">
-  <div class="modal-overlay"></div>
-  <div class="modal-content">
-    <button class="modal-close">&times;</button>
-    <div class="quick-view-content">
-      <!-- Content will be loaded here -->
-    </div>
-  </div>
-</div>
+<style>
+.featured-collections-tabs .tab-nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #e0e0e0;
+}
 
+.featured-collections-tabs .tab-button {
+  background: none;
+  border: none;
+  padding: 15px 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.featured-collections-tabs .tab-button.active,
+.featured-collections-tabs .tab-button:hover {
+  color: #333;
+  border-bottom-color: #333;
+}
+
+.featured-collections-tabs .tab-pane {
+  display: none;
+}
+
+.featured-collections-tabs .tab-pane.active {
+  display: block;
+}
+
+.featured-collections-tabs .products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.featured-collections-tabs .product-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.featured-collections-tabs .product-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.featured-collections-tabs .product-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.featured-collections-tabs .product-info {
+  padding: 15px;
+}
+
+.featured-collections-tabs .product-title {
+  font-size: 14px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.featured-collections-tabs .product-title a {
+  text-decoration: none;
+  color: #333;
+}
+
+.featured-collections-tabs .product-price {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.featured-collections-tabs .sale-price {
+  color: #ef4444;
+}
+
+.featured-collections-tabs .original-price {
+  text-decoration: line-through;
+  color: #999;
+  margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+  .featured-collections-tabs .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .featured-collections-tabs .tab-button {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-collections-tabs .products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .featured-collections-tabs .tab-nav {
+    flex-wrap: wrap;
+  }
+  
+  .featured-collections-tabs .tab-button {
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+}
+</style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Tab functionality
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const collectionContents = document.querySelectorAll('.collection-content');
-    
-    tabButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const targetTab = this.getAttribute('data-tab');
-        
-        // Remove active class from all buttons and contents
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        collectionContents.forEach(content => content.classList.remove('active'));
-        
-        // Add active class to clicked button and corresponding content
-        this.classList.add('active');
-        const targetContent = document.querySelector(`[data-tab="${targetTab}"]`);
-        if (targetContent) {
-          targetContent.classList.add('active');
-        }
-      });
+document.addEventListener('DOMContentLoaded', function() {
+  const tabButtons = document.querySelectorAll('.featured-collections-tabs .tab-button');
+  const tabPanes = document.querySelectorAll('.featured-collections-tabs .tab-pane');
+  
+  tabButtons.forEach(function(button, index) {
+    button.addEventListener('click', function() {
+      // Remove active class from all buttons and panes
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      tabPanes.forEach(pane => pane.classList.remove('active'));
+      
+      // Add active class to clicked button and corresponding pane
+      button.classList.add('active');
+      tabPanes[index].classList.add('active');
     });
-    
-    // Quick view functionality
-    const quickViewButtons = document.querySelectorAll('.quick-view-btn');
-    const modal = document.getElementById('quick-view-modal');
-    const modalContent = modal.querySelector('.quick-view-content');
-    const modalClose = modal.querySelector('.modal-close');
-    const modalOverlay = modal.querySelector('.modal-overlay');
-    
-    quickViewButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const productHandle = this.getAttribute('data-product-handle');
-        loadQuickView(productHandle);
-        modal.style.display = 'block';
-      });
-    });
-    
-    function closeModal() {
-      modal.style.display = 'none';
-    }
-    
-    modalClose.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', closeModal);
-    
-    // Close modal on escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeModal();
-      }
-    });
-    
-    function loadQuickView(productHandle) {
-      // Load product data for quick view
-      fetch(`/products/${productHandle}.js`)
-        .then(response => response.json())
-        .then(product => {
-          modalContent.innerHTML = `
-            <div class="quick-view-product">
-              <div class="quick-view-image">
-                <img src="${product.featured_image}" alt="${product.title}">
-              </div>
-              <div class="quick-view-details">
-                <h3>${product.title}</h3>
-                <p class="price">${formatMoney(product.price)}</p>
-                <div class="description">${product.description.substring(0, 200)}...</div>
-                <a href="/products/${product.handle}" class="btn btn--primary">View Full Product</a>
-              </div>
-            </div>
-          `;
-        })
-        .catch(error => {
-          modalContent.innerHTML = '<p>Error loading product details.</p>';
-        });
-    }
-    
-    function formatMoney(cents) {
-      return '$' + (cents / 100).toFixed(2);
-    }
   });
+});
 </script>
 
 {% schema %}
@@ -230,7 +218,7 @@
     {
       "type": "range",
       "id": "products_per_tab",
-      "label": "Products per tab",
+      "label": "Products to show",
       "min": 3,
       "max": 12,
       "step": 1,
@@ -240,14 +228,8 @@
   "blocks": [
     {
       "type": "collection_tab",
-      "name": "Collection Tab",
+      "name": "Collection",
       "settings": [
-        {
-          "type": "text",
-          "id": "tab_title",
-          "label": "Tab Title",
-          "default": "FIRE"
-        },
         {
           "type": "collection",
           "id": "collection",
@@ -262,22 +244,10 @@
       "category": "Content",
       "blocks": [
         {
-          "type": "collection_tab",
-          "settings": {
-            "tab_title": "Electric Bikes"
-          }
+          "type": "collection_tab"
         },
         {
-          "type": "collection_tab",
-          "settings": {
-            "tab_title": "Accessories"
-          }
-        },
-        {
-          "type": "collection_tab",
-          "settings": {
-            "tab_title": "Components"
-          }
+          "type": "collection_tab"
         }
       ]
     }

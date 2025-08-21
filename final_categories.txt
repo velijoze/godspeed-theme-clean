@@ -1,0 +1,100 @@
+: 143
+Accessories: 44
+Accessories > Bags: 68
+Accessories > Baskets: 27
+Accessories > Bells: 12
+Accessories > Bike Computers: 2
+Accessories > Bottles: 40
+Accessories > Chargers: 1
+Accessories > Child Seats: 37
+Accessories > Clothing: 7
+Accessories > Clothing > Backpacks: 4
+Accessories > Clothing > Bike Shoes: 6
+Accessories > Clothing > Gloves: 6
+Accessories > Clothing > Goggles: 7
+Accessories > Clothing > Jacket: 9
+Accessories > Clothing > MTB Protection: 8
+Accessories > Clothing > Pants: 2
+Accessories > Clothing > Shorts: 9
+Accessories > Clothing > Socks: 10
+Accessories > Clothing > Technical T-shirt: 18
+Accessories > Fenders: 47
+Accessories > Helmets: 4
+Accessories > Helmets > Kids: 2
+Accessories > Helmets > MTB: 10
+Accessories > Helmets > MTB + Mentoniera: 1
+Accessories > Helmets > Urban: 16
+Accessories > Lights: 51
+Accessories > Locks: 32
+Accessories > Luggage Racks: 36
+Accessories > Mirrors: 9
+Accessories > Phone Mounts: 38
+Accessories > Pumps: 22
+Accessories > Rain Protection: 11
+Accessories > Stands: 28
+Accessories > Tools: 42
+Accessories > Trailers: 21
+Bikes - Dirt Bikes: 2
+Bikes - Kids - 14" (kid =< 95 cm): 3
+Bikes - Kids - 16" (kid = < 95cm): 1
+Bikes - Kids - 18" (kid = < 104cm): 2
+Bikes - Kids - 20" (kid = < 111cm): 1
+Bikes - Kids - 24" (kid = < 118 cm): 1
+Bikes - Mountainbike - Fully: 1
+Bikes - Road: 1
+Bikes > City / Trekking: 2
+Bikes > Dirt Bikes: 1
+Bikes > Foldable: 9
+Bikes > Gravel: 2
+Bikes > KinderBikes > 12": 1
+Bikes > KinderBikes > 16" (kid = < 95cm): 3
+Bikes > KinderBikes > 18" (kid = < 104cm): 1
+Bikes > KinderBikes > 20" (kid = < 111cm): 1
+Bikes > Mountainbike > Fully: 6
+Bikes > Mountainbike > Jugend: 1
+Bikes > Road: 6
+E-Bikes - E-Bike Cargo: 6
+E-Bikes - E-MTB Full Suspension - 140-150: 3
+E-Bikes - E-MTB Hardtail: 5
+E-Bikes - E-bike City, Tour & Trekking: 2
+E-Bikes - E-bike City, Tour & Trekking - E-bike Easy Entry: 4
+E-Bikes - E-bike City, Tour & Trekking - E-bike compatta & - pieghevole: 1
+E-Bikes - E-bike City, Tour & Trekking - E-bike compatta pieghevole: 1
+E-Bikes - E-bike City, Tour & Trekking - On-Road: 2
+E-Bikes - E-bike City, Tour & Trekking - S-Pedelec 45km& - h: 2
+E-Bikes - E-bike City, Tour & Trekking - S-Pedelec 45kmh: 1
+E-Bikes - E-bike City, Tour & Trekking - Stylish E-Bikes & - Vintage: 2
+E-Bikes > Cargo e-bike: 10
+E-Bikes > E-Gravel: 1
+E-Bikes > E-MTB Full Suspension > 120-130mm Travel: 1
+E-Bikes > E-MTB Full Suspension > 120-134: 1
+E-Bikes > E-MTB Full Suspension > 140-150: 1
+E-Bikes > E-MTB Full Suspension > 160-infinity: 7
+E-Bikes > E-MTB Hardtail: 1
+E-Bikes > E-bike 24 Zoll: 2
+E-Bikes > E-bike 26 Zoll: 1
+E-Bikes > E-bike City & Trekking: 2
+E-Bikes > E-bike City & Trekking > 45km/h: 2
+E-Bikes > E-bike City & Trekking > Kompaktes / Faltbares E-bike: 4
+E-Bikes > E-bike City & Trekking > Light e-bikes: 1
+E-Bikes > E-bike City & Trekking > Niedriger Einstieg: 4
+E-Bikes > E-bike City & Trekking > On-Road: 2
+E-Bikes > E-bike City & Trekking > Stylish E-Bikes / Vintage: 1
+E-Bikes > Gebraucht: 1
+E-Bikes > Gravel: 3
+E-Bikes > Velo Sale: 2
+General: 6
+Indoor Trainers > Rollers: 1
+Parts: 58
+Parts > Bosch: 88
+Parts > Brakes: 150
+Parts > Dämpfer & Federgabel: 17
+Parts > Getriebe und Übersetzung: 223
+Parts > Grips: 49
+Parts > Handlebars: 50
+Parts > Pedals: 73
+Parts > Powerplay: 6
+Parts > Räder: 264
+Parts > Saddles: 30
+Parts > Saddlesstütze: 47
+Parts > Velopflege: 59

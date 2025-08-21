@@ -3197,6 +3197,28 @@ $infoBarPadding: 5px;
   }
 }
 
+/*================ Font size fixes ================*/
+[data-section-type="sustainability"] h3,
+[data-section-type="featured-collections"] .product-title {
+  font-size: 14px !important;
+}
+
+[data-section-type="sustainability"] p {
+  font-size: 12px !important;
+}
+
+.featured-collections-tabs .product-title {
+  font-size: 12px !important;
+}
+
+.featured-collections-tabs .product-price {
+  font-size: 14px !important;
+}
+
+.featured-collections-tabs .tab-button {
+  font-size: 12px !important;
+}
+
 /*================ Language selector in header ================*/
 .header-locale {
   float: right;
@@ -3205,7 +3227,7 @@ $infoBarPadding: 5px;
   
   .locale-selector {
     background: $colorInfoBg;
-    border: 1px solid darken($colorInfoBg, 20%);
+    border: 1px solid rgba($colorInfoText, 0.7);
     color: $colorInfoText;
     font-size: 12px;
     padding: 4px 20px 4px 8px;
@@ -3219,12 +3241,12 @@ $infoBarPadding: 5px;
     
     &:focus {
       outline: none;
-      background: darken($colorInfoBg, 5%);
-      border-color: darken($colorInfoBg, 30%);
+      background: lighten($colorInfoBg, 10%);
+      border-color: $colorInfoText;
     }
     
     &:hover {
-      background: darken($colorInfoBg, 3%);
+      background: lighten($colorInfoBg, 5%);
     }
     
     option {
@@ -6689,34 +6711,59 @@ button.mfp-close {
 /*============ Feature Icons & Typography Fixes ==================*/
 
 .feature-icon {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: #22c55e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
   svg {
-    width: 48px;
-    height: 48px;
+    width: 60px !important;
+    height: 60px !important;
+    fill: currentColor;
   }
 }
 
 // Fix typography hierarchy
-.h5 {
+h3.h5, .h5 {
   font-size: 1.2rem !important;
   line-height: 1.3 !important;
   margin-bottom: 1rem !important;
 }
 
-.h6 {
+h3.h6, .h6 {
   font-size: 1rem !important;
   line-height: 1.4 !important;
   margin-bottom: 0.5rem !important;
 }
 
-// Featured collections grid fixes
-.collection-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 2rem;
+// Specific overrides for sections
+.feature-card h3 {
+  font-size: 1.2rem !important;
+  line-height: 1.3 !important;
+  margin-bottom: 0.8rem !important;
+}
+
+.product-title {
+  font-size: 0.95rem !important;
+  line-height: 1.3 !important;
+  font-weight: normal !important;
+}
+
+// Featured collections grid fixes - more specific selector
+.index-featured-collections .collection-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  margin-top: 2rem !important;
+  
+  @include at-query($max, $medium) {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  @include at-query($max, $small) {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 .collection-product {
@@ -6922,4 +6969,75 @@ button.mfp-close {
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
+}
+
+/*============ Final Override Fixes ==================*/
+
+// Force correct display for featured collections products
+[data-section-type="featured-collections"] {
+  .collection-product {
+    display: block !important;
+    width: 100% !important;
+    
+    .product-image {
+      display: block !important;
+      width: 100% !important;
+      height: 250px !important;
+      object-fit: cover !important;
+    }
+    
+    .product-title {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      
+      a {
+        color: #333 !important;
+        text-decoration: none !important;
+        
+        &:hover {
+          color: #22c55e !important;
+        }
+      }
+    }
+  }
+  
+  .product-price {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+    
+    .price-sale {
+      color: #ef4444 !important;
+      margin-right: 8px !important;
+    }
+    
+    .price-compare {
+      text-decoration: line-through !important;
+      color: #999 !important;
+    }
+  }
+}
+
+// Ensure sustainability section displays correctly
+[data-section-type="sustainability"] {
+  .feature-card {
+    h3 {
+      font-size: 18px !important;
+      margin-bottom: 12px !important;
+      font-weight: 600 !important;
+    }
+    
+    p {
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      color: #666 !important;
+    }
+  }
+  
+  .feature-icon {
+    height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
 }

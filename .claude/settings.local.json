@@ -11,7 +11,8 @@
       "WebFetch(domain:t0uds3-a2.myshopify.com)",
       "Bash(timeout:*)",
       "Bash(mv:*)",
-      "Bash(FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch bulk-translate-simple.ps1 bulk-translate-types-categories.ps1' --prune-empty --tag-name-filter cat -- --all)"
+      "Bash(FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch bulk-translate-simple.ps1 bulk-translate-types-categories.ps1' --prune-empty --tag-name-filter cat -- --all)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
