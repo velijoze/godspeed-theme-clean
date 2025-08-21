@@ -3205,7 +3205,7 @@ $infoBarPadding: 5px;
   
   .locale-selector {
     background: $colorInfoBg;
-    border: 1px solid rgba($colorInfoText, 0.3);
+    border: 1px solid darken($colorInfoBg, 20%);
     color: $colorInfoText;
     font-size: 12px;
     padding: 4px 20px 4px 8px;
@@ -3220,7 +3220,7 @@ $infoBarPadding: 5px;
     &:focus {
       outline: none;
       background: darken($colorInfoBg, 5%);
-      border-color: rgba($colorInfoText, 0.5);
+      border-color: darken($colorInfoBg, 30%);
     }
     
     &:hover {
@@ -6684,6 +6684,150 @@ button.mfp-close {
   margin: 1rem 0;
   border-radius: 4px;
   font-size: 12px;
+}
+
+/*============ Feature Icons & Typography Fixes ==================*/
+
+.feature-icon {
+  margin-bottom: 1rem;
+  color: #22c55e;
+  
+  svg {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+// Fix typography hierarchy
+.h5 {
+  font-size: 1.2rem !important;
+  line-height: 1.3 !important;
+  margin-bottom: 1rem !important;
+}
+
+.h6 {
+  font-size: 1rem !important;
+  line-height: 1.4 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+// Featured collections grid fixes
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 2rem;
+}
+
+.collection-product {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+}
+
+.product-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.collection-product:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-actions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.collection-product:hover .product-actions {
+  opacity: 1;
+}
+
+.quick-view-btn {
+  background: rgba(255,255,255,0.9);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  
+  &:hover {
+    background: #fff;
+  }
+}
+
+.product-info {
+  padding: 15px;
+}
+
+.product-title {
+  margin-bottom: 10px;
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+    
+    &:hover {
+      color: #22c55e;
+    }
+  }
+}
+
+.collection-tabs {
+  margin-bottom: 2rem;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  
+  &.active {
+    color: #22c55e;
+    border-bottom-color: #22c55e;
+  }
+  
+  &:hover {
+    color: #22c55e;
+  }
+}
+
+.collection-content {
+  display: none;
+  
+  &.active {
+    display: block;
+  }
 }
 
 /*============ Loading States ==================*/
