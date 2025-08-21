@@ -182,15 +182,15 @@
       "index-banner-image": {
         "type": "index-banner-image",
         "settings": {
-          "image": "shopify://shop_images/5S5A2355.jpg",
+          "image": "shopify://shop_images/Black_and_White_Photo_Biking_Facebook_Post_1800_x_900_px.png",
           "height": "use_screen_two_thirds",
-          "overlay": "image-overlay-15",
+          "overlay": "image-overlay-0",
           "parallax": true,
-          "title": "0% FINANCING AVAILABLE",
-          "description": "RIDE NOW, PAY LATER",
+          "title": "",
+          "description": "",
           "text_align": "text-center",
           "color": "homepage--white",
-          "link_text": "View products",
+          "link_text": "",
           "link": "",
           "button_style": "btn btn--large btn--clear btn--square uppercase"
         }
