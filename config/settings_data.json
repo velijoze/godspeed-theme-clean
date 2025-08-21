@@ -184,7 +184,7 @@
         "settings": {
           "image": "shopify://shop_images/Black_and_White_Photo_Biking_Facebook_Post_1800_x_900_px.png",
           "height": "use_screen_two_thirds",
-          "overlay": "image-overlay-15",
+          "overlay": "image-overlay-0",
           "parallax": true,
           "title": "",
           "description": "",
