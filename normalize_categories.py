@@ -2,7 +2,7 @@ import csv
 import re
 from collections import Counter, defaultdict
 
-# Terms to translate at the token/segment level
+# Terms to translate at the token/segment level (substring-safe)
 SEGMENT_TRANSLATIONS = {
 	# Main group names
 	"Zubehör": "Accessories",
@@ -34,6 +34,7 @@ SEGMENT_TRANSLATIONS = {
 	"Handy": "Phone Mounts",
 	"Caricatori": "Chargers",
 	"Helme": "Helmets",
+	"Helmetsts": "Helmets",
 
 	# Bikes
 	"KinderBikes": "Kids Bikes",
@@ -51,6 +52,12 @@ SEGMENT_TRANSLATIONS = {
 	"Niedriger Einstieg": "Step-Through",
 	"compatta pieghevole": "Compact Folding",
 	"compatta & - pieghevole": "Compact Folding",
+	"compatta": "Compact",
+	"pieghevole": "Folding",
+	"Cargo e-bike": "Cargo",
+	"E-Bike Cargo": "Cargo",
+	"City, Tour & Trekking": "City & Trekking",
+	"E-Gravel": "Gravel",
 
 	# Parts
 	"Dämpfer & Federgabel": "Suspension",
@@ -75,7 +82,7 @@ WHOLE_REPLACEMENTS = [
 	(r"^E-Bikes\s*-\s*E-?bike\s*City,?\s*Tour\s*&\s*Trekking.*$", "E-Bikes > City & Trekking"),
 ]
 
-# Foreign terms to assert none remain post-normalization
+# Foreign terms to assert none remain post-normalization (whole-word match)
 FOREIGN_TERMS = [
 	"Zubehör", "Anhänger", "Bekleidung", "Bikeschuhe", "Calze", "Handschuhe", "Hosen",
 	"Jacke", "MTB Schutz", "Rucksäcke", "Rücksäcke", "Schutzbrille", "Mentoniera", "Körbe",
@@ -100,12 +107,24 @@ def normalize_category(raw: str) -> str:
 			value = replacement
 			break
 
-	# Segment translations
+	# Segment translations with substring replacements
 	segments = [seg.strip() for seg in value.split(" > ")]
 	translated_segments = []
 	for seg in segments:
-		translated_segments.append(SEGMENT_TRANSLATIONS.get(seg, seg))
+		for src, dst in SEGMENT_TRANSLATIONS.items():
+			if src in seg:
+				seg = seg.replace(src, dst)
+		translated_segments.append(seg)
 	value = " > ".join(translated_segments)
+
+	# If first segment contains E-Bikes variants, normalize main/sub structure
+	parts = [p.strip() for p in value.split(" > ") if p.strip()]
+	if parts:
+		if parts[0].lower().startswith("e-bikes") or parts[0].lower().startswith("e-bike"):
+			parts[0] = "E-Bikes"
+			if len(parts) > 1 and parts[1].lower().startswith("e-bikes"):
+				parts[1] = parts[1].replace("E-Bikes ", "").replace("E-bikes ", "").replace("E-bike ", "").strip()
+		value = " > ".join(parts)
 
 	# Final tidy
 	value = value.replace("&amp;", "&")
@@ -150,9 +169,9 @@ def run():
 			if any(ch not in ASCII_ALLOWED for ch in cat):
 				non_ascii_rows += 1
 
-			# Foreign term detection
+			# Foreign term detection with whole-word regex
 			for term in FOREIGN_TERMS:
-				if term in cat:
+				if re.search(rf"\b{re.escape(term)}\b", cat):
 					foreign_hits[term] += 1
 
 			# Main/subcategory counts

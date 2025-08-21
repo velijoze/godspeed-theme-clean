@@ -4,11 +4,7 @@ One-Pass Category Normalization Report
 Type equals Category mismatches: 0
 Rows with non-ASCII in Category: 0
 Remaining foreign terms (should be empty):
-- Jacke: 9
-- Zoll: 3
-- compatta: 2
-- pieghevole: 2
-- Mentoniera: 1
+- None
 
 Category overview:
 Accessories (Total: 687)
@@ -43,16 +39,13 @@ Bikes (Total: 45)
   - Mountain Bikes: 8
   - Road: 7
 E-Bikes (Total: 76)
-  - Cargo e-bike: 10
-  - E-Bike Cargo: 6
-  - E-Gravel: 1
+  - 24 Inch: 2
+  - 26 Inch: 1
+  - Cargo: 16
+  - City & Trekking: 31
   - E-MTB Full Suspension: 13
   - E-MTB Hardtail: 6
-  - E-bike 24 Zoll: 2
-  - E-bike 26 Zoll: 1
-  - E-bike City & Trekking: 16
-  - E-bike City, Tour & Trekking: 15
-  - Gravel: 3
+  - Gravel: 4
   - Sale: 2
   - Used: 1
 General (Total: 6)
