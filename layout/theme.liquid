@@ -39,10 +39,8 @@
 
   <!-- Modernizr ============================================================ -->
   {{ 'modernizr.min.js' | asset_url | script_tag }}
-
   <!-- jQuery v2.2.3 ======================================================== -->
   {{ 'jquery.min.js' | asset_url | script_tag }}
-
   
 
   <script>
@@ -133,18 +131,7 @@
     </script>
   {% endunless %}
 
-  <script>
-    {% if newHash %}
-      $(function() {
-        timber.updateHash('{{ newHash }}');
-      });
-    {% endif %}
-    {% if resetPassword %}
-      $(function() {
-        timber.resetPasswordSuccess();
-      });
-    {% endif %}
-  </script>
+ 
 
   <!-- Paste mailchimp popup code between comments ===================================== -->
 
