@@ -98,14 +98,14 @@
       return;
     }
 
-    {% if section.settings.google_maps_api_key != blank %}
+    {% if settings.google_maps_api_key != blank %}
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key={{ section.settings.google_maps_api_key }}&callback=initMap`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key={{ settings.google_maps_api_key }}&callback=initMap`;
     script.async = true;
     script.defer = true;
     document.head.appendChild(script);
     {% else %}
-    document.getElementById('locations-map').innerHTML = '<p style="text-align: center; padding: 50px;">Google Maps API key required. Please add your API key in theme settings.</p>';
+    document.getElementById('locations-map').innerHTML = '<div style="text-align: center; padding: 50px; border: 2px dashed #ccc; background: #f9f9f9;"><h3>Google Maps API Key Required</h3><p>To display the map, please:</p><ol style="text-align: left; display: inline-block;"><li>Go to <strong>Theme Settings → API Integration</strong></li><li>Add your Google Maps API key</li><li>Get a key from <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li></ol></div>';
     {% endif %}
   }
 
@@ -127,12 +127,6 @@
       "id": "description",
       "label": "Description",
       "default": "Visit one of our stores to experience our e-bikes firsthand"
-    },
-    {
-      "type": "text",
-      "id": "google_maps_api_key",
-      "label": "Google Maps API Key",
-      "info": "Required for maps to work. Get your key from Google Cloud Console."
     },
     {
       "type": "range",

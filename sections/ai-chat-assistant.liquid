@@ -3,29 +3,29 @@
   Floating chat widget for customer support
 {% endcomment %}
 
-<div id="ai-chat-widget" class="ai-chat-widget">
-  <button id="ai-chat-toggle" class="ai-chat-toggle" aria-label="Open chat">
+<div id="ai-chat-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+  <button id="ai-chat-toggle" class="btn" style="width: 60px; height: 60px; border-radius: 50%; background: {{ settings.colorPrimary | default: '#333' }}; color: white; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; position: relative;" aria-label="Open chat">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
     </svg>
-    <span class="chat-badge" style="display: none;">1</span>
+    <span style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; display: none; align-items: center; justify-content: center;">1</span>
   </button>
   
-  <div id="ai-chat-container" class="ai-chat-container" style="display: none;">
-    <div class="ai-chat-header">
-      <h3>{{ section.settings.title | default: 'Chat Assistant' }}</h3>
-      <button id="ai-chat-close" class="ai-chat-close" aria-label="Close chat">×</button>
+  <div id="ai-chat-container" style="display: none; position: absolute; bottom: 80px; right: 0; width: 350px; height: 500px; background: white; border-radius: {{ settings.radius }}px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); display: flex; flex-direction: column;">
+    <div style="padding: 15px; background: {{ settings.colorBorder | default: '#f5f5f5' }}; border-radius: {{ settings.radius }}px {{ settings.radius }}px 0 0; display: flex; justify-content: space-between; align-items: center;">
+      <h3 style="margin: 0; font-size: 16px;">{{ section.settings.title | default: 'Chat Assistant' }}</h3>
+      <button id="ai-chat-close" style="background: none; border: none; font-size: 24px; cursor: pointer; color: {{ settings.colorTextBody }};" aria-label="Close chat">×</button>
     </div>
     
-    <div class="ai-chat-messages" id="ai-chat-messages">
-      <div class="ai-message">
-        <p>{{ section.settings.welcome_message | default: 'Hello! How can I help you today?' }}</p>
+    <div id="ai-chat-messages" style="flex: 1; padding: 15px; overflow-y: auto;">
+      <div style="margin-bottom: 15px; padding: 10px; background: {{ settings.colorBorder | default: '#f5f5f5' }}; border-radius: {{ settings.radius }}px; color: {{ settings.colorTextBody }};">
+        <p style="margin: 0;">{{ section.settings.welcome_message | default: 'Hello! How can I help you today?' }}</p>
       </div>
     </div>
     
-    <div class="ai-chat-input">
-      <input type="text" id="ai-chat-input" placeholder="{{ section.settings.placeholder | default: 'Type your message...' }}" />
-      <button id="ai-chat-send" aria-label="Send message">
+    <div style="padding: 15px; display: flex; gap: 10px; border-top: 1px solid {{ settings.colorBorder }};">
+      <input type="text" id="ai-chat-input" class="input-full" placeholder="{{ section.settings.placeholder | default: 'Type your message...' }}" style="flex: 1;" />
+      <button id="ai-chat-send" class="btn" style="padding: 10px; background: {{ settings.colorPrimary }}; color: white; border: none; cursor: pointer; border-radius: {{ settings.radius }}px;" aria-label="Send message">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="22" y1="2" x2="11" y2="13"></line>
           <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -35,139 +35,6 @@
   </div>
 </div>
 
-<style>
-  .ai-chat-widget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-  }
-  
-  .ai-chat-toggle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: {{ section.settings.button_color | default: '#333' }};
-    color: white;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  
-  .chat-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: red;
-    color: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .ai-chat-container {
-    position: absolute;
-    bottom: 80px;
-    right: 0;
-    width: 350px;
-    height: 500px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .ai-chat-header {
-    padding: 15px;
-    background: {{ section.settings.header_color | default: '#f5f5f5' }};
-    border-radius: 12px 12px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .ai-chat-header h3 {
-    margin: 0;
-    font-size: 16px;
-  }
-  
-  .ai-chat-close {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #666;
-  }
-  
-  .ai-chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 15px;
-  }
-  
-  .ai-message, .user-message {
-    margin-bottom: 15px;
-    padding: 10px 15px;
-    border-radius: 8px;
-    max-width: 80%;
-  }
-  
-  .ai-message {
-    background: #f0f0f0;
-    margin-right: auto;
-  }
-  
-  .user-message {
-    background: {{ section.settings.user_message_color | default: '#007bff' }};
-    color: white;
-    margin-left: auto;
-  }
-  
-  .ai-chat-input {
-    display: flex;
-    padding: 15px;
-    border-top: 1px solid #eee;
-  }
-  
-  .ai-chat-input input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    outline: none;
-  }
-  
-  .ai-chat-input button {
-    background: {{ section.settings.send_button_color | default: '#007bff' }};
-    color: white;
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    margin-left: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  @media (max-width: 480px) {
-    .ai-chat-container {
-      width: calc(100vw - 40px);
-      height: calc(100vh - 160px);
-      right: -10px;
-    }
-  }
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

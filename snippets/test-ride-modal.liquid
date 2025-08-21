@@ -1,0 +1,202 @@
+{% comment %}
+  Test Ride Booking Modal Popup
+  Usage: {% include 'test-ride-modal' %}
+{% endcomment %}
+
+<div id="test-ride-modal" class="modal modal-hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Book a Test Ride</h3>
+      <button class="modal-close" onclick="closeTestRideModal()">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+      {% form 'contact', id: 'test-ride-form' %}
+        <input type="hidden" name="contact[subject]" value="Test Ride Booking Request">
+        
+        {% if form.posted_successfully? %}
+          <div class="note form-success">
+            <h4>Test Ride Booked!</h4>
+            <p>We'll contact you within 24 hours to confirm your test ride appointment.</p>
+          </div>
+        {% endif %}
+        
+        {{ form.errors | default_errors }}
+        
+        <div class="grid">
+          <div class="grid__item large--one-half">
+            <div class="form-field">
+              <label for="TestRideName">Name <span class="required">*</span></label>
+              <input type="text" id="TestRideName" name="contact[name]" required class="input-full">
+            </div>
+          </div>
+          
+          <div class="grid__item large--one-half">
+            <div class="form-field">
+              <label for="TestRideEmail">Email <span class="required">*</span></label>
+              <input type="email" id="TestRideEmail" name="contact[email]" required class="input-full">
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid">
+          <div class="grid__item large--one-half">
+            <div class="form-field">
+              <label for="TestRidePhone">Phone Number <span class="required">*</span></label>
+              <input type="tel" id="TestRidePhone" name="contact[phone]" required class="input-full">
+            </div>
+          </div>
+          
+          <div class="grid__item large--one-half">
+            <div class="form-field">
+              <label for="TestRideBike">E-Bike Model <span class="required">*</span></label>
+              <select id="TestRideBike" name="contact[bike_model]" required class="input-full">
+                <option value="">Select E-Bike Model</option>
+                <option value="cube-touring">Cube Touring Hybrid</option>
+                <option value="cube-cross">Cube Cross Hybrid</option>
+                <option value="cube-mountain">Cube Stereo Hybrid</option>
+                <option value="trek-verve">Trek Verve+ 2</option>
+                <option value="trek-powerfly">Trek Powerfly 5</option>
+                <option value="specialized-turbo">Specialized Turbo Vado</option>
+                <option value="other">Other (specify in notes)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid">
+          <div class="grid__item large--one-half">
+            <div class="form-field">
+              <label for="TestRideDate">Preferred Date <span class="required">*</span></label>
+              <input type="date" id="TestRideDate" name="contact[preferred_date]" required class="input-full" min="{{ 'now' | date: '%Y-%m-%d' }}">
+            </div>
+          </div>
+          
+          <div class="grid__item large--one-half">
+            <div class="form-field">
+              <label for="TestRideTime">Preferred Time</label>
+              <select id="TestRideTime" name="contact[preferred_time]" class="input-full">
+                <option value="">Select Time Slot</option>
+                <option value="09:00">09:00 - 10:00</option>
+                <option value="10:00">10:00 - 11:00</option>
+                <option value="11:00">11:00 - 12:00</option>
+                <option value="13:00">13:00 - 14:00</option>
+                <option value="14:00">14:00 - 15:00</option>
+                <option value="15:00">15:00 - 16:00</option>
+                <option value="16:00">16:00 - 17:00</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-field">
+          <label for="TestRideLocation">Store Location <span class="required">*</span></label>
+          <select id="TestRideLocation" name="contact[location]" required class="input-full">
+            <option value="">Select Location</option>
+            <option value="zurich">Zurich Store - Bahnhofstrasse 123</option>
+            <option value="basel">Basel Store - Freie Strasse 45</option>
+            <option value="bern">Bern Store - Spitalgasse 67</option>
+            <option value="geneva">Geneva Store - Rue du Rhône 89</option>
+            <option value="lausanne">Lausanne Store - Place St-François 12</option>
+            <option value="lucerne">Lucerne Store - Kapellplatz 34</option>
+          </select>
+        </div>
+        
+        <div class="grid">
+          <div class="grid__item large--one-half">
+            <div class="form-field">
+              <label for="TestRideHeight">Your Height (cm)</label>
+              <input type="number" id="TestRideHeight" name="contact[height]" class="input-full" placeholder="e.g., 175" min="140" max="210">
+            </div>
+          </div>
+          
+          <div class="grid__item large--one-half">
+            <div class="form-field">
+              <label for="TestRideExperience">E-Bike Experience</label>
+              <select id="TestRideExperience" name="contact[experience]" class="input-full">
+                <option value="">Select Experience Level</option>
+                <option value="beginner">Beginner - Never rode an e-bike</option>
+                <option value="some">Some experience - Tried a few times</option>
+                <option value="experienced">Experienced - Regular e-bike rider</option>
+                <option value="expert">Expert - E-bike enthusiast</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-field">
+          <label for="TestRideNotes">Additional Notes / Questions</label>
+          <textarea id="TestRideNotes" name="contact[notes]" rows="3" class="input-full" placeholder="Any specific questions or requirements..."></textarea>
+        </div>
+        
+        <div class="form-field">
+          <label class="checkbox-label">
+            <input type="checkbox" name="contact[newsletter]" value="yes">
+            <span class="checkmark"></span>
+            Send me updates about new e-bike models and offers
+          </label>
+        </div>
+        
+        <div class="form-field">
+          <label class="checkbox-label">
+            <input type="checkbox" name="contact[terms]" value="yes" required>
+            <span class="checkmark"></span>
+            I agree to the <a href="/pages/terms" target="_blank">Terms & Conditions</a> and helmet requirement for test rides <span class="required">*</span>
+          </label>
+        </div>
+        
+        <div class="form-field text-center">
+          <button type="submit" class="btn btn--large">Book Test Ride</button>
+          <button type="button" class="btn btn--secondary" onclick="closeTestRideModal()">Cancel</button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+<style>
+/* Modal styles are shared with service booking modal */
+</style>
+
+<script>
+function openTestRideModal() {
+  const modal = safeGetById('test-ride-modal');
+  if (modal) {
+    modal.classList.remove('modal-hidden');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeTestRideModal() {
+  const modal = safeGetById('test-ride-modal');
+  if (modal) {
+    modal.classList.add('modal-hidden');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+  const modal = safeGetById('test-ride-modal');
+  if (modal && event.target === modal) {
+    closeTestRideModal();
+  }
+});
+
+// Close modal with Escape key (already handled globally)
+
+// Auto-populate date field with tomorrow
+document.addEventListener('DOMContentLoaded', function() {
+  const dateInput = safeGetById('TestRideDate');
+  if (dateInput) {
+    safeExecute(() => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const minDate = tomorrow.toISOString().split('T')[0];
+      dateInput.setAttribute('min', minDate);
+    }, 'Error setting minimum date for test ride');
+  }
+});
+</script>

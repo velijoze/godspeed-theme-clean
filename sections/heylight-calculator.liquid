@@ -3,42 +3,47 @@
   Heylight Financing Calculator Section - Add this to any page using the page builder
 {% endcomment %}
 
-<div class="heylight-calculator">
-  <div class="calculator-container">
-    <div class="calculator-header">
-      <h2>{{ section.settings.title | default: "Calculate Your Monthly Payment" }}</h2>
+<section class="section-spacing">
+  <div class="page-width">
+    <header class="section-header text-center">
+      <h2 class="section-header__title">{{ section.settings.title | default: "Calculate Your Monthly Payment" }}</h2>
       <p>{{ section.settings.subtitle | default: "Use our calculator to see exactly what you'll pay each month with Heylight financing" }}</p>
-    </div>
+    </header>
     
-    <div class="calculator-form-container">
-      <!-- Calculator Form -->
-      <div class="calculator-form">
-        <div class="form-row">
-          <div class="form-group">
+    <div class="feature-card">
+      <div class="grid">
+        <div class="grid__item large--one-half medium--one-half">
+          <div class="form-field">
             <label for="bike-price-{{ section.id }}">E-Bike Price (CHF)</label>
-            <input type="number" id="bike-price-{{ section.id }}" name="bike-price" placeholder="2499" min="500" max="10000" value="2499">
-          </div>
-          
-          <div class="form-group">
-            <label for="down-payment-{{ section.id }}">Down Payment (CHF)</label>
-            <input type="number" id="down-payment-{{ section.id }}" name="down-payment" placeholder="500" min="0" max="5000" value="500">
+            <input type="number" id="bike-price-{{ section.id }}" name="bike-price" placeholder="2499" min="500" max="10000" value="2499" class="input-full">
           </div>
         </div>
         
-        <div class="form-row">
-          <div class="form-group">
+        <div class="grid__item large--one-half medium--one-half">
+          <div class="form-field">
+            <label for="down-payment-{{ section.id }}">Down Payment (CHF)</label>
+            <input type="number" id="down-payment-{{ section.id }}" name="down-payment" placeholder="500" min="0" max="5000" value="500" class="input-full">
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid">
+        <div class="grid__item large--one-half medium--one-half">
+          <div class="form-field">
             <label for="loan-term-{{ section.id }}">Loan Term</label>
-            <select id="loan-term-{{ section.id }}" name="loan-term">
+            <select id="loan-term-{{ section.id }}" name="loan-term" class="input-full">
               <option value="12">12 months</option>
               <option value="24" selected>24 months</option>
               <option value="36">36 months</option>
               <option value="48">48 months</option>
             </select>
           </div>
-          
-          <div class="form-group">
+        </div>
+        
+        <div class="grid__item large--one-half medium--one-half">
+          <div class="form-field">
             <label for="credit-score-{{ section.id }}">Credit Score Range</label>
-            <select id="credit-score-{{ section.id }}" name="credit-score">
+            <select id="credit-score-{{ section.id }}" name="credit-score" class="input-full">
               <option value="excellent">Excellent (750+)</option>
               <option value="good" selected>Good (700-749)</option>
               <option value="fair">Fair (650-699)</option>
@@ -46,295 +51,69 @@
             </select>
           </div>
         </div>
-        
-        <button type="button" class="btn btn--heylight btn--large" onclick="calculateHeylightFinancing('{{ section.id }}')">
+      </div>
+      
+      <div class="text-center">
+        <button type="button" class="btn btn--large" onclick="calculateHeylightFinancing('{{ section.id }}')">
           {{ section.settings.calculate_button_text | default: "Calculate with Heylight" }}
         </button>
       </div>
+    </div>
       
-      <!-- Results -->
-      <div id="financing-results-{{ section.id }}" class="financing-results" style="display: none;">
-        <div class="heylight-results-header">
-          <div class="heylight-logo-small">
-            <span>💚</span>
-          </div>
-          <h4>{{ section.settings.results_title | default: "Your Heylight Financing Summary" }}</h4>
-        </div>
-        
-        <div class="results-grid">
-          <div class="result-card heylight-card">
-            <div class="result-label">Loan Amount</div>
-            <div class="result-value" id="loan-amount-{{ section.id }}">CHF 1,999</div>
-          </div>
-          
-          <div class="result-card heylight-card">
-            <div class="result-label">Monthly Payment</div>
-            <div class="result-value" id="monthly-payment-{{ section.id }}">CHF 83.29</div>
-          </div>
-          
-          <div class="result-card heylight-card">
-            <div class="result-label">Interest Rate</div>
-            <div class="result-value" id="interest-rate-{{ section.id }}">0%</div>
-          </div>
-          
-          <div class="result-card heylight-card">
-            <div class="result-label">Total Cost</div>
-            <div class="result-value" id="total-cost-{{ section.id }}">CHF 1,999</div>
+    <div id="financing-results-{{ section.id }}" class="feature-card" style="display: none; margin-top: 2rem;">
+      <div class="text-center">
+        <span style="font-size: 2rem;">💚</span>
+        <h3>{{ section.settings.results_title | default: "Your Heylight Financing Summary" }}</h3>
+      </div>
+      
+      <div class="grid grid-uniform">
+        <div class="grid__item large--one-quarter medium--one-half">
+          <div class="text-center">
+            <p><strong>Loan Amount</strong></p>
+            <p class="h4" id="loan-amount-{{ section.id }}">CHF 1,999</p>
           </div>
         </div>
         
-        <div class="heylight-advantage">
-          <div class="advantage-icon">🎉</div>
-          <div class="advantage-text">
-            <h5>{{ section.settings.advantage_title | default: "You Save CHF 0 in Interest!" }}</h5>
-            <p>{{ section.settings.advantage_text | default: "With Heylight's 0% financing, you pay exactly the bike price - no more, no less." }}</p>
+        <div class="grid__item large--one-quarter medium--one-half">
+          <div class="text-center">
+            <p><strong>Monthly Payment</strong></p>
+            <p class="h4" id="monthly-payment-{{ section.id }}">CHF 83.29</p>
+          </div>
+        </div>
+        
+        <div class="grid__item large--one-quarter medium--one-half">
+          <div class="text-center">
+            <p><strong>Interest Rate</strong></p>
+            <p class="h4" id="interest-rate-{{ section.id }}">0%</p>
+          </div>
+        </div>
+        
+        <div class="grid__item large--one-quarter medium--one-half">
+          <div class="text-center">
+            <p><strong>Total Cost</strong></p>
+            <p class="h4" id="total-cost-{{ section.id }}">CHF 1,999</p>
           </div>
         </div>
       </div>
       
-      <!-- Action Buttons -->
-      <div class="calculator-actions">
-        <button class="btn btn--secondary" onclick="resetCalculator('{{ section.id }}')">
+      <div class="text-center" style="margin-top: 2rem; padding: 1rem; border: 1px solid {{ settings.colorBorder }};">
+        <span style="font-size: 2rem;">🎉</span>
+        <h4>{{ section.settings.advantage_title | default: "You Save CHF 0 in Interest!" }}</h4>
+        <p>{{ section.settings.advantage_text | default: "With Heylight's 0% financing, you pay exactly the bike price - no more, no less." }}</p>
+      </div>
+      
+      <div class="text-center" style="margin-top: 2rem;">
+        <button class="btn" onclick="resetCalculator('{{ section.id }}')">
           {{ section.settings.reset_button_text | default: "Reset" }}
         </button>
-        <button class="btn btn--heylight" onclick="applyHeylightFinancing('{{ section.id }}')">
+        <button class="btn btn--large" onclick="applyHeylightFinancing('{{ section.id }}')" style="margin-left: 1rem;">
           {{ section.settings.apply_button_text | default: "Apply with Heylight" }}
         </button>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<style>
-  .heylight-calculator {
-    margin: 4rem 0;
-  }
-  
-  .calculator-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-  
-  .calculator-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  
-  .calculator-header h2 {
-    font-size: 2rem;
-    color: #2c2c2c;
-    margin-bottom: 1rem;
-  }
-  
-  .calculator-header p {
-    color: #666;
-    font-size: 1.1rem;
-  }
-  
-  .calculator-form-container {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 3rem;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    border: 2px solid #f0f0f0;
-  }
-  
-  .calculator-form {
-    max-width: 800px;
-    margin: 0 auto 2rem auto;
-  }
-  
-  .form-row {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-group {
-    flex: 1;
-  }
-  
-  .form-group label {
-    display: block;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-  }
-  
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-    background: #ffffff;
-  }
-  
-  .form-group input:focus,
-  .form-group select:focus {
-    outline: none;
-    border-color: #00D4AA;
-    box-shadow: 0 0 0 3px rgba(0,212,170,0.1);
-  }
-  
-  .btn--heylight {
-    background: #00D4AA;
-    color: #ffffff;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .btn--heylight:hover {
-    background: #00B894;
-    transform: translateY(-1px);
-  }
-  
-  .btn--large {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-top: 1rem;
-  }
-  
-  .financing-results {
-    margin-top: 2rem;
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 16px;
-    border: 2px solid #e0e0e0;
-  }
-  
-  .heylight-results-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    justify-content: center;
-  }
-  
-  .heylight-logo-small {
-    font-size: 2rem;
-  }
-  
-  .financing-results h4 {
-    color: #2c2c2c;
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  
-  .results-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  .result-card {
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid #e0e0e0;
-  }
-  
-  .heylight-card {
-    border-color: #00D4AA;
-    background: linear-gradient(135deg, #ffffff 0%, #f0fffd 100%);
-  }
-  
-  .result-label {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-  
-  .result-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #00D4AA;
-  }
-  
-  .heylight-advantage {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 2px solid #00D4AA;
-    margin-bottom: 2rem;
-  }
-  
-  .advantage-icon {
-    font-size: 2rem;
-  }
-  
-  .advantage-text h5 {
-    color: #00D4AA;
-    margin: 0 0 0.5rem 0;
-    font-size: 1.1rem;
-  }
-  
-  .advantage-text p {
-    color: #666;
-    margin: 0;
-  }
-  
-  .calculator-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-  
-  .btn--secondary {
-    background: #6c757d;
-    color: #ffffff;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .btn--secondary:hover {
-    background: #5a6268;
-    transform: translateY(-1px);
-  }
-  
-  @media (max-width: 768px) {
-    .calculator-form-container {
-      padding: 2rem;
-    }
-    
-    .form-row {
-      flex-direction: column;
-      gap: 1rem;
-    }
-    
-    .results-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .calculator-actions {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
-</style>
 
 <script>
   function calculateHeylightFinancing(sectionId) {

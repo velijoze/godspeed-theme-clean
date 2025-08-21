@@ -3,20 +3,25 @@
   E-bike size recommendation tool
 {% endcomment %}
 
-<div class="size-calculator-section page-width">
-  <div class="section-header text-center">
-    {% if section.settings.title != blank %}
-      <h2>{{ section.settings.title }}</h2>
-    {% endif %}
-    {% if section.settings.description != blank %}
-      <p>{{ section.settings.description }}</p>
-    {% endif %}
-  </div>
+<section class="section-spacing">
+  <div class="page-width">
+    <header class="section-header text-center">
+      {% if section.settings.title != blank %}
+        <h2 class="section-header__title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <p>{{ section.settings.description }}</p>
+      {% endif %}
+    </header>
 
-  <div id="size-calculator-{{ section.id }}" class="size-calculator-container">
-    <!-- Size calculator will be initialized here by JavaScript -->
+    <div id="size-calculator-{{ section.id }}" class="feature-card">
+      <!-- Size calculator will be initialized here by JavaScript -->
+      <div class="text-center">
+        <p><em>Loading size calculator...</em></p>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -27,11 +32,6 @@
   });
 </script>
 
-<style>
-  .size-calculator-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-  }
-</style>
 
 {% schema %}
 {

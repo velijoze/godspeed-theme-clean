@@ -27,23 +27,33 @@
 
           <div class="grid">
             <div class="grid__item large--one-half">
-              <label for="ContactFormName">{{ 'contact.form.name' | t | default: 'Name' }}</label>
-              <input type="text" id="ContactFormName" name="contact[name]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+              <div class="form-field">
+                <label for="ContactFormName">{{ 'contact.form.name' | t | default: 'Name' }}</label>
+                <input type="text" id="ContactFormName" name="contact[name]" class="input-full" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+              </div>
             </div>
             
             <div class="grid__item large--one-half">
-              <label for="ContactFormEmail">{{ 'contact.form.email' | t | default: 'Email' }} <span class="required">*</span></label>
-              <input type="email" id="ContactFormEmail" name="contact[email]" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+              <div class="form-field">
+                <label for="ContactFormEmail">{{ 'contact.form.email' | t | default: 'Email' }} <span class="required">*</span></label>
+                <input type="email" id="ContactFormEmail" name="contact[email]" class="input-full" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+              </div>
             </div>
           </div>
 
-          <label for="ContactFormPhone">{{ 'contact.form.phone' | t | default: 'Phone Number' }}</label>
-          <input type="tel" id="ContactFormPhone" name="contact[phone]" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+          <div class="form-field">
+            <label for="ContactFormPhone">{{ 'contact.form.phone' | t | default: 'Phone Number' }}</label>
+            <input type="tel" id="ContactFormPhone" name="contact[phone]" class="input-full" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+          </div>
 
-          <label for="ContactFormMessage">{{ 'contact.form.message' | t | default: 'Message' }} <span class="required">*</span></label>
-          <textarea rows="10" id="ContactFormMessage" name="contact[body]" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          <div class="form-field">
+            <label for="ContactFormMessage">{{ 'contact.form.message' | t | default: 'Message' }} <span class="required">*</span></label>
+            <textarea rows="6" id="ContactFormMessage" name="contact[body]" class="input-full" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          </div>
 
-          <input type="submit" class="btn" value="{{ 'contact.form.send' | t | default: 'Send' }}">
+          <div class="form-field text-center">
+            <input type="submit" class="btn btn--large" value="{{ 'contact.form.send' | t | default: 'Send Message' }}">
+          </div>
         {% endform %}
       </div>
     </div>

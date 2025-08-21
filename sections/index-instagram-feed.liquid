@@ -1,10 +1,9 @@
-<div class="instagram-section" data-section-id="{{ section.id }}" data-section-type="instagram">
-  <div class="wrapper">
-    <div class="section-header text-center">
+<section class="section-spacing" data-section-id="{{ section.id }}" data-section-type="instagram">
+  <div class="page-width">
+    <header class="section-header text-center">
       <h2 class="section-header__title">{{ section.settings.title | default: 'FOLLOW US ON INSTAGRAM' }}</h2>
-      <div class="section-header__divider"></div>
-      <p class="section-header__subtitle">{{ section.settings.subtitle | default: 'Stay connected with our latest updates and community highlights' }}</p>
-    </div>
+      <p>{{ section.settings.subtitle | default: 'Stay connected with our latest updates and community highlights' }}</p>
+    </header>
     
     <!-- Instagram Feed Options -->
     <div class="instagram-options">
@@ -101,9 +100,9 @@
       </div>
     {% endif %}
   </div>
-</div>
+</section>
 
-<style>
+<!-- CSS removed to use theme classes
   .instagram-section {
     padding: 3rem 0;
     background: #f8f9fa;
@@ -431,7 +430,7 @@
       grid-template-columns: 1fr;
     }
   }
-</style>
+-->
 
 <script>
   // Instagram Feed Loader
@@ -581,15 +580,17 @@
     // Use Instagram Basic Display API or fallback to embed
     const username = '{{ section.settings.instagram_username }}';
     const photoCount = {{ section.settings.photo_count | default: 6 }};
-    const accessToken = '{{ section.settings.instagram_access_token }}';
+    const accessToken = '{{ settings.instagram_access_token }}';
     
     // Try different methods to get Instagram photos
-    if (accessToken) {
+    if (accessToken && accessToken.length > 10) {
       // Method 1: Use Instagram Basic Display API with token
       fetchInstagramWithToken(accessToken, photoCount, grid, loading, error);
+    } else if (username) {
+      // Method 2: Show placeholder with Instagram link
+      showInstagramPlaceholder(username, photoCount, grid, loading, error);
     } else {
-      // Method 2: Use Instagram oEmbed API (no token required)
-      fetchInstagramOEmbed(username, photoCount, grid, loading, error);
+      showSetupInstructions(grid, loading, error);
     }
   }
   
@@ -669,36 +670,47 @@
     grid.innerHTML = html;
   }
   
-  function showStaticInstagram(username, count, grid, loading, error) {
-    // Last resort: Show sample e-bike photos with Instagram styling
+  function showInstagramPlaceholder(username, count, grid, loading, error) {
     loading.style.display = 'none';
     error.style.display = 'none';
     grid.style.display = 'grid';
     
-    const samplePhotos = [
-      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-mountain-1.jpg?v=1640000001',
-      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-city-1.jpg?v=1640000002',
-      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-cargo-1.jpg?v=1640000003',
-      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-mountain-2.jpg?v=1640000004',
-      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-city-2.jpg?v=1640000005',
-      'https://cdn.shopify.com/s/files/1/0555/0912/files/ebike-cargo-2.jpg?v=1640000006'
-    ];
-    
     let html = '';
-    for (let i = 0; i < Math.min(count, samplePhotos.length); i++) {
+    for (let i = 0; i < count; i++) {
       html += `
         <div class="instagram-photo">
           <a href="https://www.instagram.com/${username}" target="_blank" rel="noopener">
-            <img src="${samplePhotos[i]}" alt="E-bike photo ${i + 1}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x400/E1306C/ffffff?text=@${username}'">
+            <div style="width: 100%; height: 200px; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+              📷
+            </div>
             <div class="instagram-photo-overlay">
-              <span class="icon icon-instagram"></span>
+              <span style="color: white;">@${username}</span>
             </div>
           </a>
         </div>
       `;
     }
     
-    grid.innerHTML = html;
+    grid.innerHTML = html + '<p style="grid-column: 1/-1; text-align: center; margin-top: 1rem;"><strong>Add Instagram Access Token in Theme Settings → API Integration to show real photos</strong></p>';
+  }
+  
+  function showSetupInstructions(grid, loading, error) {
+    loading.style.display = 'none';
+    error.style.display = 'none';
+    grid.style.display = 'block';
+    
+    grid.innerHTML = `
+      <div style="text-align: center; padding: 2rem; border: 2px dashed #ccc; background: #f9f9f9;">
+        <h3>Instagram Feed Setup</h3>
+        <p>To display your Instagram photos:</p>
+        <ol style="text-align: left; display: inline-block; max-width: 400px;">
+          <li>Add your Instagram username in section settings</li>
+          <li>Get an Instagram Access Token from Facebook Developers</li>
+          <li>Add the token in <strong>Theme Settings → API Integration</strong></li>
+        </ol>
+        <p><a href="https://developers.facebook.com/docs/instagram-basic-display-api" target="_blank">Get Instagram Access Token →</a></p>
+      </div>
+    `;
   }
 </script>
 

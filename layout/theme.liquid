@@ -150,5 +150,201 @@
 
   <!-- End mailchimp ================================================== -->
 
+  <!-- Notification System ================================================== -->
+  <div id="notification-container"></div>
+
+  <script>
+    window.NotificationSystem = {
+      show: function(message, type = 'info', duration = 5000) {
+        const container = document.getElementById('notification-container');
+        if (!container) return;
+
+        const notification = document.createElement('div');
+        notification.className = `notification notification--${type}`;
+        
+        const icons = {
+          success: '✓',
+          error: '✕',
+          warning: '⚠',
+          info: 'ℹ'
+        };
+
+        notification.innerHTML = `
+          <div class="notification__content">
+            <span class="notification__icon">${icons[type] || icons.info}</span>
+            <div class="notification__message">${message}</div>
+          </div>
+          <button class="notification__close" onclick="this.parentElement.remove()">&times;</button>
+        `;
+
+        container.appendChild(notification);
+
+        // Trigger animation
+        setTimeout(() => notification.classList.add('show'), 10);
+
+        // Auto remove
+        if (duration > 0) {
+          setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+          }, duration);
+        }
+      }
+    };
+
+    // Global notification functions
+    window.showNotification = window.NotificationSystem.show;
+    window.showSuccess = (msg, dur) => window.NotificationSystem.show(msg, 'success', dur);
+    window.showError = (msg, dur) => window.NotificationSystem.show(msg, 'error', dur);
+    window.showWarning = (msg, dur) => window.NotificationSystem.show(msg, 'warning', dur);
+    window.showInfo = (msg, dur) => window.NotificationSystem.show(msg, 'info', dur);
+
+    // Loading state utilities
+    window.LoadingStates = {
+      showButtonLoading: function(buttonSelector) {
+        const btn = window.SafeDOM.querySelector(buttonSelector);
+        if (btn) {
+          btn.classList.add('loading');
+          btn.disabled = true;
+          if (!btn.querySelector('.btn-text')) {
+            btn.innerHTML = `<span class="btn-text">${btn.innerHTML}</span>`;
+          }
+        }
+      },
+      
+      hideButtonLoading: function(buttonSelector) {
+        const btn = window.SafeDOM.querySelector(buttonSelector);
+        if (btn) {
+          btn.classList.remove('loading');
+          btn.disabled = false;
+        }
+      },
+      
+      showOverlay: function(containerSelector) {
+        const container = window.SafeDOM.querySelector(containerSelector);
+        if (container) {
+          container.style.position = 'relative';
+          const overlay = document.createElement('div');
+          overlay.className = 'loading-overlay';
+          overlay.innerHTML = '<div class="loading-spinner"></div>';
+          overlay.dataset.loadingOverlay = 'true';
+          container.appendChild(overlay);
+        }
+      },
+      
+      hideOverlay: function(containerSelector) {
+        const container = window.SafeDOM.querySelector(containerSelector);
+        if (container) {
+          const overlay = container.querySelector('[data-loading-overlay]');
+          if (overlay) overlay.remove();
+        }
+      },
+      
+      showSkeleton: function(containerSelector, type = 'text') {
+        const container = window.SafeDOM.querySelector(containerSelector);
+        if (container) {
+          container.innerHTML = this.getSkeletonHTML(type);
+        }
+      },
+      
+      getSkeletonHTML: function(type) {
+        switch (type) {
+          case 'image':
+            return '<div class="loading-skeleton skeleton-image"></div>';
+          case 'button':
+            return '<div class="loading-skeleton skeleton-button"></div>';
+          case 'product':
+            return `
+              <div class="loading-skeleton skeleton-image"></div>
+              <div class="loading-skeleton skeleton-text"></div>
+              <div class="loading-skeleton skeleton-text"></div>
+              <div class="loading-skeleton skeleton-button"></div>
+            `;
+          default:
+            return `
+              <div class="loading-skeleton skeleton-text"></div>
+              <div class="loading-skeleton skeleton-text"></div>
+              <div class="loading-skeleton skeleton-text"></div>
+            `;
+        }
+      }
+    };
+
+    // Global loading functions
+    window.showLoading = window.LoadingStates.showButtonLoading;
+    window.hideLoading = window.LoadingStates.hideButtonLoading;
+    window.showLoadingOverlay = window.LoadingStates.showOverlay;
+    window.hideLoadingOverlay = window.LoadingStates.hideOverlay;
+
+    // Error handling utilities
+    window.SafeDOM = {
+      querySelector: function(selector) {
+        try {
+          const element = document.querySelector(selector);
+          if (!element) {
+            console.warn(`Element not found: ${selector}`);
+            return null;
+          }
+          return element;
+        } catch (error) {
+          console.error(`Error selecting element ${selector}:`, error);
+          return null;
+        }
+      },
+      
+      querySelectorAll: function(selector) {
+        try {
+          return document.querySelectorAll(selector);
+        } catch (error) {
+          console.error(`Error selecting elements ${selector}:`, error);
+          return [];
+        }
+      },
+      
+      getElementById: function(id) {
+        try {
+          const element = document.getElementById(id);
+          if (!element) {
+            console.warn(`Element with ID not found: ${id}`);
+            return null;
+          }
+          return element;
+        } catch (error) {
+          console.error(`Error getting element by ID ${id}:`, error);
+          return null;
+        }
+      },
+      
+      addEventListener: function(selector, event, callback) {
+        const element = this.querySelector(selector);
+        if (element) {
+          try {
+            element.addEventListener(event, callback);
+            return true;
+          } catch (error) {
+            console.error(`Error adding event listener to ${selector}:`, error);
+            return false;
+          }
+        }
+        return false;
+      },
+      
+      safeExecute: function(callback, errorMessage = 'Function execution failed') {
+        try {
+          return callback();
+        } catch (error) {
+          console.error(errorMessage, error);
+          return null;
+        }
+      }
+    };
+
+    // Global safe DOM functions
+    window.safeQuery = window.SafeDOM.querySelector;
+    window.safeQueryAll = window.SafeDOM.querySelectorAll;
+    window.safeGetById = window.SafeDOM.getElementById;
+    window.safeExecute = window.SafeDOM.safeExecute;
+  </script>
+
 </body>
 </html>

@@ -12,8 +12,8 @@
     {% assign blog_grid = 'large--one-third' %}
 {% endcase %}
 
-<div class="homepage-blog {{ section.settings.homepage_blog_color }}" data-section-id="{{ section.id }}" data-section-type="index-blog">
-  <div class="wrapper">
+<section class="section-spacing {{ section.settings.homepage_blog_color }}" data-section-id="{{ section.id }}" data-section-type="index-blog">
+  <div class="page-width">
     {% unless section.settings.title == '' %}
       <h4 class="home__subtitle">{{ section.settings.title | escape }}</h4>
     {% endunless %}
@@ -110,74 +110,8 @@
       {% endunless %}
     </div>
   </div>
-</div>
+</section>
 
-<style>
-  .blog__empty-state,
-  .blog__setup-state,
-  .blog__error-state {
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    margin: 1rem 0;
-  }
-  
-  .blog__empty-state h3,
-  .blog__setup-state h3,
-  .blog__error-state h3 {
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  .blog__empty-state p,
-  .blog__setup-state p,
-  .blog__error-state p {
-    color: #666;
-    margin-bottom: 1rem;
-  }
-  
-  .blog__setup-steps {
-    text-align: left;
-    max-width: 500px;
-    margin: 1rem auto;
-    background: #ffffff;
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid #e9ecef;
-  }
-  
-  .blog__setup-steps ol {
-    margin: 0.5rem 0 0 1.5rem;
-    color: #666;
-  }
-  
-  .blog__setup-steps li {
-    margin-bottom: 0.5rem;
-  }
-  
-  .btn--primary {
-    background: #007cba;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 1rem;
-    transition: background 0.3s ease;
-  }
-  
-  .btn--primary:hover {
-    background: #005a87;
-    color: #ffffff;
-  }
-  
-  @media (max-width: 768px) {
-    .blog__setup-steps {
-      text-align: left;
-      margin: 1rem 0;
-    }
-  }
-</style>
 
 {% schema %}
 {

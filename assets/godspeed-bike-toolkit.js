@@ -741,12 +741,12 @@ class SizeCalculatorInstance {
     const bikeType = this.element.querySelector(`#bike-type-${this.id}`).value;
     
     if (!height || !inseam) {
-      alert('Please enter both height and inseam measurements.');
+      showError('Please enter both height and inseam measurements.');
       return;
     }
     
     if (height < 120 || height > 230) {
-      alert('Please enter a height between 120 and 230 cm.');
+      showError('Please enter a height between 120 and 230 cm.');
       return;
     }
     
@@ -1857,12 +1857,12 @@ class TestRideBookingInstance {
     const phone = this.element.querySelector('.customer-phone').value.trim();
 
     if (!name || !email || !phone) {
-      alert('Please fill in all required fields.');
+      showError('Please fill in all required fields.');
       return false;
     }
 
     if (!this.validateEmail(email)) {
-      alert('Please enter a valid email address.');
+      showError('Please enter a valid email address.');
       return false;
     }
 
@@ -1894,7 +1894,7 @@ class TestRideBookingInstance {
       this.showBookingSuccess();
       
     } catch (error) {
-      alert('There was an error processing your booking. Please try again.');
+      showError('There was an error processing your booking. Please try again.');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Book Test Ride';
     }
@@ -2597,13 +2597,13 @@ class ServiceBookingInstance {
     switch (this.currentStep) {
       case 1:
         if (!this.bookingData.service) {
-          alert('Please select a service package.');
+          showError('Please select a service package.');
           return false;
         }
         break;
       case 2:
         if (!this.bookingData.location || !this.bookingData.datetime?.date || !this.bookingData.datetime?.time) {
-          alert('Please select a location, date, and time.');
+          showError('Please select a location, date, and time.');
           return false;
         }
         break;
@@ -2611,7 +2611,7 @@ class ServiceBookingInstance {
         const required = ['firstName', 'lastName', 'email', 'phone'];
         for (const field of required) {
           if (!this.bookingData.customer?.[field]) {
-            alert(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.`);
+            showError(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.`);
             return false;
           }
         }
@@ -2619,7 +2619,7 @@ class ServiceBookingInstance {
       case 4:
         const termsAccepted = document.querySelector(`#acceptTerms-${this.id}`)?.checked;
         if (!termsAccepted) {
-          alert('Please accept the terms and conditions.');
+          showError('Please accept the terms and conditions.');
           return false;
         }
         break;
@@ -2650,7 +2650,7 @@ class ServiceBookingInstance {
           <div class="success-details">
             <p>📧 Confirmation email sent to ${this.bookingData.customer.email}</p>
             <p>📱 SMS reminder will be sent 24 hours before your appointment</p>
-            <p>📅 <a href="#" onclick="alert('Add to calendar feature')">Add to Calendar</a></p>
+            <p>📅 <a href="#" onclick="showInfo('Add to calendar feature')">Add to Calendar</a></p>
           </div>
           <div class="next-steps">
             <h4>What's Next?</h4>
@@ -2667,10 +2667,10 @@ class ServiceBookingInstance {
         </div>
       `;
 
-      console.log('Service booking completed:', this.bookingData);
+      // Booking completed successfully
 
     } catch (error) {
-      alert('Booking failed. Please try again or contact us directly.');
+      showError('Booking failed. Please try again or contact us directly.');
       console.error('Booking error:', error);
     }
   }
@@ -3333,7 +3333,7 @@ class ComparisonInstance {
   exportComparison() {
     const activeBikes = this.selectedBikes.filter(bike => bike);
     if (activeBikes.length < 2) {
-      alert('Please select at least 2 bikes to export comparison.');
+      showWarning('Please select at least 2 bikes to export comparison.');
       return;
     }
     
@@ -3345,14 +3345,14 @@ class ComparisonInstance {
     };
     
     // Simulate PDF export
-    console.log('Exporting comparison:', comparisonData);
-    alert('Comparison exported! (Feature would generate PDF in production)');
+    // Export comparison data
+    showSuccess('Comparison exported! (Feature would generate PDF in production)');
   }
 
   shareComparison() {
     const activeBikes = this.selectedBikes.filter(bike => bike);
     if (activeBikes.length < 2) {
-      alert('Please select at least 2 bikes to share comparison.');
+      showWarning('Please select at least 2 bikes to share comparison.');
       return;
     }
     
@@ -3368,8 +3368,8 @@ class ComparisonInstance {
     } else {
       // Fallback - copy to clipboard
       navigator.clipboard.writeText(`${shareText} ${window.location.href}`)
-        .then(() => alert('Comparison link copied to clipboard!'))
-        .catch(() => alert('Unable to share. Please copy the URL manually.'));
+        .then(() => showSuccess('Comparison link copied to clipboard!'))
+        .catch(() => showError('Unable to share. Please copy the URL manually.'));
     }
   }
 
@@ -3936,14 +3936,14 @@ class DashboardManagementInstance {
     const vendor = this.vendors[vendorKey];
     if (!vendor) return;
     
-    alert(`Testing connection to ${vendor.name}...\n\nResult: Connection successful ✅\nLatency: ${vendor.metrics.avgResponseTime}ms\nEndpoint: ${vendor.apiUrl}`);
+    showInfo(`Testing connection to ${vendor.name}...\n\nResult: Connection successful ✅\nLatency: ${vendor.metrics.avgResponseTime}ms\nEndpoint: ${vendor.apiUrl}`);
   }
 
   forcSync(vendorKey) {
     const vendor = this.vendors[vendorKey];
     if (!vendor) return;
     
-    alert(`Force sync initiated for ${vendor.name}...\n\nSync started successfully ✅\nEstimated completion: 2-3 minutes\nProducts to sync: ${vendor.metrics.totalProducts}`);
+    showInfo(`Force sync initiated for ${vendor.name}...\n\nSync started successfully ✅\nEstimated completion: 2-3 minutes\nProducts to sync: ${vendor.metrics.totalProducts}`);
     
     // Simulate sync update
     setTimeout(() => {
@@ -3964,19 +3964,19 @@ class DashboardManagementInstance {
       `[${new Date(Date.now() - 180000).toLocaleTimeString()}] INFO: Connection established`,
     ];
     
-    alert(`Recent logs for ${vendor.name}:\n\n${sampleLogs.join('\n')}\n\n(Full logs would open in new window)`);
+    showInfo(`Recent logs for ${vendor.name}:\n\n${sampleLogs.join('\n')}\n\n(Full logs would open in new window)`);
   }
 
   showVendorDetails(vendorKey) {
     const vendor = this.vendors[vendorKey];
     if (!vendor) return;
     
-    console.log('Showing detailed vendor info:', vendor);
-    alert(`Detailed information for ${vendor.name} would open in a modal window.`);
+    // Show vendor details
+    showInfo(`Detailed information for ${vendor.name} would open in a modal window.`);
   }
 
   openSettings() {
-    alert('Dashboard settings would open here:\n\n• Refresh interval\n• Alert thresholds\n• Vendor configurations\n• API credentials\n• Export options');
+    showInfo('Dashboard settings would open here:\n\n• Refresh interval\n• Alert thresholds\n• Vendor configurations\n• API credentials\n• Export options');
   }
 
   formatTime(date) {
@@ -4463,7 +4463,7 @@ class BlogGeneratorInstance {
       });
       
       modal.remove();
-      alert('Article generated successfully! Check the Drafts tab.');
+      showSuccess('Article generated successfully! Check the Drafts tab.');
       this.currentView = 'drafts';
       this.updateView();
     }, 3000);
@@ -4502,16 +4502,16 @@ class BlogGeneratorInstance {
   }
 
   async scanFeeds() {
-    alert('Scanning RSS feeds for new content...');
+    showInfo('Scanning RSS feeds for new content...');
     // Simulate feed scanning
     setTimeout(() => {
-      alert('Found 5 new articles across all feeds!');
+      showSuccess('Found 5 new articles across all feeds!');
     }, 2000);
   }
 
   loadFeedStatus() {
     // Simulate loading feed status
-    console.log('Loading RSS feed status...');
+    // Load RSS feed status
   }
 
   destroy() {
@@ -4525,7 +4525,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const autoInit = !document.querySelector('[data-ebike-toolkit-manual]');
   
   if (autoInit) {
-    window.EBikeToolkit = new EBikeToolkit(window.ebikeToolkitConfig || {});
+    window.EBikeToolkitInstance = new EBikeToolkit(window.ebikeToolkitConfig || {});
   }
 });
 
@@ -4541,7 +4541,73 @@ window.EBikeToolkitModules = {
   RangeCalculator,
   TestRideBooking,
   ServiceBooking,
-  BikeComparison,
   DashboardManagement,
   BlogGenerator
+};
+
+// Make modules available under GodspeedToolkit namespace for sections
+window.GodspeedToolkit = window.EBikeToolkitModules;
+
+// Create standalone versions of modules that don't require toolkit parameter
+window.GodspeedToolkit.WishlistManager = class extends WishlistManager {
+  constructor() {
+    // Create a minimal toolkit instance for standalone use
+    const minimalToolkit = { 
+      config: {}, 
+      theme: null,
+      log: console.log.bind(console)
+    };
+    super(minimalToolkit);
+  }
+  
+  init(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      this.setupElement(element);
+    }
+  }
+};
+
+window.GodspeedToolkit.SizeCalculator = class extends SizeCalculator {
+  constructor() {
+    const minimalToolkit = { config: {}, theme: null, log: console.log.bind(console) };
+    super(minimalToolkit);
+  }
+  init(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) this.setupElement(element);
+  }
+};
+
+window.GodspeedToolkit.RangeCalculator = class extends RangeCalculator {
+  constructor() {
+    const minimalToolkit = { config: {}, theme: null, log: console.log.bind(console) };
+    super(minimalToolkit);
+  }
+  init(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) this.setupElement(element);
+  }
+};
+
+window.GodspeedToolkit.DashboardManagement = class extends DashboardManagement {
+  constructor() {
+    const minimalToolkit = { config: {}, theme: null, log: console.log.bind(console) };
+    super(minimalToolkit);
+  }
+  init(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) this.setupElement(element);
+  }
+};
+
+window.GodspeedToolkit.BlogGenerator = class extends BlogGenerator {
+  constructor() {
+    const minimalToolkit = { config: {}, theme: null, log: console.log.bind(console) };
+    super(minimalToolkit);
+  }
+  init(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) this.setupElement(element);
+  }
 };

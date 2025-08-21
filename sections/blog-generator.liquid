@@ -3,20 +3,25 @@
   AI-powered blog content generation
 {% endcomment %}
 
-<div class="blog-generator-section page-width">
-  <div class="section-header text-center">
-    {% if section.settings.title != blank %}
-      <h2>{{ section.settings.title }}</h2>
-    {% endif %}
-    {% if section.settings.description != blank %}
-      <p>{{ section.settings.description }}</p>
-    {% endif %}
-  </div>
+<section class="section-spacing">
+  <div class="page-width">
+    <header class="section-header text-center">
+      {% if section.settings.title != blank %}
+        <h2 class="section-header__title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <p>{{ section.settings.description }}</p>
+      {% endif %}
+    </header>
 
-  <div id="blog-generator-{{ section.id }}" class="blog-generator-container">
-    <!-- Blog generator will be initialized here by JavaScript -->
+    <div id="blog-generator-{{ section.id }}" class="feature-card">
+      <!-- Blog generator will be initialized here by JavaScript -->
+      <div class="text-center">
+        <p><em>Loading blog generator...</em></p>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -27,11 +32,6 @@
   });
 </script>
 
-<style>
-  .blog-generator-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-  }
-</style>
 
 {% schema %}
 {

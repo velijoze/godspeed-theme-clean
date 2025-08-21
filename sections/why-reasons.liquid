@@ -17,7 +17,7 @@
     {% for block in section.blocks %}
       <div class="grid__item large--one-third medium--one-half text-center" {{ block.shopify_attributes }}>
         {% if block.settings.icon != blank %}
-          <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+          <div class="section-icon">
             {{ block.settings.icon }}
           </div>
         {% endif %}
@@ -27,11 +27,11 @@
         {% endif %}
         
         {% if block.settings.description != blank %}
-          <p style="margin-bottom: 1rem;">{{ block.settings.description }}</p>
+          <p class="section-description">{{ block.settings.description }}</p>
         {% endif %}
         
         {% if block.settings.highlight != blank %}
-          <div class="label" style="font-weight: 600;">
+          <div class="label section-highlight">
             {{ block.settings.highlight }}
           </div>
         {% endif %}
@@ -40,7 +40,7 @@
   </div>
 
   {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
-    <div class="text-center" style="margin-top: 3rem;">
+    <div class="text-center section-cta">
       <a href="{{ section.settings.cta_link }}" class="btn btn--primary">
         {{ section.settings.cta_text }}
       </a>

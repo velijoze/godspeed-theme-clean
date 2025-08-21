@@ -21,12 +21,13 @@
             <div class="grid__item large--one-third medium--one-half" {{ block.shopify_attributes }}>
               <div class="feature-card text-center">
                 {% if block.settings.photo %}
-                  <img 
-                    src="{{ block.settings.photo | img_url: '300x300', crop: 'center' }}"
-                    alt="{{ block.settings.name }}"
-                    loading="lazy"
-                    style="width: 100%; height: auto; max-width: 300px; margin: 0 auto 1rem;"
-                  >
+                  <div class="team-member-photo">
+                    <img 
+                      src="{{ block.settings.photo | img_url: '300x300', crop: 'center' }}"
+                      alt="{{ block.settings.name }}"
+                      loading="lazy"
+                    >
+                  </div>
                 {% endif %}
                 
                 <h3 class="h4">{{ block.settings.name }}</h3>
@@ -40,12 +41,12 @@
                 {% endif %}
                 
                 {% if block.settings.social_links != blank %}
-                  <div style="margin-top: 1rem;">
+                  <div class="team-social-links">
                     {% assign social_links = block.settings.social_links | split: ',' %}
                     {% for link in social_links %}
                       {% assign link_parts = link | split: '|' %}
                       {% if link_parts.size == 2 %}
-                        <a href="{{ link_parts[1] | strip }}" target="_blank" rel="noopener" class="btn btn--small" style="margin: 0.25rem;">
+                        <a href="{{ link_parts[1] | strip }}" target="_blank" rel="noopener" class="btn btn--small team-social-btn">
                           {{ link_parts[0] | strip }}
                         </a>
                       {% endif %}

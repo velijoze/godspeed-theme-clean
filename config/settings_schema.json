@@ -1,11 +1,11 @@
 [
   {
-      "name": "theme_info",
-      "theme_name": "godspeed",
-      "theme_author": "Godspeed",
-      "theme_version": "1.0.0",
-      "theme_documentation_url": "https://example.com",
-      "theme_support_email": "support@example.com"
+    "name": "theme_info",
+    "theme_name": "godspeed",
+    "theme_author": "Godspeed",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://example.com",
+    "theme_support_email": "support@example.com"
   },
   {
     "name": "Color",
@@ -94,7 +94,6 @@
         "label": "Dark background",
         "default": "#2e3438"
       },
-
       {
         "type": "header",
         "content": "Product page"
@@ -133,6 +132,69 @@
         "id": "color_footer_social_link",
         "label": "Icons",
         "default": "#333333"
+      }
+    ]
+  },
+  {
+    "name": "API Integration",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Vendor APIs"
+      },
+      {
+        "type": "text",
+        "id": "veloconnect_api_key",
+        "label": "VeloConnect API Key",
+        "info": "Enter your VeloConnect API key for inventory synchronization"
+      },
+      {
+        "type": "text",
+        "id": "cube_api_key",
+        "label": "Cube API Key",
+        "info": "Enter your Cube Bikes API key for product data"
+      },
+      {
+        "type": "text",
+        "id": "bosch_api_key",
+        "label": "Bosch API Key",
+        "info": "Enter your Bosch eBike Systems API key"
+      },
+      {
+        "type": "header",
+        "content": "Maps & Location Services"
+      },
+      {
+        "type": "text",
+        "id": "google_maps_api_key",
+        "label": "Google Maps API Key",
+        "info": "Required for store location maps. Get your key from Google Cloud Console."
+      },
+      {
+        "type": "header",
+        "content": "Social Media"
+      },
+      {
+        "type": "text",
+        "id": "instagram_access_token",
+        "label": "Instagram Access Token",
+        "info": "For displaying Instagram feed photos"
+      },
+      {
+        "type": "header",
+        "content": "Payment & Financing"
+      },
+      {
+        "type": "text",
+        "id": "heylight_api_key",
+        "label": "HeyLight API Key",
+        "info": "For 0% financing calculator integration"
+      },
+      {
+        "type": "text",
+        "id": "heylight_merchant_id",
+        "label": "HeyLight Merchant ID",
+        "info": "Your HeyLight merchant identifier"
       }
     ]
   },
@@ -544,11 +606,26 @@
         "info": "14px reccomended",
         "default": "14px",
         "options": [
-          { "value": "12px", "label": "12px"},
-          { "value": "13px", "label": "13px"},
-          { "value": "14px", "label": "14px"},
-          { "value": "15px", "label": "15px"},
-          { "value": "16px", "label": "16px"}
+          {
+            "value": "12px",
+            "label": "12px"
+          },
+          {
+            "value": "13px",
+            "label": "13px"
+          },
+          {
+            "value": "14px",
+            "label": "14px"
+          },
+          {
+            "value": "15px",
+            "label": "15px"
+          },
+          {
+            "value": "16px",
+            "label": "16px"
+          }
         ]
       }
     ]
@@ -561,8 +638,14 @@
         "id": "cart_type",
         "label": "Cart type",
         "options": [
-          { "value": "modal", "label": "Modal"},
-          { "value": "page", "label": "Page"}
+          {
+            "value": "modal",
+            "label": "Modal"
+          },
+          {
+            "value": "page",
+            "label": "Page"
+          }
         ]
       },
       {
@@ -618,9 +701,18 @@
         "id": "collection_text_alignment",
         "label": "Text alignment",
         "options": [
-          { "value": "text-left", "label": "Left" },
-          { "value": "text-center", "label": "Center" },
-          { "value": "text-right", "label": "Right" }
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
         ],
         "default": "text-center"
       },
@@ -629,8 +721,14 @@
         "id": "product_grid_style",
         "label": "Price hover effect",
         "options": [
-           { "value": "under", "label": "Always show price"},
-           { "value": "hover", "label": "Show price on hover"}
+          {
+            "value": "under",
+            "label": "Always show price"
+          },
+          {
+            "value": "hover",
+            "label": "Show price on hover"
+          }
         ],
         "info": "Price will always show on small devices and phones."
       },

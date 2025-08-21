@@ -2878,25 +2878,353 @@ $infoBarPadding: 5px;
 }
 
 
+/*================ Feature cards for custom sections ================*/
+.feature-card {
+  padding: $gutter;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: $colorSplash;
+  color: #fff;
+  
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/*================ Featured collections styling ================*/
+.collection-tabs {
+  margin-bottom: 2rem;
+  
+  .tab-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .tab-button {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 2px solid $colorSplash;
+    color: $colorSplash;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    
+    &.active,
+    &:hover {
+      background: $colorSplash;
+      color: #fff;
+    }
+  }
+}
+
+.collection-content {
+  display: none;
+  
+  &.active {
+    display: block;
+  }
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.collection-product {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+}
+
+.product-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  
+  .product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover .product-image {
+    transform: scale(1.05);
+  }
+}
+
+.product-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.collection-product:hover .product-actions {
+  opacity: 1;
+}
+
+.quick-view-btn {
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.product-info {
+  padding: 1rem;
+  
+  .product-title {
+    margin-bottom: 0.5rem;
+    
+    a {
+      color: $colorText;
+      text-decoration: none;
+      
+      &:hover {
+        color: $colorSplash;
+      }
+    }
+  }
+}
+
+.sold-out-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255,0,0,0.8);
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/*================ Instagram feed styling ================*/
+.instagram-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.instagram-photo {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.instagram-photo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.instagram-photo:hover .instagram-photo-overlay {
+  opacity: 1;
+}
+
+.instagram-loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+/*================ Team members styling ================*/
+.team-member-photo {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.team-social-links {
+  margin-top: 1rem;
+}
+
+.team-social-btn {
+  margin: 0.25rem;
+}
+
+/*================ Responsive design for custom sections ================*/
+@include at-query($max, $medium) {
+  .feature-card {
+    padding: $gutter / 1.5;
+  }
+  
+  .collection-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .tab-buttons {
+    gap: 0.5rem;
+  }
+  
+  .tab-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .instagram-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .team-member-photo {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@include at-query($max, $small) {
+  .collection-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .tab-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .instagram-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/*================ Product page wishlist and comparison buttons ================*/
+.product-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+  @include at-query($max, $small) {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.product-wishlist-btn, .product-compare-btn {
+  flex: 1;
+  min-width: 140px;
+  
+  &.added {
+    background: $colorSplash;
+    color: white;
+    
+    .wishlist-icon {
+      content: '♥';
+    }
+  }
+}
+
+.wishlist-icon {
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.btn--secondary {
+  background: transparent;
+  border: 1px solid $colorSplash;
+  color: $colorSplash;
+  
+  &:hover {
+    background: $colorSplash;
+    color: white;
+  }
+}
+
 /*================ Language selector in header ================*/
 .header-locale {
   float: right;
   margin-left: 15px;
+  position: relative;
   
   .locale-selector {
-    background: transparent;
-    border: none;
+    background: $colorInfoBg;
+    border: 1px solid rgba($colorInfoText, 0.3);
     color: $colorInfoText;
     font-size: 12px;
-    padding: 2px 8px;
+    padding: 4px 20px 4px 8px;
     border-radius: 3px;
     cursor: pointer;
-    max-width: 120px;
+    max-width: 80px;
     text-overflow: ellipsis;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     
     &:focus {
       outline: none;
-      background: rgba($colorInfoText, 0.1);
+      background: darken($colorInfoBg, 5%);
+      border-color: rgba($colorInfoText, 0.5);
+    }
+    
+    &:hover {
+      background: darken($colorInfoBg, 3%);
     }
     
     option {
@@ -2904,6 +3232,18 @@ $infoBarPadding: 5px;
       color: $colorInfoText;
       font-size: 12px;
     }
+  }
+  
+  // Add dropdown arrow
+  &::after {
+    content: '▼';
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 8px;
+    color: $colorInfoText;
+    pointer-events: none;
   }
 }
 
@@ -6222,4 +6562,220 @@ button.mfp-close {
       }
     }
   }
+}
+
+/*============ Notification System ==================*/
+
+#notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  max-width: 400px;
+  pointer-events: none;
+}
+
+.notification {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  pointer-events: all;
+  position: relative;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.3s ease;
+  
+  &.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  &.notification--success {
+    border-left: 4px solid #22c55e;
+    .notification__icon {
+      color: #22c55e;
+    }
+  }
+  
+  &.notification--error {
+    border-left: 4px solid #ef4444;
+    .notification__icon {
+      color: #ef4444;
+    }
+  }
+  
+  &.notification--warning {
+    border-left: 4px solid #f59e0b;
+    .notification__icon {
+      color: #f59e0b;
+    }
+  }
+  
+  &.notification--info {
+    border-left: 4px solid #3b82f6;
+    .notification__icon {
+      color: #3b82f6;
+    }
+  }
+}
+
+.notification__content {
+  display: flex;
+  align-items: flex-start;
+}
+
+.notification__icon {
+  margin-right: 10px;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.notification__message {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.notification__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+  padding: 4px;
+  
+  &:hover {
+    color: #666;
+  }
+}
+
+/*============ Inline Style Cleanup ==================*/
+
+.section-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  margin-bottom: 1rem;
+}
+
+.section-highlight {
+  font-weight: 600;
+}
+
+.section-cta {
+  margin-top: 3rem;
+}
+
+.modal-hidden {
+  display: none;
+}
+
+.debug-info {
+  background: #f0f0f0;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/*============ Loading States ==================*/
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  
+  &.hidden {
+    display: none;
+  }
+}
+
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  
+  &.skeleton-text {
+    height: 1em;
+    margin-bottom: 0.5em;
+    
+    &:last-child {
+      width: 60%;
+      margin-bottom: 0;
+    }
+  }
+  
+  &.skeleton-image {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 1rem;
+  }
+  
+  &.skeleton-button {
+    height: 40px;
+    width: 120px;
+  }
+}
+
+.btn {
+  &.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-top: 2px solid currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    .btn-text {
+      opacity: 0;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }

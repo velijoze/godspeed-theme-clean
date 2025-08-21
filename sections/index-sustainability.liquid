@@ -1,143 +1,53 @@
-<div class="sustainability-section" data-section-id="{{ section.id }}" data-section-type="sustainability">
-  <div class="wrapper">
-    <div class="section-header text-center">
+<section class="section-spacing" data-section-id="{{ section.id }}" data-section-type="sustainability">
+  <div class="page-width">
+    <header class="section-header text-center">
       <h2 class="section-header__title">{{ section.settings.title | default: 'ECO-FRIENDLY TRANSPORT' }}</h2>
-      <div class="section-header__divider"></div>
-      <p class="section-header__subtitle">{{ section.settings.subtitle | default: 'Join the green revolution with our sustainable e-bike solutions.' }}</p>
-    </div>
+      <p>{{ section.settings.subtitle | default: 'Join the green revolution with our sustainable e-bike solutions.' }}</p>
+    </header>
     
-    <div class="sustainability-grid">
+    <div class="grid grid-uniform">
       <!-- Green Commuting -->
-      <div class="sustainability-item">
-        <div class="sustainability-icon">
-          <span class="icon icon-leaf"></span>
+      <div class="grid__item large--one-third medium--one-half">
+        <div class="feature-card text-center">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L13.09 8.26L19.5 9L13.09 9.74L12 16L10.91 9.74L4.5 9L10.91 8.26L12 2Z"/>
+            </svg>
+          </div>
+          <h3 class="h5">{{ section.settings.commuting_title | default: 'Green Commuting' }}</h3>
+          <p>{{ section.settings.commuting_description | default: 'Reduce your carbon footprint by choosing e-bikes for daily transportation.' }}</p>
         </div>
-        <h3 class="sustainability-title">{{ section.settings.commuting_title | default: 'Green Commuting' }}</h3>
-        <p class="sustainability-description">{{ section.settings.commuting_description | default: 'Reduce your carbon footprint by choosing e-bikes for daily transportation.' }}</p>
       </div>
       
       <!-- Energy Efficient -->
-      <div class="sustainability-item">
-        <div class="sustainability-icon">
-          <span class="icon icon-bolt"></span>
+      <div class="grid__item large--one-third medium--one-half">
+        <div class="feature-card text-center">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11,21H9L13,2H15L11,21M12,4.5L11,8.5H13L12,4.5Z"/>
+            </svg>
+          </div>
+          <h3 class="h5">{{ section.settings.energy_title | default: 'Energy Efficient' }}</h3>
+          <p>{{ section.settings.energy_description | default: 'Our e-bikes use minimal electricity compared to cars and public transport.' }}</p>
         </div>
-        <h3 class="sustainability-title">{{ section.settings.energy_title | default: 'Energy Efficient' }}</h3>
-        <p class="sustainability-description">{{ section.settings.energy_description | default: 'Our e-bikes use minimal electricity compared to cars and public transport.' }}</p>
       </div>
       
       <!-- Sustainable Materials -->
-      <div class="sustainability-item">
-        <div class="sustainability-icon">
-          <span class="icon icon-recycle"></span>
+      <div class="grid__item large--one-third medium--one-half">
+        <div class="feature-card text-center">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21,9L15,17H10V19H9V17H6L12,9L21,9M4,20H20V21H4V20M6,2H18V8H16V4H8V8H6V2Z"/>
+            </svg>
+          </div>
+          <h3 class="h5">{{ section.settings.materials_title | default: 'Sustainable Materials' }}</h3>
+          <p>{{ section.settings.materials_description | default: 'Built with eco-friendly components and recyclable materials.' }}</p>
         </div>
-        <h3 class="sustainability-title">{{ section.settings.materials_title | default: 'Sustainable Materials' }}</h3>
-        <p class="sustainability-description">{{ section.settings.materials_description | default: 'Built with eco-friendly components and recyclable materials.' }}</p>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<style>
-  .sustainability-section {
-    padding: 2rem 0;
-    background: #f8f9fa;
-  }
-  
-  .section-header__title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  .section-header__divider {
-    width: 40px;
-    height: 2px;
-    background: #4CAF50;
-    margin: 0.75rem auto;
-  }
-  
-  .section-header__subtitle {
-    font-size: 0.9rem;
-    color: #666;
-    max-width: 400px;
-    margin: 0 auto;
-    line-height: 1.4;
-  }
-  
-  .sustainability-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    margin: 1.5rem 0;
-  }
-  
-  .sustainability-item {
-    text-align: center;
-    padding: 1.25rem 0.75rem;
-    background: #ffffff;
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .sustainability-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
-  
-  .sustainability-icon {
-    margin-bottom: 0.75rem;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .sustainability-icon .icon {
-    font-size: 1.5rem;
-    color: #4CAF50;
-  }
-  
-  .sustainability-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 0.5rem;
-  }
-  
-  .sustainability-description {
-    font-size: 0.8rem;
-    color: #666;
-    line-height: 1.3;
-    margin: 0;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .sustainability-section {
-      padding: 1.5rem 0;
-    }
-    
-    .sustainability-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      margin: 1.25rem 0;
-    }
-    
-    .sustainability-item {
-      padding: 1rem 0.75rem;
-    }
-    
-    .section-header__title {
-      font-size: 1.3rem;
-    }
-    
-    .section-header__subtitle {
-      font-size: 0.85rem;
-    }
-  }
-</style>
 
 {% schema %}
 {

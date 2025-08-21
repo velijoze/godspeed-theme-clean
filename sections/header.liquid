@@ -1,6 +1,6 @@
 <div class="header__wrapper" data-section-id="{{ section.id }}" data-section-type="header">
 
-  {% if section.settings.header_enable_account or section.settings.header_enable_search or section.settings.header_message != '' %}
+  {% if section.settings.header_enable_account or section.settings.header_enable_search or section.settings.header_message != '' or (section.settings.show_language_selector and localization.available_languages.size > 1) %}
   <div class="info-bar showMobile">
     <div class="wrapper text-center">
 

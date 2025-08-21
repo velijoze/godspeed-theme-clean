@@ -1,9 +1,8 @@
-<div class="featured-collections-section" data-section-id="{{ section.id }}" data-section-type="featured-collections">
-  <div class="wrapper">
-    <div class="section-header text-center">
+<section class="section-spacing" data-section-id="{{ section.id }}" data-section-type="featured-collections">
+  <div class="page-width">
+    <header class="section-header text-center">
       <h2 class="section-header__title">{{ section.settings.title | default: 'FEATURED COLLECTIONS' }}</h2>
-      <div class="section-header__divider"></div>
-    </div>
+    </header>
     
     <!-- Collection Category Tabs -->
     <div class="collection-tabs">
@@ -35,7 +34,7 @@
                   <div class="collection-product">
                     <div class="product-image-wrapper">
                       <a href="{{ product.url }}" class="product-image-link">
-                        <img src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}" 
+                        <img src="{{ product.featured_image | img_url: '250x250', crop: 'center' }}" 
                              alt="{{ product.title | escape }}"
                              class="product-image"
                              loading="lazy">
@@ -52,7 +51,7 @@
                       </div>
                     </div>
                     <div class="product-info">
-                      <h3 class="product-title">
+                      <h3 class="product-title h6">
                         <a href="{{ product.url }}">{{ product.title }}</a>
                       </h3>
                       <div class="product-price">
@@ -135,278 +134,6 @@
   </div>
 </div>
 
-<style>
-  .featured-collections-section {
-    padding: 4rem 0;
-    background: #ffffff;
-  }
-  
-  .section-header__title {
-    font-size: 1.5rem !important;
-    font-weight: 600 !important;
-    color: #333 !important;
-    margin-bottom: 1rem !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-  }
-  
-  .section-header__divider {
-    width: 60px;
-    height: 2px;
-    background: #000000;
-    margin: 1rem auto;
-  }
-  
-  .collection-tabs {
-    margin: 3rem 0;
-    text-align: center;
-  }
-  
-  .tab-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-  
-  .tab-button {
-    background: transparent;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #333;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 25px;
-  }
-  
-  .tab-button:hover,
-  .tab-button.active {
-    background: #f0f0f0;
-    color: #000;
-  }
-  
-  .collection-content {
-    display: none;
-  }
-  
-  .collection-content.active {
-    display: block;
-  }
-  
-  .collection-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .collection-product {
-    text-align: center;
-  }
-  
-  .product-image-wrapper {
-    position: relative;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    border-radius: 8px;
-  }
-  
-  .product-image {
-    width: 100%;
-    height: auto;
-    transition: transform 0.3s ease;
-  }
-  
-  .product-image-wrapper:hover .product-image {
-    transform: scale(1.05);
-  }
-  
-  .sold-out-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #f0f0f0;
-    color: #000;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    border-radius: 4px;
-  }
-  
-  .product-actions {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .product-image-wrapper:hover .product-actions {
-    opacity: 1;
-  }
-  
-  .quick-view-btn {
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.3s ease;
-  }
-  
-  .quick-view-btn:hover {
-    background: #333;
-  }
-  
-  .product-title {
-    margin: 0.5rem 0;
-    font-size: 1rem;
-  }
-  
-  .product-title a {
-    color: #333;
-    text-decoration: none;
-  }
-  
-  .product-title a:hover {
-    color: #000;
-  }
-  
-  .product-price {
-    margin-top: 0.5rem;
-  }
-  
-  .price-sale {
-    color: #e74c3c;
-    font-weight: 600;
-  }
-  
-  .price-compare {
-    color: #999;
-    text-decoration: line-through;
-    margin-left: 0.5rem;
-  }
-  
-  .price-regular {
-    color: #333;
-    font-weight: 600;
-  }
-  
-  /* Setup Messages */
-  .collection-setup,
-  .no-collections-setup {
-    text-align: center;
-    padding: 3rem 2rem;
-    background: #f8f9fa;
-    border-radius: 12px;
-    margin: 2rem 0;
-  }
-  
-  .collection-setup h3,
-  .no-collections-setup h3 {
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  .collection-setup p,
-  .no-collections-setup p {
-    color: #666;
-    margin-bottom: 1.5rem;
-  }
-  
-  .setup-instructions {
-    text-align: left;
-    max-width: 600px;
-    margin: 0 auto;
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-  }
-  
-  .setup-instructions ol {
-    margin: 0.5rem 0 0 1.5rem;
-    color: #666;
-  }
-  
-  .setup-instructions li {
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Quick View Modal */
-  .quick-view-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-  }
-  
-  .modal-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  
-  .modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    max-width: 90%;
-    max-height: 90%;
-    overflow-y: auto;
-  }
-  
-  .modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #999;
-  }
-  
-  .modal-close:hover {
-    color: #000;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .tab-buttons {
-      gap: 1rem;
-    }
-    
-    .tab-button {
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
-    }
-    
-    .collection-grid {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-    
-    .setup-instructions {
-      text-align: left;
-      margin: 1rem 0;
-    }
-  }
-</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -537,22 +264,19 @@
         {
           "type": "collection_tab",
           "settings": {
-            "tab_title": "Collection 1",
-            "collection": ""
+            "tab_title": "Electric Bikes"
           }
         },
         {
           "type": "collection_tab",
           "settings": {
-            "tab_title": "Collection 2",
-            "collection": ""
+            "tab_title": "Accessories"
           }
         },
         {
           "type": "collection_tab",
           "settings": {
-            "tab_title": "Collection 3",
-            "collection": ""
+            "tab_title": "Components"
           }
         }
       ]

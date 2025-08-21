@@ -1,37 +1,124 @@
 {% comment %}
   Section: Test Ride Booking
-  Multi-location appointment system
+  Multi-location appointment system with popup modal
 {% endcomment %}
 
-<div class="test-ride-booking-section page-width">
-  <div class="section-header text-center">
+<section class="section-spacing">
+  <div class="page-width">
     {% if section.settings.title != blank %}
-      <h2>{{ section.settings.title }}</h2>
+      <header class="section-header text-center">
+        <h2 class="section-header__title">{{ section.settings.title }}</h2>
+        {% if section.settings.description != blank %}
+          <p>{{ section.settings.description }}</p>
+        {% endif %}
+      </header>
     {% endif %}
-    {% if section.settings.description != blank %}
-      <p>{{ section.settings.description }}</p>
-    {% endif %}
-  </div>
 
-  <div id="test-ride-booking-{{ section.id }}" class="test-ride-booking-container">
-    <!-- Test ride booking will be initialized here by JavaScript -->
+    <div class="grid grid-uniform">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'featured_bike' %}
+            <div class="grid__item large--one-third medium--one-half" {{ block.shopify_attributes }}>
+              <div class="feature-card text-center">
+                {% if block.settings.image != blank %}
+                  <img src="{{ block.settings.image | img_url: '300x200' }}" alt="{{ block.settings.name }}" style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 1rem;">
+                {% endif %}
+                
+                <h3 class="h4">{{ block.settings.name }}</h3>
+                
+                {% if block.settings.category != blank %}
+                  <p class="bike-category" style="font-weight: bold; color: var(--color-primary, #333); margin: 0.5rem 0;">
+                    {{ block.settings.category }}
+                  </p>
+                {% endif %}
+                
+                {% if block.settings.description != blank %}
+                  <p>{{ block.settings.description }}</p>
+                {% endif %}
+                
+                {% if block.settings.specs != blank %}
+                  <div class="bike-specs" style="margin: 1rem 0;">
+                    {% assign specs = block.settings.specs | split: ',' %}
+                    <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #666;">
+                      {% for spec in specs %}
+                        <li style="margin: 0.25rem 0;">{{ spec | strip }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+                
+                <button class="btn btn--large" onclick="openTestRideModal(); setTestRideBike('{{ block.settings.name }}')">
+                  Test Ride This Bike
+                </button>
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    {% if section.blocks.size == 0 %}
+      <div class="text-center">
+        <h3>Experience Our E-Bikes</h3>
+        <p>Book a test ride to find your perfect e-bike. No obligation, just pure riding enjoyment!</p>
+        <button class="btn btn--large" onclick="openTestRideModal()">
+          Book Your Test Ride
+        </button>
+      </div>
+    {% endif %}
+
+    {% if section.settings.show_info %}
+      <div class="test-ride-info" style="margin-top: 3rem; padding: 2rem; background: #f9f9f9; border-radius: 8px;">
+        <div class="grid">
+          <div class="grid__item large--one-third">
+            <h4>📍 Multiple Locations</h4>
+            <p>Test rides available at all our Swiss stores</p>
+          </div>
+          <div class="grid__item large--one-third">
+            <h4>🕒 Flexible Times</h4>
+            <p>Morning and afternoon slots available</p>
+          </div>
+          <div class="grid__item large--one-third">
+            <h4>🛡️ Safety First</h4>
+            <p>Helmets provided and safety briefing included</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
   </div>
-</div>
+</section>
+
+{% include 'test-ride-modal' %}
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.GodspeedToolkit && window.GodspeedToolkit.TestRideBooking) {
-      const booking = new window.GodspeedToolkit.TestRideBooking();
-      booking.init('test-ride-booking-{{ section.id }}');
+function setTestRideBike(bikeName) {
+  const selectElement = document.getElementById('TestRideBike');
+  if (selectElement && bikeName) {
+    // Find matching option or select "other"
+    const options = selectElement.options;
+    let found = false;
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].text.includes(bikeName)) {
+        selectElement.selectedIndex = i;
+        found = true;
+        break;
+      }
     }
-  });
-</script>
-
-<style>
-  .test-ride-booking-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    
+    if (!found) {
+      // Select "other" option and add note
+      const otherOption = selectElement.querySelector('option[value="other"]');
+      if (otherOption) {
+        selectElement.value = 'other';
+        // Pre-fill notes with bike name
+        const notesField = document.getElementById('TestRideNotes');
+        if (notesField) {
+          notesField.value = `Interested in test riding: ${bikeName}`;
+        }
+      }
+    }
   }
-</style>
+}
+</script>
 
 {% schema %}
 {
@@ -47,33 +134,85 @@
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Schedule a test ride at one of our locations to experience our e-bikes firsthand"
+      "default": "Experience our e-bikes firsthand with a free test ride at any of our locations"
     },
     {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 40
-    },
+      "type": "checkbox",
+      "id": "show_info",
+      "label": "Show info section",
+      "default": true
+    }
+  ],
+  "blocks": [
     {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 40
+      "type": "featured_bike",
+      "name": "Featured E-Bike",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Bike Image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Bike Name",
+          "default": "Cube Touring Hybrid"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category",
+          "default": "City & Touring"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Perfect for daily commuting and leisure rides"
+        },
+        {
+          "type": "textarea",
+          "id": "specs",
+          "label": "Key Specs (comma separated)",
+          "default": "Bosch Performance motor, 500Wh battery, 120km range, 28″ wheels"
+        }
+      ]
     }
   ],
   "presets": [
     {
       "name": "Test Ride Booking",
-      "category": "E-bike Tools"
+      "category": "E-bike Tools",
+      "blocks": [
+        {
+          "type": "featured_bike",
+          "settings": {
+            "name": "Cube Touring Hybrid",
+            "category": "City & Touring",
+            "description": "Perfect for daily commuting and leisure rides with excellent comfort",
+            "specs": "Bosch Performance motor, 500Wh battery, 120km range, 28″ wheels"
+          }
+        },
+        {
+          "type": "featured_bike",
+          "settings": {
+            "name": "Trek Powerfly 5",
+            "category": "Mountain E-Bike",
+            "description": "Trail-ready e-mountain bike for off-road adventures",
+            "specs": "Bosch Performance CX, 625Wh battery, 29″ wheels, Full suspension"
+          }
+        },
+        {
+          "type": "featured_bike",
+          "settings": {
+            "name": "Specialized Turbo Vado",
+            "category": "Urban E-Bike",
+            "description": "Premium urban e-bike with smart connectivity features",
+            "specs": "Specialized SL motor, 480Wh battery, 28″ wheels, Integrated lights"
+          }
+        }
+      ]
     }
   ]
 }

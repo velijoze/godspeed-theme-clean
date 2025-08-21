@@ -1,34 +1,100 @@
 {% comment %}
   Section: Service Booking
-  E-bike service scheduling with tiered packages
+  E-bike service scheduling with popup modal
 {% endcomment %}
 
 <section class="section-spacing">
   <div class="page-width">
-  <div class="section-header text-center">
     {% if section.settings.title != blank %}
-      <h2>{{ section.settings.title }}</h2>
+      <header class="section-header text-center">
+        <h2 class="section-header__title">{{ section.settings.title }}</h2>
+        {% if section.settings.description != blank %}
+          <p>{{ section.settings.description }}</p>
+        {% endif %}
+      </header>
     {% endif %}
-    {% if section.settings.description != blank %}
-      <p>{{ section.settings.description }}</p>
-    {% endif %}
-  </div>
 
-  <div id="service-booking-{{ section.id }}" class="service-booking-container">
-    <!-- Service booking will be initialized here by JavaScript -->
-  </div>
+    <div class="grid grid-uniform">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'service_package' %}
+            <div class="grid__item large--one-third medium--one-half" {{ block.shopify_attributes }}>
+              <div class="feature-card text-center">
+                {% if block.settings.icon != blank %}
+                  <div class="service-icon" style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--color-primary, #333);">
+                    {{ block.settings.icon }}
+                  </div>
+                {% endif %}
+                
+                <h3 class="h4">{{ block.settings.name }}</h3>
+                
+                {% if block.settings.price != blank %}
+                  <p class="service-price" style="font-size: 1.5rem; font-weight: bold; color: var(--color-primary, #333); margin: 0.5rem 0;">
+                    CHF {{ block.settings.price }}
+                  </p>
+                {% endif %}
+                
+                {% if block.settings.description != blank %}
+                  <p>{{ block.settings.description }}</p>
+                {% endif %}
+                
+                {% if block.settings.features != blank %}
+                  <div class="service-features" style="margin: 1rem 0;">
+                    {% assign features = block.settings.features | split: ',' %}
+                    <ul style="list-style: none; padding: 0;">
+                      {% for feature in features %}
+                        <li style="margin: 0.25rem 0;">✓ {{ feature | strip }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+                
+                <button class="btn btn--large" onclick="openServiceBookingModal(); setServicePackage('{{ block.settings.name }}', '{{ block.settings.price }}')">
+                  Book This Service
+                </button>
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    {% if section.blocks.size == 0 %}
+      <div class="text-center">
+        <p><em>No service packages configured. Add service package blocks in the theme customizer.</em></p>
+        <button class="btn btn--large" onclick="openServiceBookingModal()">
+          Schedule Service
+        </button>
+      </div>
+    {% endif %}
   </div>
 </section>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.GodspeedToolkit && window.GodspeedToolkit.ServiceBooking) {
-      const booking = new window.GodspeedToolkit.ServiceBooking();
-      booking.init('service-booking-{{ section.id }}');
-    }
-  });
-</script>
+{% include 'service-booking-modal' %}
 
+<script>
+function setServicePackage(packageName, price) {
+  const selectElement = document.getElementById('ServicePackage');
+  if (selectElement) {
+    // Find matching option or create custom value
+    const options = selectElement.options;
+    let found = false;
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].text.includes(packageName)) {
+        selectElement.selectedIndex = i;
+        found = true;
+        break;
+      }
+    }
+    
+    if (!found && packageName && price) {
+      // Add custom option if not found
+      const option = new Option(`${packageName} (CHF ${price})`, `${packageName.toLowerCase()}`);
+      selectElement.add(option);
+      selectElement.value = packageName.toLowerCase();
+    }
+  }
+}
+</script>
 
 {% schema %}
 {
@@ -38,39 +104,89 @@
       "type": "text",
       "id": "title",
       "label": "Title",
-      "default": "Schedule E-Bike Service"
+      "default": "E-Bike Service Packages"
     },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
       "default": "Keep your e-bike in perfect condition with our professional service packages"
-    },
+    }
+  ],
+  "blocks": [
     {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 40
+      "type": "service_package",
+      "name": "Service Package",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji or symbol)",
+          "default": "🔧"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Service Name",
+          "default": "Basic Service"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price (CHF)",
+          "default": "89"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Essential maintenance for your e-bike"
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features (comma separated)",
+          "default": "Safety check, Brake adjustment, Tire inspection, Basic cleaning"
+        }
+      ]
     }
   ],
   "presets": [
     {
       "name": "Service Booking",
-      "category": "E-bike Tools"
+      "category": "E-bike Tools",
+      "blocks": [
+        {
+          "type": "service_package",
+          "settings": {
+            "icon": "🔧",
+            "name": "Basic Service",
+            "price": "89",
+            "description": "Essential maintenance for your e-bike",
+            "features": "Safety check, Brake adjustment, Tire inspection, Basic cleaning"
+          }
+        },
+        {
+          "type": "service_package",
+          "settings": {
+            "icon": "⚙️",
+            "name": "Standard Service",
+            "price": "149",
+            "description": "Comprehensive tune-up and battery check",
+            "features": "Full tune-up, Battery health check, Chain lubrication, Software diagnostics"
+          }
+        },
+        {
+          "type": "service_package",
+          "settings": {
+            "icon": "🛠️",
+            "name": "Premium Service",
+            "price": "249",
+            "description": "Complete overhaul and optimization",
+            "features": "Complete overhaul, Software update, Deep cleaning, Performance optimization"
+          }
+        }
+      ]
     }
   ]
 }
