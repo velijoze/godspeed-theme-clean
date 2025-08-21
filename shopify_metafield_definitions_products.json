@@ -1,0 +1,134 @@
+{
+  "metafield_definitions": [
+    {
+      "name": "Category Level 2",
+      "namespace": "specs",
+      "key": "category_level2",
+      "type": "single_line_text_field",
+      "description": "Subcategory under Bikes/E-Bikes (e.g., Road, Gravel, MTB, Urban).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": true
+    },
+    {
+      "name": "Wheel Size",
+      "namespace": "specs",
+      "key": "wheel_size",
+      "type": "single_line_text_field",
+      "description": "Wheel size (e.g., 26\", 27.5\", 29\").",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Motor System",
+      "namespace": "specs",
+      "key": "motor_system",
+      "type": "single_line_text_field",
+      "description": "Drive unit / motor system (e.g., Bosch CX, Shimano EP8).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Battery (Wh)",
+      "namespace": "specs",
+      "key": "battery_wh",
+      "type": "number_integer",
+      "description": "Battery capacity in watt-hours (e.g., 500, 625, 750).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Frame Material",
+      "namespace": "specs",
+      "key": "frame_material",
+      "type": "single_line_text_field",
+      "description": "Primary frame material (e.g., Carbon, Aluminum, Steel).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Suspension",
+      "namespace": "specs",
+      "key": "suspension",
+      "type": "single_line_text_field",
+      "description": "Suspension type (e.g., Rigid, Hardtail, Full).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Brake Type",
+      "namespace": "specs",
+      "key": "brake_type",
+      "type": "single_line_text_field",
+      "description": "Brake system (e.g., Hydraulic Disc, Mechanical Disc).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Fit",
+      "namespace": "specs",
+      "key": "fit",
+      "type": "single_line_text_field",
+      "description": "Intended fit (e.g., Men, Women, Unisex, Kids).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Color Family",
+      "namespace": "specs",
+      "key": "color_family",
+      "type": "single_line_text_field",
+      "description": "High-level color family when not using variants (e.g., Black, Red).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Badges",
+      "namespace": "merchandising",
+      "key": "badges",
+      "type": "list.single_line_text_field",
+      "description": "UI badges (e.g., New, Sale, Last Units).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Priority",
+      "namespace": "merchandising",
+      "key": "priority",
+      "type": "number_integer",
+      "description": "Merchandising priority; lower = higher priority (e.g., 1 = hero).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Warranty",
+      "namespace": "service",
+      "key": "warranty",
+      "type": "single_line_text_field",
+      "description": "Warranty term (e.g., 2 years, 5 years).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    },
+    {
+      "name": "Ships Assembled",
+      "namespace": "service",
+      "key": "assembly",
+      "type": "boolean",
+      "description": "Whether the bike ships assembled (true/false).",
+      "owner_type": "Product",
+      "visible_to_storefront_api": true,
+      "pin": false
+    }
+  ]
+}
