@@ -412,6 +412,18 @@
           "title": "FEATURED COLLECTIONS",
           "products_per_tab": 6
         }
+      },
+      "index_collection_wmzdxH": {
+        "type": "index-collection",
+        "name": "Featured collection",
+        "settings": {
+          "title": "CUBE",
+          "collection": "brands-cube-bikes",
+          "grid": "3",
+          "rows": "1",
+          "homepage_collection_color": "homepage--white",
+          "show_view_all": true
+        }
       }
     },
     "content_for_index": [
@@ -422,7 +434,8 @@
       "index_collection_grid_P3keXh",
       "index_blog_6zJUw4",
       "index_sustainability_rFiKFj",
-      "index_featured_collections_KWKDEg"
+      "index_featured_collections_KWKDEg",
+      "index_collection_wmzdxH"
     ]
   },
   "presets": {
